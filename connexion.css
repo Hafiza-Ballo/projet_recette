@@ -1,0 +1,7 @@
+.connexion{
+    text-align: center;
+    border-radius: 2px;
+    border: solid 2px rgb(164, 163, 163);
+    padding: 0;
+    box-sizing: content-box;
+}
