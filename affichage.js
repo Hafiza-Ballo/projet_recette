@@ -5,14 +5,17 @@ function changeImgURL(button,name){
       url: "vue.php",
       data: {"name":name}
     }).done(function(e) {
-        if($(".like").css("display")=="block"){
-          $(".dislike").css("display","block");
-          $(".like").css("display","none");
+      let $btn = $(button);
+      let $like=$btn.parent().find(".like");
+      let $dislike=$btn.parent().find(".dislike");
+        if($like.css("display")=="block"){
+          $dislike.css("display","block");
+          $like.css("display","none");
           ajoutlike(name);
         }
        else{
-          $(".dislike").css("display","none");
-          $(".like").css("display","block");
+          $dislike.css("display","none");
+          $like.css("display","block");
           supprimelike(name);
         }
     }).fail(function(e) {
