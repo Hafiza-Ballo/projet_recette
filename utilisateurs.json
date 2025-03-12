@@ -6,5 +6,21 @@
         "role": "",
         "mdp": "$2y$10$Fg0Gmy5jtqRgJ4pwedPs8Ow0xYR.L3w\/hIJlZDNQz0EB2H6FbjhCy",
         "isCuisinier": 1
+    },
+    {
+        "nom": "Ballo",
+        "prenom": "Hafiza",
+        "mail": "h@gmail.com",
+        "role": "DemandeChef",
+        "mdp": "$2y$10$0TVO6FeZrJOeZihCRpT7H.ROCUjr8LDuImUwGVXhY644nwLcEwuiW",
+        "isCuisinier": 1
+    },
+    {
+        "nom": "Ballo",
+        "prenom": "Hafiza",
+        "mail": "h@gmail.com",
+        "role": "DemandeChef",
+        "mdp": "ok",
+        "isCuisinier": 1
     }
 ]

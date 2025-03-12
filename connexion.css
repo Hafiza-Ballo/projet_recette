@@ -5,3 +5,27 @@
     padding: 0;
     box-sizing: content-box;
 }
+body{
+    background-color: rgb(244, 245, 236);
+}
+.principale_image{
+    height: 30%;
+    width: 30%;
+}
+.principale_ensemble{
+    width: 70%;
+    background-color: white;
+    border-radius: 5px;
+    margin-left: 20%;
+    text-align:center;
+}
+.page_recette{
+    width: 70%;
+    border-radius: 5px;
+}
+.like{
+    height: 5%;
+    width: 5%;
+    align-self: center;
+}
+

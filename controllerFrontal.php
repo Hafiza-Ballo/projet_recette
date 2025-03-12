@@ -3,6 +3,9 @@ require_once ('controller.php');
 session_start();
 
 try {
+    $jsonString = file_get_contents('utilisateurs.json');
+    $data = json_decode($jsonString, true);
+    
     if(isset($_POST['inscription']))
     {
         $nom = $_POST['nom'];
@@ -14,15 +17,19 @@ try {
 
         CtlInscription($nom, $prenom, $mail, $role, $mdp, $isCuisinier);
         
+        
+        
     }
     else if(isset($_POST['connexion']))
     {
         $mail = $_POST['mail'];
         $mdp = $_POST['mdp'];
+        $_SESSION['mail']=$mail;
+        $_SESSION['mdp']=$mdp;
         CtlConnexion($mail, $mdp);
     }
 
-else 
+    else
     {
         require_once ('connexion.php');
     }
