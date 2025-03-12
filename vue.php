@@ -22,8 +22,8 @@ echo '<!doctype html>
                 background-color: rgb(244, 245, 236);
             }
             .principale_image{
-                height: 30%;
-                width: 30%;
+                height: 40%;
+                width: 40%;
             }
             .principale_ensemble{
                 width: 70%;
@@ -31,24 +31,35 @@ echo '<!doctype html>
                 border-radius: 5px;
                 margin-left: 20%;
                 text-align:center;
+                padding-top: 2%;
             }
             .like{
                 display:block;
-                height: 10%;
-                width: 10%;
+                height: 100%;
+                width: 100%;
             }
             .dislike{
                 display:none;
-                height: 10%;
-                width: 10%;
+                height: 100%;
+                width: 100%;
             }
-            #btn_like{
-                
+            .btn_like{
+                width: 5%;
+                border: none;
+                background-color: transparent;
+                vertical-align: middle;
             }
-            button {
-    
-    color: white;
-}
+            #voir_r{
+                background-color: #ED4B5B;
+                color: white;
+                border: none;
+                border-radius: 5px;
+            }
+            a{
+                text-decoration: none;
+                color: #ED4B5B;
+            }
+            
         </style> 
     </head>
 
@@ -87,12 +98,12 @@ if (file_exists('recettes.json')) {
                             <a href="page_recette.php?id='.$id_recette.'">
                                 <img class="principale_image" src="'.$d["imageURL"].'" alt="'.$id_recette.'" >
                                 <h4>'.$d["nameFR"].'</h4>
-                                <button >Voir la recette</button>
-                                </a>
-                                <button  id="btn_like" onclick="changeImgURL(this,\''.$d["nameFR"].'\')">
+                                <button id="voir_r" >Voir la recette</button>
+                            </a>
+                            <button  class="btn_like" onclick="changeImgURL(this,\''.$d["nameFR"].'\')">
                                 <img class="like" src='.$liker.' alt="like">
                                 <img class="dislike" src='.$disliker.' alt="like" >
-                                </button>
+                            </button>
                             </div>';
 
                     $newdata[]=$d;  
