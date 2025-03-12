@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-//$image=$_SESSION["image"];
-//$nom_recette=$_SESSION["nom_recette"];
 $f = fopen('recettes.json', 'r+');
 
 if (!flock($f, LOCK_EX)){
@@ -10,65 +8,7 @@ if (!flock($f, LOCK_EX)){
 }
 $jsonString = fread($f, filesize('recettes.json'));
 $data = json_decode($jsonString, true); 
-/*$autheur=$_SESSION["autheur"];
-$without=implode(", ", $_SESSION["without"]);
-$nom_ingredients=array_column($_SESSION["ingredients"], "name");
-$ingredients=implode(", ", $nom_ingredients);
-$nom_ingredientsFR=array_column($_SESSION["ingredientsFR"], "name");
-$ingredientsFR=implode(", ", $nom_ingredientsFR);
-$steps=$_SESSION["steps"];
-$stepsFR=$_SESSION["stepsFR"];
-$timers=$_SESSION["timers"];
-if (file_exists('recettes.json')) {
-    
-    echo '<!doctype html>
-        <html lang="fr">
-            <head>
-                <meta charset="utf-8">
-                <title>Page principale</title>
-                <link rel="stylesheet" href="connexion.css" type="text/css">
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-                
-            </head>
 
-            <body>
-                <section>
-                    <h1>'.$nom_recette.'</h1> 
-                </section>
-                <section class="">
-                    <div>
-                        <img class="principale_image" src="'.$image.'">
-                        <ul>
-                            <li>Autheur: '.$autheur.'</li>
-                            <li>Without: '.$without.'</li>
-                            <li>Ingredients:<ul>';
-                                foreach($nom_ingredientsFR as $n){
-                                    echo '<li>'.$n.'</li>';
-                                } 
-                                echo '</ul>
-                            <li>Etapes:<ul>';
-                                foreach($stepsFR as $s){
-                                    echo '<li>'.$s.'</li>';
-                                } 
-                                echo '</ul>
-                            <li>Temps: <ul>';
-                                foreach($timers as $t){
-                                    echo '<li>'.$t.'</li>';
-                                } 
-                                echo '</ul>
-                        </ul>
-                        
-                    </div>';
-
-                echo'         
-                </section>
-            </body>
-        </html>';
-
-
-    session_unset();
-}*/
 $ligne_recette;
 if(isset($_GET['id'])){
     $id_recette=$_GET['id'];
