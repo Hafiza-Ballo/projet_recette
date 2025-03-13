@@ -25,12 +25,12 @@ function CtlConnexion($mail, $mdp)
     else {
         $result = connexion($mail, $mdp);
         if ($result) {
-            echo 'Connexion réussie';
-            header("Location: vue.php");  
-            exit();
+            afficherAccueil($result);
         } else {
-            throw new Exception('Un des champs est incorrect');
+            throw new Exception('Erreur lors de la connexion');
         }
+        
+        
     }
 }
 

@@ -31,8 +31,8 @@ function connexion($mail, $mdp)
     }
     foreach ($utilisateurs as $utilisateur) {
         if ($utilisateur['mail'] === $mail && password_verify($mdp, $utilisateur['mdp'])) {
-            return true;
+            return $utilisateur;
         }
     }
-    return false;
+    return [];
 }
