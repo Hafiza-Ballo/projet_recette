@@ -53,6 +53,29 @@ function supprimelike(name){
     });
 }
 
+function affichage_conteneur_modif(){
+  $.ajax({
+    method: "POST",
+    url: "conteneur_modif.php",
+    data: {}
+  }).done(function(e) {
+    let $btn = $(button);
+    let $like=$btn.parent().find(".like");
+    let $dislike=$btn.parent().find(".dislike");
+      if($like.css("display")=="block"){
+        $dislike.css("display","block");
+        $like.css("display","none");
+        ajoutlike(name);
+      }
+     else{
+        $dislike.css("display","none");
+        $like.css("display","block");
+        supprimelike(name);
+      }
+  }).fail(function(e) {
+    console.log(e);
    
+  });
+}
 
 

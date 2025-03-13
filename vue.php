@@ -1,5 +1,4 @@
 <?php
-session_start();
 echo '<!doctype html>
 <html lang="fr">
     <head>
@@ -59,14 +58,37 @@ echo '<!doctype html>
                 text-decoration: none;
                 color: #ED4B5B;
             }
+            #icone_recherche{
+                heigth:2%;
+                width: 2%;
+            
+            }
+            .hat{
+                position:fixed;
+                top:0;
+            }
+            #user_mc{
+                heigth: 5%;
+                width:5%;
+            }
+            #mon_compte{
+                position:fixed;
+                right: 1%;
+                top:0;
+                border: none;
+                background-color:white;
+            }
             
         </style> 
     </head>
 
     <body>
-        <section>
-            <input placeholder="recherche">
-            <img alt="icone_recherce" src=""> 
+        <section class="haut">
+            <div id="ensemble_recherche">
+                <input placeholder="recherche">
+                <img alt="icone_recherce" src="images\magnifying-glass-solid.svg" id="icone_recherche"> 
+            </div> 
+            <button id="mon_compte" onclick="affichage_conteneur_modif"><img src="images\user-solid.svg" alt="user" id="user_mc">Mon compte</button>
         </section>
         <section class="principale_ensemble">';
 if (file_exists('recettes.json')) {
