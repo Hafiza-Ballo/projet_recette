@@ -3,7 +3,7 @@
 function afficherAccueil($user,$recette) {
     $id_user="";
     $id_user .= '<div>
-    <input type="text" name="id" value="'.$user['id'].'">
+    <input type="hidden" name="id" value="'.$user['id'].'">
     </div>';
     $liker="images\heart-regular.svg";
     $disliker="images\heart-plein.svg";
