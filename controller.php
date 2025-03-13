@@ -26,13 +26,19 @@ function CtlConnexion($mail, $mdp)
         $result = connexion($mail, $mdp);
         if ($result) {
             $recette = recupRecette();
-            afficherAccueil($result,$recette);
+            $like=recupLike();
+            afficherAccueil($result,$recette,$like);
         } else {
             throw new Exception('Erreur lors de la connexion');
         }
         
         
     }
+}
+
+function CtlLike($id,$id_user,$type)
+{
+    gererLike($id,$id_user,$type);
 }
 
 ?>

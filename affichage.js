@@ -1,8 +1,8 @@
 
-function changeImgURL(button,id){
+function changeImgURL(button,id,$id_user){
     $.ajax({
       method: "GET",
-      url: "vue.php",
+      url: "controllerFrontal.php",
       data: {"id":id}
     }).done(function(e) {
       let $btn = $(button);
@@ -12,25 +12,25 @@ function changeImgURL(button,id){
           $dislike.css("display","block");
           $like.css("display","none");
             
-          ajoutlike(id);
+          ajoutlike(id,$id_user);
         }
        else{
           $dislike.css("display","none");
           $like.css("display","block");
-          supprimelike(id);
+          supprimelike(id,$id_user);
         }
     }).fail(function(e) {
       console.log(e);
      
     });
 }
-function ajoutlike(id){
+function ajoutlike(id,$id_user){
     $type="ajout";
     console.log($type);
     $.ajax({
       method: "POST",
-      url: "ajax.php",
-      data: {"id":id,"type":$type}
+      url: "controllerFrontal.php",
+      data: {"id":id,"type":$type,"id_user":$id_user}
     }).done(function(e) {
       console.log(e);
     }).fail(function(e) {
@@ -38,13 +38,13 @@ function ajoutlike(id){
      
     });
 }
-function supprimelike(id){
+function supprimelike(id,$id_user){
     $type="supprime";
     console.log($type);
     $.ajax({
       method: "POST",
-      url: "ajax.php",
-      data: {"id":id,"type":$type}
+      url: "controllerFrontal.php",
+      data: {"id":id,"type":$type,"id_user":$id_user}
       
     }).done(function(e) {
       console.log(e);
