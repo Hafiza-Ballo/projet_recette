@@ -25,7 +25,8 @@ function CtlConnexion($mail, $mdp)
     else {
         $result = connexion($mail, $mdp);
         if ($result) {
-            afficherAccueil($result);
+            $recette = recupRecette();
+            afficherAccueil($result,$recette);
         } else {
             throw new Exception('Erreur lors de la connexion');
         }

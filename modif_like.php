@@ -4,26 +4,28 @@ $f = fopen('recettes.json', 'r+');
 if (!flock($f, LOCK_EX)){
     http_response_code(409);
 }
-if(isset($_POST['name']) && isset($_POST['type'])){
-    $name=$_POST['name'];
+echo $_POST['id'];
+echo $_POST['type'];
+if(isset($_POST['id']) && isset($_POST['type'])){
+    $id=$_POST['id'];
     $type=$_POST['type'];
     $jsonString = fread($f, filesize('recettes.json'));
     $data = json_decode($jsonString, true); 
-    foreach($data as $index=>$valeur){
-        if($valeur['nameFR']==$name){
+    foreach($data as $index=> $r){
+        if($r['id']==$id){
             if($type=="ajout"){
                 $data[$index]['like']+=1;
             }
             else{
-                $data[$index]['like']-=1;
+                $data[$index]['like']-=1;            
             }
             break;
         }
         $newdata[]=$data; 
     }
     
-    
-    $newJsonString = json_encode($newdata, JSON_PRETTY_PRINT);
+    $newdata=[];
+    $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
     ftruncate($f, 0);
     fseek($f,0);
     fwrite($f, $newJsonString);

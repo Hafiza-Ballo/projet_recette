@@ -1,5 +1,4 @@
-<?php
-echo '<!doctype html>
+<!doctype html>
 <html lang="fr">
     <head>
         <meta charset="utf-8">
@@ -92,59 +91,9 @@ echo '<!doctype html>
             <button id="mon_compte" onclick="affichage_conteneur_modif"><img src="images\user-solid.svg" alt="user" id="user_mc">Mon compte</button>
         </section>
         <section class="principale_ensemble">';
+        <?php
         echo $contenu;
-if (file_exists('recettes.json')) {
-    $f = fopen('recettes.json', 'r+');
-
-    if (!flock($f, LOCK_EX)){
-        http_response_code(409);
-    } 
-
-    $jsonString = fread($f, filesize('recettes.json'));
-    $data = json_decode($jsonString, true); 
-    // ICI ON MODIFIE LE CONTENU COMME UN TABLEAU ASSOCIATIF
-    $newdata=[];
-    $liker="images\heart-regular.svg";
-    $disliker="images\heart-plein.svg";
-
-      
-            foreach ($data as $d) {
-                
-                if(isset($d["imageURL"])){
-                    if(strlen($d["nameFR"])>0){
-                        $id_recette=str_replace(' ', '-', $d["nameFR"]);
-                    }
-                    else{
-                        $id_recette=str_replace(' ', '-', $d["name"]);
-                    }
-                    
-                    echo'<div id='.$id_recette.' >
-                            <a href="page_recette.php?id='.$id_recette.'">
-                                <img class="principale_image" src="'.$d["imageURL"].'" alt="'.$id_recette.'" >
-                                <h4>'.$d["nameFR"].'</h4>
-                                <button id="voir_r" >Voir la recette</button>
-                            </a>
-                            <button  class="btn_like" onclick="changeImgURL(this,\''.$d["nameFR"].'\')">
-                                <img class="like" src='.$liker.' alt="like">
-                                <img class="dislike" src='.$disliker.' alt="like" >
-                            </button>
-                            </div>';
-
-                    $newdata[]=$d;  
-                }
-               echo' <br>';
-                
-                
-            } 
-        } 
-    $newJsonString = json_encode($newdata, JSON_PRETTY_PRINT);
-    ftruncate($f, 0);
-    fseek($f,0);
-    fwrite($f, $newJsonString);
-    flock($f, LOCK_UN);
-    fclose($f);   
-        
-echo'         
+        ?>
         </section>
     </body>
 </html>';
