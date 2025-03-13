@@ -36,3 +36,18 @@ function connexion($mail, $mdp)
     }
     return [];
 }
+
+function recupRecette(){
+    if (file_exists('recettes.json')) {
+        $f = fopen('recettes.json', 'r+');
+    
+        if (!flock($f, LOCK_EX)){
+            http_response_code(409);
+        } 
+    
+        $jsonString = fread($f, filesize('recettes.json'));
+        $data = json_decode($jsonString, true); 
+        return $data;
+    }
+        
+}

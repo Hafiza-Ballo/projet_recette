@@ -1,9 +1,9 @@
 
-function changeImgURL(button,name){
+function changeImgURL(button,id){
     $.ajax({
       method: "GET",
       url: "vue.php",
-      data: {"name":name}
+      data: {"id":id}
     }).done(function(e) {
       let $btn = $(button);
       let $like=$btn.parent().find(".like");
@@ -11,25 +11,26 @@ function changeImgURL(button,name){
         if($like.css("display")=="block"){
           $dislike.css("display","block");
           $like.css("display","none");
-          ajoutlike(name);
+            
+          ajoutlike(id);
         }
        else{
           $dislike.css("display","none");
           $like.css("display","block");
-          supprimelike(name);
+          supprimelike(id);
         }
     }).fail(function(e) {
       console.log(e);
      
     });
 }
-function ajoutlike(name){
+function ajoutlike(id){
     $type="ajout";
     console.log($type);
     $.ajax({
       method: "POST",
       url: "ajax.php",
-      data: {"name":name,"type":$type}
+      data: {"id":id,"type":$type}
     }).done(function(e) {
       console.log(e);
     }).fail(function(e) {
@@ -37,13 +38,13 @@ function ajoutlike(name){
      
     });
 }
-function supprimelike(name){
+function supprimelike(id){
     $type="supprime";
     console.log($type);
     $.ajax({
       method: "POST",
       url: "ajax.php",
-      data: {"name":name,"type":$type}
+      data: {"id":id,"type":$type}
       
     }).done(function(e) {
       console.log(e);
