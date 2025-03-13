@@ -58,7 +58,7 @@
                 color: #ED4B5B;
             }
             #icone_recherche{
-                heigth:2%;
+                height:2%;
                 width: 2%;
             
             }
@@ -67,7 +67,7 @@
                 top:0;
             }
             #user_mc{
-                heigth: 5%;
+                height: 5%;
                 width:5%;
             }
             #mon_compte{
