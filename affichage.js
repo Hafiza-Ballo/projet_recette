@@ -25,7 +25,7 @@ function changeImgURL(button,name){
 }
 function ajoutlike(name){
     $type="ajout";
-    console.log($type);
+    console.log(name);
     $.ajax({
       method: "POST",
       url: "ajax.php",
@@ -54,24 +54,13 @@ function supprimelike(name){
 }
 
 function affichage_conteneur_modif(){
+  console.log("la");
   $.ajax({
     method: "POST",
     url: "conteneur_modif.php",
     data: {}
   }).done(function(e) {
-    let $btn = $(button);
-    let $like=$btn.parent().find(".like");
-    let $dislike=$btn.parent().find(".dislike");
-      if($like.css("display")=="block"){
-        $dislike.css("display","block");
-        $like.css("display","none");
-        ajoutlike(name);
-      }
-     else{
-        $dislike.css("display","none");
-        $like.css("display","block");
-        supprimelike(name);
-      }
+      console.log(e);
   }).fail(function(e) {
     console.log(e);
    

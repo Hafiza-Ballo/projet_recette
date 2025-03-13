@@ -1,3 +1,4 @@
 <?php
-echo 'ok';
+echo '<h1>ok</h1>';
+
 ?>

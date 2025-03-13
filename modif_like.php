@@ -1,5 +1,4 @@
 <?php
-echo 'hello';
 $f = fopen('recettes.json', 'r+');
 
 if (!flock($f, LOCK_EX)){
@@ -20,10 +19,11 @@ if(isset($_POST['name']) && isset($_POST['type'])){
             }
             break;
         }
+        $newdata[]=$data; 
     }
     
     
-    $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+    $newJsonString = json_encode($newdata, JSON_PRETTY_PRINT);
     ftruncate($f, 0);
     fseek($f,0);
     fwrite($f, $newJsonString);
