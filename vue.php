@@ -1,6 +1,10 @@
 <?php
 
 function afficherAccueil($user,$recette,$likes) {
+    $_SESSION['idUser']=$user['id'];
+    $_SESSION['nom']=$user['nom'];
+    $_SESSION['prenom']=$user['prenom'];
+    $_SESSION['mail']=$user['mail'];
     $id_user="";
     $id_user .= '<div>
     <input type="hidden" name="id_user" value="'.$user['id'].'">
