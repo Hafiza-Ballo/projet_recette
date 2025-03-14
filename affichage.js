@@ -26,7 +26,7 @@ function changeImgURL(button,id){
 }
 function ajoutlike(id){
     $type="ajout";
-    console.log(name);
+    console.log($type);
     $.ajax({
       method: "POST",
       url: "ajax.php",
@@ -55,17 +55,15 @@ function supprimelike(id){
 }
 
 function affichage_conteneur_modif(){
-  console.log("la");
-  $.ajax({
-    method: "POST",
-    url: "conteneur_modif.php",
-    data: {}
-  }).done(function(e) {
-      console.log(e);
-  }).fail(function(e) {
-    console.log(e);
-   
-  });
+ let conteneur_modif_c=document.getElementsByClassName("conteneur_modif_c")[0];
+
+ if(conteneur_modif_c.style.visibility==="visible"){
+  conteneur_modif_c.style.visibility="hidden";
+ }
+ else{
+  conteneur_modif_c.style.visibility="visible";
+ }
+  
 }
 
 

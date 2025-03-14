@@ -21,7 +21,6 @@ if(isset($_POST['id']) && isset($_POST['type'])){
             }
             break;
         }
-        $newdata[]=$data; 
     }
     
     $newdata=[];
