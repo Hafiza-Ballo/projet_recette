@@ -28,6 +28,13 @@ try {
         $_SESSION['mdp']=$mdp;
         CtlConnexion($mail, $mdp);
     }
+    else if(isset($_POST['id']) && isset($_POST['type'] ) && isset($_POST['id_user'])){
+        $id=$_POST['id'];
+        $type=$_POST['type'];
+        $id_user=$_POST['id_user'];
+        CtlLike($id,$id_user,$type);
+        
+    }
 
     else
     {

@@ -107,7 +107,7 @@
     </head>
 
     <body>
-    
+            
         <section class="haut">
             <div id="ensemble_recherche">
                 <input placeholder="recherche">
