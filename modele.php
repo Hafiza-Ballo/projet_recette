@@ -76,10 +76,11 @@ function gererLike($id,$id_user,$type)
         http_response_code(409);
     }
 
-if (!flock($f, LOCK_EX)){
-    http_response_code(409);
-}
-$jsonString = fread($f, filesize('recettes.json'));
+    if (!flock($f, LOCK_EX)){
+        http_response_code(409);
+    }
+
+    $jsonString = fread($f, filesize('recettes.json'));
     $data = json_decode($jsonString, true); 
     $jsonString2 = stream_get_contents($l);
     $data2 = json_decode($jsonString2, true); 
@@ -118,5 +119,28 @@ $jsonString = fread($f, filesize('recettes.json'));
     flock($l, LOCK_UN);
     fclose($l); 
     
-
 }
+
+
+/*function AjoutRole($id_user,$newrole){
+    $f = fopen('utilisateurs.json', 'r+');
+    if (!flock($f, LOCK_EX)){
+        http_response_code(409);
+    }
+
+    $jsonString = fread($f, filesize('utilisateurs.json'));
+    $data = json_decode($jsonString, true); 
+    foreach($data as $index=> $u){
+        if($u['id']==$id_user){
+            $data[$index]['role'][] = $newrole;
+            
+            break;
+        }
+    }
+    $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+    ftruncate($f, 0);
+    fseek($f,0);
+    fwrite($f, $newJsonString);
+    flock($f, LOCK_UN);
+    fclose($f);
+}*/

@@ -128,12 +128,14 @@
                     <a href="informations_perso.php">Informations personnelles</a><br>
                     <a><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Deconnexion</a>
                 </div>
+                
     
             </div>
         </section>
         <section class="principale_ensemble">';
         <?php
         echo $contenu;
+        var_dump($_SESSION['role']);
         ?>
         </section>
     </body>

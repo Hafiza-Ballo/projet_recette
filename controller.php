@@ -41,4 +41,8 @@ function CtlLike($id,$id_user,$type)
     gererLike($id,$id_user,$type);
 }
 
+/*function CtlAjoutRole($id_user,$role){
+    AjoutRole($id_user, $role);
+}*/
+
 ?>

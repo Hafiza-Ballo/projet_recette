@@ -66,4 +66,29 @@ function affichage_conteneur_modif(){
   
 }
 
+function ajouterRole($id_user){
+  let role=document.getElementById("role").value;
+  if(role=="Defaut"){
+    console.log("aucun choix");
+  }
+  else{
+    console.log(role);
+    $.ajax({
+      method: "POST",
+      url: "informations_perso.php", 
+      data: {"id_user":$id_user, "role":role}
+      
+    }).done(function(e) {
+      $(".liste_role ul").append('<li>'+role+' </li> <button class="btn_supprimer" onclick="supprimerRole()" ><img src="images/trash-solid.svg" alt="supprimer" id="supprimer" > </button>')
+      console.log(e);
+    }).fail(function(e) {
+      console.log(e);
+     
+    });
+  }
+
+}
+function supprimerElement(element){
+  
+}
 

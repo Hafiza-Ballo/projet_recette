@@ -13,14 +13,8 @@ $ligne_recette;
 if(isset($_GET['id'])){
     $id_recette=$_GET['id'];
     foreach($data as $recette){
-        if(strlen($recette["nameFR"])>0){
-            $compareur=str_replace(' ', '-', $recette["nameFR"]);
-        }
-        else{
-            $compareur=str_replace(' ', '-', $recette["name"]);
-        }
-
-        if($compareur==$id_recette){
+    
+        if($id_recette==$recette['id']){
             $ligne_recette=$recette;
             break;
         }
