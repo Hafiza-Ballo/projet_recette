@@ -13,7 +13,8 @@ $ligne_recette;
 if(isset($_GET['id'])){
     $id_recette=$_GET['id'];
     foreach($data as $recette){
-        if($recette['id']==$id_recette){
+    
+        if($id_recette==$recette['id']){
             $ligne_recette=$recette;
             break;
         }

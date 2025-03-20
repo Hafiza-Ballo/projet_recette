@@ -35,6 +35,11 @@ try {
         CtlLike($id,$id_user,$type);
         
     }
+    /*else if (isset($_POST['id_user']) && isset($_POST['role'])){
+        $role=$_POST['role'];
+        $id_user=$_POST['id_user'];
+        CtlAjoutRole($id_user,$role);
+    }*/
 
     else
     {

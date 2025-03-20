@@ -55,28 +55,40 @@ function supprimelike(id,$id_user){
 }
 
 function affichage_conteneur_modif(){
-  $.ajax({
-    method: "POST",
-    url: "conteneur_modif.php",
-    data: {}
-  }).done(function(e) {
-    let $btn = $(button);
-    let $like=$btn.parent().find(".like");
-    let $dislike=$btn.parent().find(".dislike");
-      if($like.css("display")=="block"){
-        $dislike.css("display","block");
-        $like.css("display","none");
-        ajoutlike(name);
-      }
-     else{
-        $dislike.css("display","none");
-        $like.css("display","block");
-        supprimelike(name);
-      }
-  }).fail(function(e) {
-    console.log(e);
-   
-  });
+ let conteneur_modif_c=document.getElementsByClassName("conteneur_modif_c")[0];
+
+ if(conteneur_modif_c.style.visibility==="visible"){
+  conteneur_modif_c.style.visibility="hidden";
+ }
+ else{
+  conteneur_modif_c.style.visibility="visible";
+ }
+  
 }
 
+function ajouterRole($id_user){
+  let role=document.getElementById("role").value;
+  if(role=="Defaut"){
+    console.log("aucun choix");
+  }
+  else{
+    console.log(role);
+    $.ajax({
+      method: "POST",
+      url: "informations_perso.php", 
+      data: {"id_user":$id_user, "role":role}
+      
+    }).done(function(e) {
+      $(".liste_role ul").append('<li>'+role+' </li> <button class="btn_supprimer" onclick="supprimerRole()" ><img src="images/trash-solid.svg" alt="supprimer" id="supprimer" > </button>')
+      console.log(e);
+    }).fail(function(e) {
+      console.log(e);
+     
+    });
+  }
+
+}
+function supprimerElement(element){
+  
+}
 

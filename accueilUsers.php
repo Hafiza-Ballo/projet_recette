@@ -57,7 +57,7 @@
                 text-decoration: none;
                 color: #ED4B5B;
             }
-            #icone_recherche{
+            .icone_recherche{
                 height:2%;
                 width: 2%;
             
@@ -67,8 +67,8 @@
                 top:0;
             }
             #user_mc{
-                height: 5%;
-                width:5%;
+                height: 15%;
+                width:15%;
             }
             #mon_compte{
                 position:fixed;
@@ -76,6 +76,31 @@
                 top:0;
                 border: none;
                 background-color:white;
+                width: 10%;
+                float: right;
+            }
+            #t{
+                background-color: yellow;
+            }
+            .conteneur_modif_c{
+                visibility: hidden;
+                background-color: white;
+                border: none;
+                border-radius: 5px;
+                width: 20%;
+                padding-bottom: 2%;
+                position:fixed;
+                right: 1%;
+                top:5%;
+            }
+            #deconnexion_img{
+                height: 8%;
+                width:8%;
+                vertical-align: middle;
+            }
+            .choix_langue{
+                top: 0;
+                right: 15%;
             }
             
         </style> 
@@ -86,13 +111,31 @@
         <section class="haut">
             <div id="ensemble_recherche">
                 <input placeholder="recherche">
-                <img alt="icone_recherce" src="images\magnifying-glass-solid.svg" id="icone_recherche"> 
+                <img alt="icone_recherce" src="images\magnifying-glass-solid.svg" class="icone_recherche"> 
             </div> 
-            <button id="mon_compte" onclick="affichage_conteneur_modif"><img src="images\user-solid.svg" alt="user" id="user_mc">Mon compte</button>
+            <div>
+                <form class="choix_langue">
+                    <select name="">
+                        <option value="fr" id="t">Fr </option>
+                        <option value="eng" > Eng</option>
+
+                    </select>
+                </form>
+                
+                
+                <button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc">Mon compte</button>
+                <div class="conteneur_modif_c">
+                    <a href="informations_perso.php">Informations personnelles</a><br>
+                    <a><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Deconnexion</a>
+                </div>
+                
+    
+            </div>
         </section>
         <section class="principale_ensemble">';
         <?php
         echo $contenu;
+        var_dump($_SESSION['role']);
         ?>
         </section>
     </body>
