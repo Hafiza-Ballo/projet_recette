@@ -9,101 +9,197 @@
         <script src="jquery-3.7.1.js"></script>
         <script src="affichage.js"></script>
         <style>
-            .connexion{
-                text-align: center;
-                border-radius: 2px;
-                border: solid 2px rgb(164, 163, 163);
-                padding: 0;
-                box-sizing: content-box;
-            }
-            body{
-                background-color: rgb(244, 245, 236);
-            }
-            .principale_image{
-                height: 40%;
-                width: 40%;
-            }
-            .principale_ensemble{
-                width: 70%;
-                background-color: white;
-                border-radius: 5px;
-                margin-left: 20%;
-                text-align:center;
-                padding-top: 2%;
-            }
-            .like{
-                display:block;
-                height: 100%;
-                width: 100%;
-            }
-            .dislike{
-                display:none;
-                height: 100%;
-                width: 100%;
-            }
-            .btn_like{
-                width: 5%;
-                border: none;
-                background-color: transparent;
-                vertical-align: middle;
-            }
-            #voir_r{
-                background-color: #ED4B5B;
-                color: white;
-                border: none;
-                border-radius: 5px;
-            }
-            a{
-                text-decoration: none;
-                color: #ED4B5B;
-            }
-            .icone_recherche{
-                height:2%;
-                width: 2%;
-            
-            }
-            .hat{
-                position:fixed;
-                top:0;
-            }
-            #user_mc{
-                height: 15%;
-                width:15%;
-            }
-            #mon_compte{
-                position:fixed;
-                right: 1%;
-                top:0;
-                border: none;
-                background-color:white;
-                width: 10%;
-                float: right;
-            }
-            #t{
-                background-color: yellow;
-            }
-            .conteneur_modif_c{
-                visibility: hidden;
-                background-color: white;
-                border: none;
-                border-radius: 5px;
-                width: 20%;
-                padding-bottom: 2%;
-                position:fixed;
-                right: 1%;
-                top:5%;
-            }
-            #deconnexion_img{
-                height: 8%;
-                width:8%;
-                vertical-align: middle;
-            }
-            .choix_langue{
-                top: 0;
-                right: 15%;
-            }
-            
-        </style> 
+    body {
+        background-color: #f4f5ec;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    
+    .haut {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #fff;
+        padding: 15px 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+    }
+    #ensemble_recherche {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 auto;
+    }
+    #ensemble_recherche input {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 200px;
+    }
+    .icone_recherche {
+        height: 20px;
+        width: 20px;
+    }
+    .choix_langue {
+        position: absolute;
+        right: 15%;
+        top: 20px;
+    }
+    .choix_langue select {
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    #mon_compte {
+        right: 20px;
+        top: 10px;
+        background-color: transparent;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    #user_mc {
+        height: 25px;
+        width: 25px;
+    }
+    .conteneur_modif_c {
+        visibility: hidden;
+        background-color: #fff;
+        border-radius: 10px;
+        width: 200px;
+        padding: 15px;
+        position: fixed;
+        right: 20px;
+        top: 50px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .conteneur_modif_c a {
+        display: block;
+        margin: 10px 0;
+        color: #ED4B5B;
+        text-decoration: none;
+    }
+    #deconnexion_img {
+        height: 20px;
+        width: 20px;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+
+    .principale_ensemble {
+    width: 90%;
+    max-width: 1200px;
+    margin: 100px auto 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 30px;
+    box-sizing: border-box; 
+}
+.jaime {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    gap: 8px; 
+}
+#carouselRecette {
+    width: 600px; 
+    height: 350px; 
+    margin: 0 auto; 
+    overflow: hidden; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
+}
+
+#carouselRecette .carousel-item img {
+    width: 100%;
+    height: 350px; 
+    object-fit: cover; 
+}
+
+.carousel-item {
+    height: 350px;
+}
+.recette_card {
+    width: 100%; 
+    max-width: none; 
+    margin: 0; 
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease;
+    box-sizing: border-box;
+}
+    .recette_card:hover {
+        transform: translateY(-5px);
+    }
+    .principale_image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+    h4 {
+        color: #faab66;
+        margin: 10px 0;
+        font-weight: 600;
+    }
+    .btn_like {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+    }
+    .btn_like:hover {
+        transform: scale(1.1);
+    }
+    .like, .dislike {
+        width: 100%;
+        height: 100%;
+        transition: opacity 0.3s ease;
+    }
+    .like {
+        display: block;
+    }
+    .dislike {
+        display: none;
+    }
+    #voir_r {
+        background-color: #ED4B5B;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 15px;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    #voir_r:hover {
+        background-color: #d43f4e;
+    }
+    a {
+        text-decoration: none;
+        color: #ED4B5B;
+    }
+</style> 
     </head>
 
     <body>
@@ -132,10 +228,10 @@
     
             </div>
         </section>
-        <section class="principale_ensemble">';
+        <section class="principale_ensemble">
         <?php
         echo $contenu;
-        var_dump($_SESSION['role']);
+        // var_dump($_SESSION['role']);
         ?>
         </section>
     </body>

@@ -86,14 +86,13 @@ if(isset($_GET['id'])){
                 </section>
                 <section class="page_recette">
                     <h1>'.$ligne_recette["nameFR"].'</h1> 
-                    <div class="recette_principale">
-                        <img class="img_sec" src="'.$ligne_recette["imageURL"].'">
-                        <br>
-                        <br>
-                        <div class="btn_a_c">
-                            <button class="btn_a"><img class="" src="images\heart-plein.svg" alt="like">'.$like.' j\'aime</button>
-                            <button ><img class="" src="" alt="commentaire"> Commentaires</button>
-                        </div>
+                        <div class="recette_principale">
+                            <img class="img_sec" src="'.$ligne_recette["imageURL"].'">
+                            <br>
+                            <div class="btn_a_c">
+                                <button class="btn_a"><img class="" src="images\heart-plein.svg" alt="like">'.$like.' j\'aime</button>
+                                <button ><img class="" src="" alt="commentaire"> Commentaires</button>
+                            </div>
                         <h4>Spécificités</h4>';
                         if(strlen($without)>0){
                             echo '<p>'.$without.'</p>';

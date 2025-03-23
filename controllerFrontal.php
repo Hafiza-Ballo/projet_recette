@@ -34,6 +34,35 @@ try {
         $id_user=$_POST['id_user'];
         CtlLike($id,$id_user,$type);
         
+    }else if(isset($_POST['voir_recette'])){
+        $id_recette=$_POST['id_recette'];
+        $id_user=$_POST['id_user'];
+        CtlafficherRecette($id_recette,$id_user);
+        
+    }
+    else if(isset($_GET['action'])){
+        switch ($_GET['action']) {
+            case 'retour_accueil':
+                $id_user=$_GET['id_user'];
+                CtlaffAccueil($id_user);
+                break;
+            default:
+                require_once ('connexion.php');
+                break;
+        }
+        
+    }
+    else if(isset($_POST['id_user'])  && isset($_POST['id_recette'] ) && isset($_FILES['photo'] )){
+        $id_user=$_POST['id_user'];
+        $id_recette=$_POST['id_recette'];
+        $photo=$_FILES['photo'];
+        CtlAjoutPhoto($id_user,$id_recette,$photo);
+    }
+    else if(isset($_POST['id_user'])  && isset($_POST['id_recette'] ) && isset($_POST['url'] )){
+        $id_user=$_POST['id_user'];
+        $id_recette=$_POST['id_recette'];
+        $photo=$_POST['url'];
+        CtlAjoutPhoto2($id_user,$id_recette,$photo);
     }
     /*else if (isset($_POST['id_user']) && isset($_POST['role'])){
         $role=$_POST['role'];

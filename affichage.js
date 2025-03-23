@@ -8,16 +8,20 @@ function changeImgURL(button,id,$id_user){
       let $btn = $(button);
       let $like=$btn.parent().find(".like");
       let $dislike=$btn.parent().find(".dislike");
-        if($like.css("display")=="block"){
+      let $likeCount = $('#like-count-' + id);
+
+      if($like.css("display")=="block"){
           $dislike.css("display","block");
           $like.css("display","none");
             
           ajoutlike(id,$id_user);
+          $likeCount.text(parseInt($likeCount.text()) + 1);
         }
        else{
           $dislike.css("display","none");
           $like.css("display","block");
           supprimelike(id,$id_user);
+          $likeCount.text(parseInt($likeCount.text()) - 1);
         }
     }).fail(function(e) {
       console.log(e);
@@ -88,7 +92,47 @@ function ajouterRole($id_user){
   }
 
 }
-function supprimerElement(element){
-  
-}
+function ajouterPhoto($idUser, $idRecette) {
+  var photoInput = $('#photoInput')[0];
+  var photoUrl = $('#photoUrl').val();
+  var statut = $('#statut');
 
+  if (photoInput && photoInput.files.length > 0) {
+      var formData = new FormData();
+      formData.append('photo', photoInput.files[0]);
+      formData.append('id_user', $idUser);
+      formData.append('id_recette', $idRecette);
+
+      $.ajax({
+          url: 'controllerFrontal.php',
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            statut.html('<div class="alert alert-success alert-dismissible fade show" role="alert">Photo ajoutée !!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+              photoInput.value = '';
+          },
+          error: function() {
+            statut.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Erreur lors de l\'upload<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+          }
+      });
+  }
+  
+  else if (photoUrl) {
+      $.ajax({
+          url: 'controllerFrontal.php',
+          type: 'POST',
+          data: {"url": photoUrl, "id_recette": $idRecette, "id_user": $idUser},
+          success: function(response) {
+            statut.html('<div class="alert alert-success alert-dismissible fade show" role="alert">Photo ajoutée !!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+              $('#photoUrl').val('');
+          },
+          error: function() {
+            statut.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Erreur avec l\'url<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+          }
+      });
+  } else {
+    statut.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Veuillez sélectionner un fichier ou entrer une URL.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+  }
+}
