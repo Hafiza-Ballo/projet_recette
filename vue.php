@@ -5,6 +5,7 @@ function afficherAccueil($user, $recette, $likes) {
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
     $contenu = '';
+    $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
 
     foreach ($recette as $d) {
         $nblike = $d['like'];
@@ -21,11 +22,11 @@ function afficherAccueil($user, $recette, $likes) {
         }
 
         
-        $contenu .= '<div class="recette_card" id="' . $d['id'] . '">
-                        <form method="post" action="controllerFrontal.php">
-                            ' . $id_user . '
-                            <input type="hidden" name="id_recette" value="' . $d['id'] . '">
+        $contenu .= '<div class="recette_card" id="' . $d['id'] . '">             
                             <div class="recette_principale">
+                            <form method="post" action="controllerFrontal.php">
+                            <input type="hidden" name="id_user" value="' . $user['id'] . '">
+                            <input type="hidden" name="id_recette" value="' . $d['id'] . '">
                                 <div id="carouselRecette_' . $d['id'] . '" class="carousel slide" data-bs-ride="carousel">
                                     <div class="carousel-inner">';
 
@@ -48,7 +49,7 @@ function afficherAccueil($user, $recette, $likes) {
                             </button>
                         </div>
                         <h4>' . $d["nameFR"] . '</h4>
-                        <button id="voir_r" name="voir_recette">Voir la recette</button>
+                        <button id="voir_r" name="voir_recette">Voir la recette</button> 
                     </form>
                     <div class="jaime">
                         <button class="btn_like" onclick="changeImgURL(this, \'' . $d["id"] . '\', \'' . $user["id"] . '\')">';
@@ -74,10 +75,13 @@ function afficherAccueil($user, $recette, $likes) {
 }
 
 function afficherRecette($id_recette, $id_user, $recette, $like) {
+    
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
     $nblike=$recette['like'];
     $a_licke = false;
+    $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $id_user . '\'">Retour</button>';
+
 
     foreach ($like as $l) {
         if ($l['id'] == $recette['id'] && $l['id_user'] == $id_user) {
@@ -142,4 +146,81 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
     $contenu .= ($author == "Unknown") ? '<i>Par Anonyme</i>' : '<i>Par ' . $author . '</i>';
 
     require_once('pageRecette.php');
+}
+
+
+function afficherRecherche($user,$recette,$likes){
+   
+    $id_user = '<div><input type="hidden" name="id_user" value="' . $user['id'] . '"></div>';
+    $liker = "images/heart-regular.svg";
+    $disliker = "images/heart-plein.svg";
+    $contenu = '';
+    $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">Retour</button>';
+    $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
+    if (empty($recette)) {
+        $contenu .= '<p>Aucune recette trouvée.</p>';
+    } else {
+    foreach ($recette as $d) {
+        $nblike = $d['like'];
+        $images = getImage($d['id']); 
+        $images[] = $d["imageURL"]; 
+
+        
+        $a_licke = false;
+        foreach ($likes as $l) {
+            if ($l['id'] == $d['id'] && $l['id_user'] == $user['id']) {
+                $a_licke = true;
+                break;
+            }
+        }
+
+        
+        $contenu .= '<div class="recette_card" id="' . $d['id'] . '">             
+                            <div class="recette_principale">
+                            <form method="post" action="controllerFrontal.php">
+                            <input type="hidden" name="id_recette" value="' . $d['id'] . '">
+                                <div id="carouselRecette_' . $d['id'] . '" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">';
+
+        
+        foreach ($images as $index => $image) {
+            $active = ($index === 0) ? 'active' : '';
+            $contenu .= '<div class="carousel-item ' . $active . '">
+                            <img src="' . $image . '" class="d-block w-100 img_sec" alt="recette">
+                         </div>';
+        }
+
+        $contenu .= '</div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselRecette_' . $d['id'] . '" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Précédent</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselRecette_' . $d['id'] . '" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Suivant</span>
+                            </button>
+                        </div>
+                        <h4>' . $d["nameFR"] . '</h4>
+                        <button id="voir_r" name="voir_recette">Voir la recette</button> 
+                    </form>
+                    <div class="jaime">
+                        <button class="btn_like" onclick="changeImgURL(this, \'' . $d["id"] . '\', \'' . $user["id"] . '\')">';
+
+        
+        if ($a_licke) {
+            $contenu .= '<img class="like" style="display:none" src="' . $liker . '" alt="like">
+                         <img class="dislike" style="display:block" src="' . $disliker . '" alt="dislike">';
+        } else {
+            $contenu .= '<img class="like" style="display:block" src="' . $liker . '" alt="like">
+                         <img class="dislike" style="display:none" src="' . $disliker . '" alt="dislike">';
+        }
+
+        $contenu .= '</button>
+                     <span id="like-count-' . $d["id"] . '">' . $nblike . '</span> j\'aime
+                    </div>
+                </div>
+            </div>';
+    }
+    }
+        require_once('afficheRecherche.php');
 }

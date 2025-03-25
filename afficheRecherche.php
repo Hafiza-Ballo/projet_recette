@@ -199,12 +199,33 @@
         text-decoration: none;
         color: #ED4B5B;
     }
+    .btn_retour {
+    
+    bottom: 20px;
+    left: 20px;
+    background-color: #ED4B5B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+.btn_retour:hover {
+    background-color: #d43f4e;
+}
 </style> 
     </head>
 
     <body>
             
         <section class="haut">
+            <?php
+                echo $retourBtn;
+            ?>
             <div id="ensemble_recherche">
                 <input id="recherche_input" placeholder="recherche">
                 <?php
@@ -233,8 +254,9 @@
         <section class="principale_ensemble">
         <?php
         echo $contenu;
-        // var_dump($_SESSION['role']);
+        
         ?>
         </section>
     </body>
 </html>
+

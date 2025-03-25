@@ -46,6 +46,11 @@ try {
                 $id_user=$_GET['id_user'];
                 CtlaffAccueil($id_user);
                 break;
+            case 'rechercher':
+                $id_user=$_GET['id_user'];
+                $mot=$_GET['mot'];
+                CtlRechercher($id_user,$mot);
+                break;
             default:
                 require_once ('connexion.php');
                 break;

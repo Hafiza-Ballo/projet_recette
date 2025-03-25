@@ -231,6 +231,72 @@ function getImage($id_recette){
     return $images;
 }
 
+function recupRecetteByMot($mot){
+    if (file_exists('recettes.json')) {
+        $f = fopen('recettes.json', 'r+');
+    
+        if (!flock($f, LOCK_EX)){
+            http_response_code(409);
+        } 
+    
+        $jsonString = fread($f, filesize('recettes.json'));
+        $data = json_decode($jsonString, true); 
+        $recettes = [];
+        foreach ($data as $recette) {
+            
+            if (stripos($recette['name'], $mot) !== false || stripos($recette['nameFR'], $mot) !== false) {
+                $recettes[] = $recette;
+                continue; 
+            }
+
+            if (isset($recette['Without']) && !is_null($recette['Without']) && is_array($recette['Without'])) {
+                foreach ($recette['Without'] as $restriction) {
+                    if (stripos($restriction, $mot) !== false) {
+                        $recettes[] = $recette;
+                        continue 2;
+                    }
+                }
+            }
+
+            foreach ($recette['ingredients'] as $ing) {
+                if (isset($ing['name']) && stripos($ing['name'], $mot) !== false) {
+                    $recettes[] = $recette;
+                    continue 2; 
+                }
+            }
+
+            
+            foreach ($recette['ingredientsFR'] as $ing) {
+                if (isset($ing['name']) && stripos($ing['name'], $mot) !== false) {
+                    $recettes[] = $recette;
+                    continue 2;
+                }
+            }
+
+            // Étapes anglais
+            foreach ($recette['steps'] as $step) {
+                if (stripos($step, $mot) !== false) {
+                    $recettes[] = $recette;
+                    continue 2;
+                }
+            }
+
+            // Étapes français
+            foreach ($recette['stepsFR'] as $step) {
+                if (stripos($step, $mot) !== false) {
+                    $recettes[] = $recette;
+                    continue 2;
+                }
+            }
+            
+        
+    }
+    return $recettes;  
+}else {
+    throw new Exception('Erreur lors de la recherche');
+}
+
+}
 /*function AjoutRole($id_user,$newrole){
     $f = fopen('utilisateurs.json', 'r+');
     if (!flock($f, LOCK_EX)){

@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
@@ -200,7 +200,9 @@
 </head>
 <body>
 <section class="haut">
-<button class="btn_retour" onclick="window.location.href='controllerFrontal.php?action=retour_accueil&id_user=<?php echo $id_user; ?>'">Retour</button>
+<?php
+                echo $retourBtn;
+            ?>
             <div id="ensemble_recherche">
                 <input placeholder="recherche">
                 <img alt="icone_recherce" src="images\magnifying-glass-solid.svg" class="icone_recherche"> 
