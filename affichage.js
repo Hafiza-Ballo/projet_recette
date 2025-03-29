@@ -142,3 +142,11 @@ function ajouterPhoto($idUser, $idRecette) {
     statut.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Veuillez sélectionner un fichier ou entrer une URL.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
   }
 }
+
+
+function redirigerRecherche(idUser) {
+  var mot = $('#recherche_input').val();
+  if (mot.length > 0) {
+      window.location.href = 'controllerFrontal.php?action=rechercher&mot=' + mot + '&id_user=' + idUser;
+  }
+}

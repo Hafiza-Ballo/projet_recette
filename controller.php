@@ -62,7 +62,14 @@ function CtlAjoutPhoto2($id_user,$id_recette,$photo){
     ajoutPhoto2($id_user,$id_recette,$photo);
 }
 
-function CtlAjoutRole($id_user,$role){
+function CtlRechercher($id_user,$mot){
+    $recette = recupRecetteByMot($mot);
+    $like=recupLike();
+    $user=recupUserById($id_user);
+    afficherRecherche($user,$recette,$like,$mot);
+}
+
+/*function CtlAjoutRole($id_user,$role){
     AjoutRole($id_user, $role);
 }
 
