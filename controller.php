@@ -71,6 +71,6 @@ function CtlRechercher($id_user,$mot){
 
 /*function CtlAjoutRole($id_user,$role){
     AjoutRole($id_user, $role);
-}
+}*/
 
 ?>

@@ -332,3 +332,4 @@ function recupRecetteByMot($mot){
 
     echo json_encode(["success" => true, "newrole" => $newrole]);
 }
+*/

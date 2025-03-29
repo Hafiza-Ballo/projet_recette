@@ -149,7 +149,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
 }
 
 
-function afficherRecherche($user,$recette,$likes){
+function afficherRecherche($user,$recette,$likes,$mot){
    
     $id_user = '<div><input type="hidden" name="id_user" value="' . $user['id'] . '"></div>';
     $liker = "images/heart-regular.svg";

@@ -227,7 +227,7 @@
                 echo $retourBtn;
             ?>
             <div id="ensemble_recherche">
-                <input id="recherche_input" placeholder="recherche">
+                <input id="recherche_input" value="<?php echo $mot ?>">
                 <?php
                 echo $rechercheBtn;
             ?>
