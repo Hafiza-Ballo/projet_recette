@@ -70,20 +70,26 @@ function affichage_conteneur_modif(){
   
 }
 
-function ajouterRole($id_user){
-  let role=document.getElementById("role").value;
-  if(role=="Defaut"){
+function ajouterRole($id_user, $role){
+  let roleAjoute=document.getElementById("role").value;
+  if(roleAjoute=="Defaut"){
     console.log("aucun choix");
   }
   else{
-    console.log(role);
+    
     $.ajax({
       method: "POST",
-      url: "informations_perso.php", 
-      data: {"id_user":$id_user, "role":role}
+      url: "controllerFrontal.php", 
+      data: {"id_user":$id_user, "roleAjoute":roleAjoute}
       
     }).done(function(e) {
-      $(".liste_role ul").append('<li>'+role+' </li> <button class="btn_supprimer" onclick="supprimerRole()" ><img src="images/trash-solid.svg" alt="supprimer" id="supprimer" > </button>')
+      if(e.success){
+        $(".liste_role ul").append('<li>'+roleAjoute+' </li> <button class="btn_supprimer" onclick="supprimerRole()" ><img src="images/trash-solid.svg" alt="supprimer" id="supprimer" > </button>')
+
+      }
+      else{
+        alert("Erreur lors de l'ajout du rôle.");
+      }
       console.log(e);
     }).fail(function(e) {
       console.log(e);

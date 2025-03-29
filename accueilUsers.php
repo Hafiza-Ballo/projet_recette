@@ -231,7 +231,6 @@
         <section class="principale_ensemble">
         <?php
         echo $contenu;
-        // var_dump($_SESSION['role']);
         ?>
         </section>
     </body>

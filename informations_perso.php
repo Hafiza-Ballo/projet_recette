@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-if (isset($_POST['id_user']) && isset($_POST['role'])){
-    echo 'la';
-    $role=$_POST['role'];
+/*if (isset($_POST['id_user']) && isset($_POST['roleAjoute']) ){
+    $role=$_POST['roleAjoute'];
 
     $id_user=$_POST['id_user'];
+    var_dump( $_SESSION['role']);
     $f = fopen('utilisateurs.json', 'r+');
     if (!flock($f, LOCK_EX)){
         http_response_code(409);
@@ -14,22 +14,34 @@ if (isset($_POST['id_user']) && isset($_POST['role'])){
     $jsonString = fread($f, filesize('utilisateurs.json'));
     $data = json_decode($jsonString, true); 
     foreach($data as $index=> $u){
+        
         if($u['id']==$id_user){
+            echo 'i  ';
+            if(!in_array($role, $data[$index]['role'])){
+                $data[$index]['role'][] = $role;
+                $_SESSION['role']=$data[$index]['role'];
+                var_dump($data[$index]['role']);
+                
+            }
+            else{
+                echo 'Role existe deja';
+            }
             $data[$index]['role'][] = $role;
             $_SESSION['role']=$data[$index]['role'];
-            
+            var_dump($data[$index]['role']);
             break;
             
         }
     }
+    
     $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
     ftruncate($f, 0);
     fseek($f,0);
     fwrite($f, $newJsonString);
     flock($f, LOCK_UN);
     fclose($f);
-}
-else{
+}*/
+
 
 
 $id_user= $_SESSION['idUser'];
@@ -84,38 +96,24 @@ echo '<!doctype html>
                         foreach($role as $r){
                             echo '<li>'.$r.' </li> <button class="btn_supprimer" onclick="supprimerRole()" ><img src="images/trash-solid.svg" alt="supprimer" id="supprimer" > </button>';
                         }
-                    }
+                    };
                     echo'</ul>
                 </div>
                 <div>
                     <select id="role" name="role" onchange="">
-                        <option value="">Defaut</option>';
-                        if(count($role)>0){
-                            foreach($role as $r){
-                                if($r!="DemandeTraducteur" && $r!="Traducteur"){
-                                    echo '<option value="DemandeTraducteur">DemandeTraducteur</option>';
-                                }
-                                elseif($r!="DemandeChef" && $r!="Chef"){
-                                    echo '<option value="DemandeChef">DemandeChef</option>';
-                                }
-                                else{
-                                    echo $r;
-                                }
-                                
-                            }
-                        }
-                        else{
-                            echo '<option value="DemandeTraducteur">DemandeTraducteur</option>
-                                    <option value="DemandeChef">DemandeChef</option>';
-                        }
+                        <option value="">Defaut</option>
+                        <option value="DemandeTraducteur">DemandeTraducteur</option>
+                        <option value="DemandeChef">DemandeChef</option>';
+                        
                         
                     echo'   
                     </select>
-                    <button onclick="ajouterRole('.$id_user.')"> Ajouter un role </button>
+
+                    <button onclick="ajouterRole('.$id_user.','.htmlspecialchars(json_encode($_SESSION['role'])).') "> Ajouter un role </button>
                 </div>
 
         </section>';
 
 echo ' </body>
-</html>';}
+</html>';
 ?>

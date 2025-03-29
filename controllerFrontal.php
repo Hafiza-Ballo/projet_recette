@@ -64,11 +64,12 @@ try {
         $photo=$_POST['url'];
         CtlAjoutPhoto2($id_user,$id_recette,$photo);
     }
-    /*else if (isset($_POST['id_user']) && isset($_POST['role'])){
+    else if (isset($_POST['id_user']) && isset($_POST['role'])){
+        echo 'ici';
         $role=$_POST['role'];
         $id_user=$_POST['id_user'];
         CtlAjoutRole($id_user,$role);
-    }*/
+    }
 
     else
     {

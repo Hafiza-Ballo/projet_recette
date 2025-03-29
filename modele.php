@@ -231,7 +231,8 @@ function getImage($id_recette){
     return $images;
 }
 
-/*function AjoutRole($id_user,$newrole){
+function AjoutRole($id_user,$newrole){
+    
     $f = fopen('utilisateurs.json', 'r+');
     if (!flock($f, LOCK_EX)){
         http_response_code(409);
@@ -239,17 +240,30 @@ function getImage($id_recette){
 
     $jsonString = fread($f, filesize('utilisateurs.json'));
     $data = json_decode($jsonString, true); 
+    $ajoute=false;
     foreach($data as $index=> $u){
         if($u['id']==$id_user){
-            $data[$index]['role'][] = $newrole;
+            if(!in_array($newrole, $data[$index]['role'])){
+                $data[$index]['role'][] = $newrole;
+                $_SESSION['role']=$data[$index]['role'];
+                $ajoute=true;
+                break;
+            }
+            else{
+                echo 'Role existe deja';
+            }
             
-            break;
         }
     }
-    $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
-    ftruncate($f, 0);
-    fseek($f,0);
-    fwrite($f, $newJsonString);
+    if($ajoute){
+        $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+        ftruncate($f, 0);
+        fseek($f,0);
+        fwrite($f, $newJsonString);
+    }
+    
     flock($f, LOCK_UN);
     fclose($f);
-}*/
+
+    echo json_encode(["success" => true, "newrole" => $newrole]);
+}

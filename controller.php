@@ -62,8 +62,8 @@ function CtlAjoutPhoto2($id_user,$id_recette,$photo){
     ajoutPhoto2($id_user,$id_recette,$photo);
 }
 
-/*function CtlAjoutRole($id_user,$role){
+function CtlAjoutRole($id_user,$role){
     AjoutRole($id_user, $role);
-}*/
+}
 
 ?>

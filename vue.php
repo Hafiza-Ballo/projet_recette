@@ -5,6 +5,13 @@ function afficherAccueil($user, $recette, $likes) {
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
     $contenu = '';
+    $_SESSION['idUser']=$user['id'];
+    $_SESSION['nom']= $user['nom'];
+    $_SESSION['prenom']= $user['prenom'];
+    $_SESSION['mail']= $user['mail'];
+    $_SESSION['mdp']= $user['mdp'];
+    $_SESSION['role']= $user['role'];
+   
 
     foreach ($recette as $d) {
         $nblike = $d['like'];
