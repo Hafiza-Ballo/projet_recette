@@ -4,6 +4,7 @@ function afficherAccueil($user, $recette, $likes) {
     $id_user = '<div><input type="hidden" name="id_user" value="' . $user['id'] . '"></div>';
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
+    $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$user['id'] . '">Informations personnelles</a>';
     $contenu = '';
     $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
 
@@ -78,6 +79,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
     
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
+    $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$id_user . '">Informations personnelles</a>';
     $nblike=$recette['like'];
     $a_licke = false;
     $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $id_user . '\'">Retour</button>';
@@ -154,6 +156,7 @@ function afficherRecherche($user,$recette,$likes,$mot){
     $id_user = '<div><input type="hidden" name="id_user" value="' . $user['id'] . '"></div>';
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
+    $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$user['id'] . '">Informations personnelles</a>';
     $contenu = '';
     $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">Retour</button>';
     $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
@@ -223,4 +226,37 @@ function afficherRecherche($user,$recette,$likes,$mot){
     }
     }
         require_once('afficheRecherche.php');
+}
+
+
+function afficherInfo($user){
+    $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">Retour</button>';
+
+    $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
+    $id_user= '<input type="hidden" name="id" value="' .$user['id'] .'">';
+    $nom = '<input type="text" class="form-control" name="nom" value="'. $user['nom'] . '" required>';
+    $prenom = '<input type="text" class="form-control" name="prenom" value=" ' .  $user['prenom'] . '" required>';
+    $mail = '<input type="email" class="form-control" name="mail" value="'.  $user['mail'] . '" required>';
+    $roles = '';
+    foreach ($user['role'] as $role): 
+        $roles .= '<li>'. $role .'</li>';
+    endforeach;
+    $demandeRoles = '';
+    if (!in_array('DemandeChef', $user['role']) && !in_array('Chef', $user['role'])) {
+        $demandeRoles .= '
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="demande_roles[]" id="demande-chef" value="DemandeChef">
+            <label class="form-check-label" for="demande-chef">Demander le rôle Chef</label>
+        </div>';
+    }
+    if (!in_array('DemandeTraducteur', $user['role']) && !in_array('Traducteur', $user['role'])) {
+        $demandeRoles .= '
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="demande_roles[]" id="demande-traducteur" value="DemandeTraducteur">
+            <label class="form-check-label" for="demande-traducteur">Demander le rôle Traducteur</label>
+        </div>';
+    }
+    $btn = '<button type="button" onclick="modifInfo()">Modifier</button>';
+
+    require_once('informations_perso.php');
 }

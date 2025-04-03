@@ -39,6 +39,14 @@ try {
         $id_user=$_POST['id_user'];
         CtlafficherRecette($id_recette,$id_user);
         
+    }else if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['mail']) && isset($_POST['id']) ){
+        $id_user = $_POST['id'];
+        $nom = $_POST['nom'];
+        $prenom = $_POST['prenom'];
+        $mail = $_POST['mail'];
+        $roles = json_decode($_POST['demande_roles'], true);
+        CtlMofifInfo($id_user, $nom, $prenom, $mail, $roles);
+        echo json_encode(['success' => true]);
     }
     else if(isset($_GET['action'])){
         switch ($_GET['action']) {
@@ -50,6 +58,10 @@ try {
                 $id_user=$_GET['id_user'];
                 $mot=$_GET['mot'];
                 CtlRechercher($id_user,$mot);
+                break;
+            case 'infos-perso':
+                $id_user=$_GET['id_user'];
+                CtlAfficherInfo($id_user);
                 break;
             default:
                 require_once ('connexion.php');
@@ -73,7 +85,6 @@ try {
         echo 'ici';
         $role=$_POST['role'];
         $id_user=$_POST['id_user'];
-        CtlAjoutRole($id_user,$role);
     }
 
     else

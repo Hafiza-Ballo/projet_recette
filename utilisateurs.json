@@ -14,7 +14,8 @@
         "prenom": "Hafiza",
         "mail": "h@gmail.com",
         "role": [
-            "DemandeChef"
+            "Chef",
+            "DemandeTraducteur"
         ],
         "mdp": "$2y$10$0TVO6FeZrJOeZihCRpT7H.ROCUjr8LDuImUwGVXhY644nwLcEwuiW",
         "isCuisinier": 1

@@ -150,3 +150,49 @@ function redirigerRecherche(idUser) {
       window.location.href = 'controllerFrontal.php?action=rechercher&mot=' + mot + '&id_user=' + idUser;
   }
 }
+
+
+function modifInfo() {
+  const form = document.getElementById('infoForm');
+  
+  var statut = $('#statut');
+
+  const id = form.querySelector('input[name="id"]')?.value;
+  const nom = form.querySelector('input[name="nom"]')?.value.trim();
+  const prenom = form.querySelector('input[name="prenom"]')?.value.trim();
+  const mail = form.querySelector('input[name="mail"]')?.value.trim();
+
+  
+  const demandeRoles = Array.from(
+      form.querySelectorAll('input[name="demande_roles[]"]:checked')
+  ).map(checkbox => checkbox.value);
+
+  
+
+  console.log("Données à envoyer:", { id, nom, prenom, mail, demandeRoles });
+
+  
+  const formData = new FormData();
+  formData.append('id', id);
+  formData.append('nom', nom);
+  formData.append('prenom', prenom);
+  formData.append('mail', mail);
+  formData.append('demande_roles', JSON.stringify(demandeRoles)); 
+
+  $.ajax({
+      url: 'controllerFrontal.php',
+      type: 'POST',
+      data: formData,
+      processData: false, 
+      contentType: false, 
+      success: function(response) {
+        statut.html('<div class="alert alert-success alert-dismissible fade show" role="alert">Modification réussie !!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+        setTimeout(() => {
+          window.location.reload();
+      }, 1500);
+      },
+      error: function() {
+        statut.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Erreur lors de la modification<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+      }
+  });
+}

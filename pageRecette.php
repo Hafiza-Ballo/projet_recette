@@ -218,7 +218,9 @@
                 
                 <button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc">Mon compte</button>
                 <div class="conteneur_modif_c">
-                    <a href="informations_perso.php">Informations personnelles</a><br>
+                <?php
+                    echo $infosBtn;
+                    ?>
                     <a><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Deconnexion</a>
                 </div>
                 

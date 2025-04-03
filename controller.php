@@ -68,6 +68,14 @@ function CtlRechercher($id_user,$mot){
     $user=recupUserById($id_user);
     afficherRecherche($user,$recette,$like,$mot);
 }
+function CtlAfficherInfo($id_user){
+    $user=recupUserById($id_user);
+    afficherInfo($user);
+}
+
+function CtlMofifInfo($id,$nom, $prenom, $mail, $roles){
+    $user=modifInfo($id,$nom, $prenom, $mail, $roles);
+}
 
 /*function CtlAjoutRole($id_user,$role){
     AjoutRole($id_user, $role);
