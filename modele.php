@@ -340,7 +340,6 @@ function modifInfo($id_user, $nom, $prenom, $mail, $roles){
 }
 function ajoutTraduction($id_recette, $liste, $index_l, $valeur,$langueDeTrad)
 {
-    var_dump( $langueDeTrad);
     $f = fopen('recettes.json', 'r+');
 
     if (!flock($f, LOCK_EX)){

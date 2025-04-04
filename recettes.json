@@ -2,7 +2,7 @@
     {
         "name": "Crock Pot Roast",
         "nameFR": "Roti \u00e0 la cocotte",
-        "Author": "Unknown",
+        "Author": "Hafifi",
         "Without": [
             "NoGluten",
             "NoMilk"
@@ -124,7 +124,18 @@
             "The tips of the spears will get very brown but watch them to prevent burning.",
             "They are great plain, but sometimes I serve them with a light vinaigrette if we need something acidic to balance out our meal."
         ],
-        "stepsFR": [],
+        "stepsFR": [
+            "Pr\u00e9chauffer le four a 425\u00b0",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
         "timers": [
             0,
             0,
