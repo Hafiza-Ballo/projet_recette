@@ -9,7 +9,6 @@
     <script src="jquery-3.7.1.js"></script>
     <script src="affichage.js"></script>
     <style>
-        /* Reset et base */
         * {
             margin: 0;
             padding: 0;
@@ -24,7 +23,6 @@
             min-height: 100vh;
         }
 
-        /* Header */
         .haut {
             position: fixed;
             top: 0;
@@ -38,7 +36,6 @@
             z-index: 1000;
         }
 
-        /* Bouton Retour */
         .btn-retour {
             background-color: #ED4B5B;
             color: white;
@@ -58,7 +55,6 @@
             box-shadow: 0 5px 15px rgba(237, 75, 91, 0.4);
         }
 
-        /* Menu Compte */
         #mon_compte {
             background-color: transparent;
             border: none;
@@ -115,7 +111,6 @@
             margin-right: 5px;
         }
 
-        /* Conteneur principal */
         .admin-container {
             width: 90%;
             max-width: 1200px;
@@ -126,7 +121,6 @@
             padding: 30px;
         }
 
-        /* Titres */
         h1 {
             text-align: center;
             color: #faab66;
@@ -144,7 +138,6 @@
             padding-bottom: 5px;
         }
 
-        /* Onglets */
         .nav-tabs {
             border-bottom: 2px solid #faab66;
             margin-bottom: 20px;
@@ -169,7 +162,6 @@
             border-bottom: 3px solid #faab66;
         }
 
-        /* Tables */
         .table-container {
             max-height: 500px;
             overflow-y: auto;
@@ -210,7 +202,6 @@
             vertical-align: middle;
         }
 
-        /* Boutons d'action */
         .btn-action {
             background-color: #faab66;
             color: white;
@@ -230,7 +221,6 @@
             box-shadow: 0 3px 10px rgba(250, 171, 102, 0.3);
         }
 
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
@@ -280,20 +270,17 @@
     <section class="admin-container">
         <h1>Panel Administrateur</h1>
 
-        <!-- Onglets -->
-        <ul class="nav nav-tabs" id="adminTabs" >
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="true">Utilisateurs</button>
+        <ul class="nav nav-tabs" id="adminTabs">
+            <li class="nav-item">
+                <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button">Utilisateurs</button>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="recipes-tab" data-bs-toggle="tab" data-bs-target="#recipes" type="button" role="tab" aria-controls="recipes" aria-selected="false">Recettes</button>
+            <li class="nav-item">
+                <button class="nav-link" id="recipes-tab" data-bs-toggle="tab" data-bs-target="#recipes" type="button">Recettes</button>
             </li>
         </ul>
 
-        <!-- Contenu des onglets -->
         <div class="tab-content" id="adminTabContent">
-            <!-- Onglet Utilisateurs -->
-            <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+            <div class="tab-pane fade show active" id="users">
                 <h2>Gestion des utilisateurs</h2>
                 <div class="table-container">
                     <table class="table">
@@ -309,11 +296,11 @@
                         </thead>
                         <tbody id="users-table-body">
                             <?php
-                            $items_per_page = 10;
-                            $page = isset($_GET['page_users']) ? (int)$_GET['page_users'] : 1;
-                            $start = ($page - 1) * $items_per_page;
-                            $users_paginated = array_slice($utilisateurs, $start, $items_per_page);
-                            foreach ($users_paginated as $u): ?>
+                            $nombre_par_page = 10; 
+                            $page_actuelle = isset($_GET['page_users']) ? (int)$_GET['page_users'] : 1;
+                            $debut = ($page_actuelle - 1) * $nombre_par_page;
+                            $utilisateurs_pagine = array_slice($utilisateurs, $debut, $nombre_par_page);
+                            foreach ($utilisateurs_pagine as $u): ?>
                                 <tr>
                                     <td><?php echo $u['id']; ?></td>
                                     <td><?php echo $u['nom']; ?></td>
@@ -328,27 +315,25 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- Pagination pour les utilisateurs -->
                 <div class="pagination">
                     <?php
-                    $total_users = count($utilisateurs);
-                    $total_pages = ceil($total_users / $items_per_page);
-                    if ($page > 1): ?>
-                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_users=<?php echo $page - 1; ?>'">Précédent</button>
+                    $total_utilisateurs = count($utilisateurs);
+                    $nombre_pages = ceil($total_utilisateurs / $nombre_par_page);
+                    if ($page_actuelle > 1): ?>
+                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_users=<?php echo $page_actuelle - 1; ?>'">Précédent</button>
                     <?php else: ?>
                         <button disabled>Précédent</button>
                     <?php endif; ?>
-                    <span>Page <?php echo $page; ?> sur <?php echo $total_pages; ?></span>
-                    <?php if ($page < $total_pages): ?>
-                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_users=<?php echo $page + 1; ?>'">Suivant</button>
+                    <span>Page <?php echo $page_actuelle; ?> sur <?php echo $nombre_pages; ?></span>
+                    <?php if ($page_actuelle < $nombre_pages): ?>
+                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_users=<?php echo $page_actuelle + 1; ?>'">Suivant</button>
                     <?php else: ?>
                         <button disabled>Suivant</button>
                     <?php endif; ?>
                 </div>
             </div>
 
-            <!-- Onglet Recettes -->
-            <div class="tab-pane fade" id="recipes" role="tabpanel" aria-labelledby="recipes-tab">
+            <div class="tab-pane fade" id="recipes">
                 <h2>Gestion des recettes</h2>
                 <div class="table-container">
                     <table class="table">
@@ -363,10 +348,11 @@
                         </thead>
                         <tbody id="recipes-table-body">
                             <?php
-                            $page_recipes = isset($_GET['page_recipes']) ? (int)$_GET['page_recipes'] : 1;
-                            $start_recipes = ($page_recipes - 1) * $items_per_page;
-                            $recipes_paginated = array_slice($recettes, $start_recipes, $items_per_page);
-                            foreach ($recipes_paginated as $r): ?>
+                            $nombre_par_page_recettes = 10; 
+                            $page_actuelle_recettes = isset($_GET['page_recettes']) ? (int)$_GET['page_recettes'] : 1;
+                            $debut_recettes = ($page_actuelle_recettes - 1) * $nombre_par_page_recettes;
+                            $recettes_pagine = array_slice($recettes, $debut_recettes, $nombre_par_page_recettes);
+                            foreach ($recettes_pagine as $r): ?>
                                 <tr>
                                     <td><?php echo $r['id']; ?></td>
                                     <td><?php echo $r['nameFR']; ?></td>
@@ -382,19 +368,18 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- Pagination pour les recettes -->
                 <div class="pagination">
                     <?php
-                    $total_recipes = count($recettes);
-                    $total_pages_recipes = ceil($total_recipes / $items_per_page);
-                    if ($page_recipes > 1): ?>
-                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_recipes=<?php echo $page_recipes - 1; ?>'">Précédent</button>
+                    $total_recettes = count($recettes);
+                    $nombre_pages_recettes = ceil($total_recettes / $nombre_par_page_recettes);
+                    if ($page_actuelle_recettes > 1): ?>
+                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_recettes=<?php echo $page_actuelle_recettes - 1; ?>'">Précédent</button>
                     <?php else: ?>
                         <button disabled>Précédent</button>
                     <?php endif; ?>
-                    <span>Page <?php echo $page_recipes; ?> sur <?php echo $total_pages_recipes; ?></span>
-                    <?php if ($page_recipes < $total_pages_recipes): ?>
-                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_recipes=<?php echo $page_recipes + 1; ?>'">Suivant</button>
+                    <span>Page <?php echo $page_actuelle_recettes; ?> sur <?php echo $nombre_pages_recettes; ?></span>
+                    <?php if ($page_actuelle_recettes < $nombre_pages_recettes): ?>
+                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_recettes=<?php echo $page_actuelle_recettes + 1; ?>'">Suivant</button>
                     <?php else: ?>
                         <button disabled>Suivant</button>
                     <?php endif; ?>

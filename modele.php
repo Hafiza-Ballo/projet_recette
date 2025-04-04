@@ -391,8 +391,6 @@ function recupUtilisateurs()
         return $data;
     }
 }
-/*function AjoutRole($id_user,$newrole){
-    $f = fopen('utilisateurs.json', 'r+');
 function ajoutTraduction($id_recette, $liste, $index_l, $valeur,$langueDeTrad)
 {
     var_dump( $langueDeTrad);
