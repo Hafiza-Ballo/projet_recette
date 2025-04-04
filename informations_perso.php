@@ -1,56 +1,4 @@
-<?php
-session_start();
-
-/*if (isset($_POST['id_user']) && isset($_POST['roleAjoute']) ){
-    $role=$_POST['roleAjoute'];
-
-    $id_user=$_POST['id_user'];
-    var_dump( $_SESSION['role']);
-    $f = fopen('utilisateurs.json', 'r+');
-    if (!flock($f, LOCK_EX)){
-        http_response_code(409);
-    }
-
-    $jsonString = fread($f, filesize('utilisateurs.json'));
-    $data = json_decode($jsonString, true); 
-    foreach($data as $index=> $u){
-        
-        if($u['id']==$id_user){
-            echo 'i  ';
-            if(!in_array($role, $data[$index]['role'])){
-                $data[$index]['role'][] = $role;
-                $_SESSION['role']=$data[$index]['role'];
-                var_dump($data[$index]['role']);
-                
-            }
-            else{
-                echo 'Role existe deja';
-            }
-            $data[$index]['role'][] = $role;
-            $_SESSION['role']=$data[$index]['role'];
-            var_dump($data[$index]['role']);
-            break;
-            
-        }
-    }
-    
-    $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
-    ftruncate($f, 0);
-    fseek($f,0);
-    fwrite($f, $newJsonString);
-    flock($f, LOCK_UN);
-    fclose($f);
-}*/
-
-
-
-$id_user= $_SESSION['idUser'];
-$nom=$_SESSION['nom'];
-$prenom=$_SESSION['prenom'];
-$mail=$_SESSION['mail'];
-$mdp=$_SESSION['mdp'];
-$role=$_SESSION['role'];
-echo '<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
     <head>
         <meta charset="utf-8">
@@ -61,59 +9,286 @@ echo '<!doctype html>
         <script src="jquery-3.7.1.js"></script>
         <script src="affichage.js"></script>
         <style>
-            #supprimer{
-                height:60%;
-                width:40%;
-            }
-            .btn_supprimer:hover{
-                background-color:#ED4B5B;
-            }
-            .btn_supprimer{
-                height:40%;
-                width:20%;
-                border:solid 1px gray;
-                background-color:white;
-            }
-            .container_role{
-                display:flex;
-            }
-        </style>
+    body {
+        background-color: #f4f5ec;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
 
-        <body>
-        <section>
-            <label>Nom </label>
-            <input type="text" value="'.$nom.'"><br>
-            <label>Prenom </label>
-            <input type="text" value="'.$prenom.'"><br>
-            <label>Mail </label>
-            <input type="email" value="'.$mail.'"><br>
-            <label>Role </label>
-            <section class="container_role">
-                <div class="liste_role">';
-                    
-                    if(sizeof($role)>0){
-                        echo '<ul>';
-                        foreach($role as $r){
-                            echo '<li>'.$r.' </li> <button class="btn_supprimer" onclick="supprimerRole()" ><img src="images/trash-solid.svg" alt="supprimer" id="supprimer" > </button>';
-                        }
-                    };
-                    echo'</ul>
-                </div>
-                <div>
-                    <select id="role" name="role" onchange="">
-                        <option value="">Defaut</option>
-                        <option value="DemandeTraducteur">DemandeTraducteur</option>
-                        <option value="DemandeChef">DemandeChef</option>';
-                        
-                        
-                    echo'   
+    
+    .haut {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #fff;
+        padding: 15px 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+    }
+    #ensemble_recherche {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 auto;
+    }
+    #ensemble_recherche input {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 200px;
+    }
+    .icone_recherche {
+        height: 20px;
+        width: 20px;
+    }
+    .choix_langue {
+        position: absolute;
+        right: 15%;
+        top: 20px;
+    }
+    .choix_langue select {
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    #mon_compte {
+        right: 20px;
+        top: 10px;
+        background-color: transparent;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    #user_mc {
+        height: 25px;
+        width: 25px;
+    }
+    .conteneur_modif_c {
+        visibility: hidden;
+        background-color: #fff;
+        border-radius: 10px;
+        width: 200px;
+        padding: 15px;
+        position: fixed;
+        right: 20px;
+        top: 50px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .conteneur_modif_c a {
+        display: block;
+        margin: 10px 0;
+        color: #ED4B5B;
+        text-decoration: none;
+    }
+    #deconnexion_img {
+        height: 20px;
+        width: 20px;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+
+    .principale_ensemble {
+    width: 90%;
+    max-width: 1200px;
+    margin: 100px auto 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 30px;
+    box-sizing: border-box; 
+}
+.jaime {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    gap: 8px; 
+}
+#carouselRecette {
+    width: 600px; 
+    height: 350px; 
+    margin: 0 auto; 
+    overflow: hidden; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
+}
+
+#carouselRecette .carousel-item img {
+    width: 100%;
+    height: 350px; 
+    object-fit: cover; 
+}
+
+.carousel-item {
+    height: 350px;
+}
+.recette_card {
+    width: 100%; 
+    max-width: none; 
+    margin: 0; 
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease;
+    box-sizing: border-box;
+}
+    .recette_card:hover {
+        transform: translateY(-5px);
+    }
+    .principale_image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+    h4 {
+        color: #faab66;
+        margin: 10px 0;
+        font-weight: 600;
+    }
+    .btn_like {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+    }
+    .btn_like:hover {
+        transform: scale(1.1);
+    }
+    .like, .dislike {
+        width: 100%;
+        height: 100%;
+        transition: opacity 0.3s ease;
+    }
+    .like {
+        display: block;
+    }
+    .dislike {
+        display: none;
+    }
+    #voir_r {
+        background-color: #ED4B5B;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 15px;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    #voir_r:hover {
+        background-color: #d43f4e;
+    }
+    a {
+        text-decoration: none;
+        color: #ED4B5B;
+    }
+    .btn_retour {
+    
+    bottom: 20px;
+    left: 20px;
+    background-color: #ED4B5B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+.btn_retour:hover {
+    background-color: #d43f4e;
+}
+</style> 
+    </head>
+
+    <body>
+            
+        <section class="haut">
+        <?php
+                echo $retourBtn;
+            ?>
+            <div id="ensemble_recherche">
+                <input id="recherche_input" placeholder="recherche">
+                <?php
+                echo $rechercheBtn;
+            ?>
+            </div>
+            <div>
+                <form class="choix_langue">
+                    <select name="">
+                        <option value="fr" id="t">Fr </option>
+                        <option value="eng" > Eng</option>
+
                     </select>
-
-                    <button onclick="ajouterRole('.$id_user.','.htmlspecialchars(json_encode($_SESSION['role'])).') "> Ajouter un role </button>
+                </form>
+                
+                
+                <button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc">Mon compte</button>
+                <div class="conteneur_modif_c">
+                    <?php
+                    echo $infosBtn;
+                    ?>
+                    <a><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Deconnexion</a>
                 </div>
+                
+    
+            </div>
+        </section>
+        <section class="principale_ensemble">
+<div class="container mt-5">
+    <h2>Mes Informations</h2>
+    <form id="infoForm">
+    <div id="statut" class="fixed-top"></div>
+        <?php echo $id_user; ?>
 
-        </section>';
+        <!-- Champs éditables -->
+        <div class="mb-3">
+            <label class="form-label">Nom</label>
+            <?php echo $nom; ?>
+        </div>
 
-echo ' </body>
-</html>';
-?>
+        <div class="mb-3">
+            <label class="form-label">Prénom</label>
+            <?php echo $prenom; ?>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <?php echo $mail; ?>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Statut</label>
+            <ul>
+            <?php  echo $roles; ?>
+            </ul>
+        </div>
+        <?php echo $demandeRoles?>
+
+        <button type="button" onclick="modifInfo()" class="btn btn-primary">
+        Enregistrer
+    </button>
+    </form>
+</div>
+</section>
+    </body>
+</html>
