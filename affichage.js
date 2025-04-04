@@ -347,3 +347,53 @@ function annulerTrad(index, type_liste){
   t.style.display="none";
 
 }
+
+
+
+
+
+function modifierRoles(id_user, roles) {
+    document.getElementById('userId').value = id_user;
+
+    document.getElementById('roleChef').checked = false;
+    document.getElementById('roleTraducteur').checked = false;
+    document.getElementById('roleDemandeChef').checked = false;
+    document.getElementById('roleDemandeTraducteur').checked = false;
+
+    // Cocher les rôles actuels
+    var rolesArray = roles.split(',');
+    if (rolesArray.includes('Chef')) document.getElementById('roleChef').checked = true;
+    if (rolesArray.includes('Traducteur')) document.getElementById('roleTraducteur').checked = true;
+    if (rolesArray.includes('DemandeChef')) document.getElementById('roleDemandeChef').checked = true;
+    if (rolesArray.includes('DemandeTraducteur')) document.getElementById('roleDemandeTraducteur').checked = true;
+
+    
+    var modal = new bootstrap.Modal(document.getElementById('roleModal'));
+    modal.show();
+}
+
+function sauverRoles() {
+    var id_user = document.getElementById('userId').value;
+    var roles = [];
+    if (document.getElementById('roleChef').checked) roles.push('Chef');
+    if (document.getElementById('roleTraducteur').checked) roles.push('Traducteur');
+    if (document.getElementById('roleDemandeChef').checked) roles.push('DemandeChef');
+    if (document.getElementById('roleDemandeTraducteur').checked) roles.push('DemandeTraducteur');
+
+    $.ajax({
+        url: 'controllerFrontal.php',
+        type: 'POST',
+        data: {
+            action: 'modifier_roles',
+            id_user: id_user,
+            roles: roles
+        },
+        success: function(response) {
+            alert('Rôles mis à jour !');
+            location.reload(); 
+        },
+        error: function() {
+            alert('Erreur lors de la mise à jour des rôles.');
+        }
+    });
+}

@@ -119,6 +119,11 @@ try {
         $role=$_POST['role'];
         $id_user=$_POST['id_user'];
     }
+    else if (isset($_POST['action']) && $_POST['action'] === 'modifier_roles') {
+        $id_user = $_POST['id_user'];
+        $roles = $_POST['roles'];
+        CtlModifierRoles($id_user, $roles);
+    }
     else if(isset($_POST['index']) && isset($_POST['valeurInput']) && isset($_POST['type_liste']) && isset($_POST['langue']) && isset($_POST['id_recette'])){
         $index= $_POST['index'];
         $valeurInput= $_POST['valeurInput'];

@@ -535,3 +535,21 @@ function ajoutTraduction($id_recette, $liste, $index_l, $valeur,$langueDeTrad)
 
 }
 
+function modifierRoles($id_user, $roles) {
+    $fichier = 'utilisateurs.json';
+    if (file_exists($fichier)) {
+        $utilisateurs = json_decode(file_get_contents($fichier), true);
+    } else {
+        $utilisateurs = [];
+    }
+
+    foreach ($utilisateurs as &$utilisateur) {
+        if ($utilisateur['id'] == $id_user) {
+            $utilisateur['role'] = $roles; 
+            break;
+        }
+    }
+
+    $json = json_encode($utilisateurs, JSON_PRETTY_PRINT);
+    file_put_contents($fichier, $json);
+}

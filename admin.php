@@ -37,6 +37,9 @@
         }
 
         .btn-retour {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
             background-color: #ED4B5B;
             color: white;
             border: none;
@@ -249,6 +252,23 @@
             border-color: #ccc;
             cursor: not-allowed;
         }
+        .modal-content {
+        padding: 20px;
+        border-radius: 10px;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-title {
+            color: #faab66;
+            font-weight: 600;
+        }
+
+        .form-check {
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -270,16 +290,16 @@
     <section class="admin-container">
         <h1>Panel Administrateur</h1>
 
-        <ul class="nav nav-tabs" id="adminTabs">
+        <ul class="nav nav-tabs" >
             <li class="nav-item">
-                <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button">Utilisateurs</button>
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#users" type="button">Utilisateurs</button>
             </li>
             <li class="nav-item">
-                <button class="nav-link" id="recipes-tab" data-bs-toggle="tab" data-bs-target="#recipes" type="button">Recettes</button>
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#recette" type="button">Recettes</button>
             </li>
         </ul>
 
-        <div class="tab-content" id="adminTabContent">
+        <div class="tab-content" >
             <div class="tab-pane fade show active" id="users">
                 <h2>Gestion des utilisateurs</h2>
                 <div class="table-container">
@@ -294,13 +314,14 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="users-table-body">
+                        <tbody >
                             <?php
                             $nombre_par_page = 10; 
                             $page_actuelle = isset($_GET['page_users']) ? (int)$_GET['page_users'] : 1;
                             $debut = ($page_actuelle - 1) * $nombre_par_page;
                             $utilisateurs_pagine = array_slice($utilisateurs, $debut, $nombre_par_page);
-                            foreach ($utilisateurs_pagine as $u): ?>
+                            foreach ($utilisateurs_pagine as $u): 
+                            if ($user['id'] === $u['id']) continue;?>
                                 <tr>
                                     <td><?php echo $u['id']; ?></td>
                                     <td><?php echo $u['nom']; ?></td>
@@ -308,8 +329,7 @@
                                     <td><?php echo $u['mail']; ?></td>
                                     <td><?php echo implode(', ', $u['role']); ?></td>
                                     <td>
-                                        <button class="btn-action" onclick="modifierRoles(<?php echo $u['id']; ?>)">Modifier rôles</button>
-                                    </td>
+                                    <button class="btn-action" onclick="modifierRoles(<?php echo $u['id']; ?>, '<?php echo implode(',', $u['role']); ?>')">Modifier rôles</button>                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -333,7 +353,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="recipes">
+            <div class="tab-pane fade" id="recette">
                 <h2>Gestion des recettes</h2>
                 <div class="table-container">
                     <table class="table">
@@ -346,7 +366,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="recipes-table-body">
+                        <tbody >
                             <?php
                             $nombre_par_page_recettes = 10; 
                             $page_actuelle_recettes = isset($_GET['page_recettes']) ? (int)$_GET['page_recettes'] : 1;
@@ -387,11 +407,45 @@
             </div>
         </div>
     </section>
+    <!-- Modale pour modifier les rôles -->
+<div class="modal fade" id="roleModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modifier les rôles</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="roleForm">
+                    <input type="hidden" id="userId" name="id_user">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="roles[]" value="Chef" id="roleChef">
+                        <label class="form-check-label" for="roleChef">Chef</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="roles[]" value="Traducteur" id="roleTraducteur">
+                        <label class="form-check-label" for="roleTraducteur">Traducteur</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="roles[]" value="DemandeChef" id="roleDemandeChef">
+                        <label class="form-check-label" for="roleDemandeChef">DemandeChef</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="roles[]" value="DemandeTraducteur" id="roleDemandeTraducteur">
+                        <label class="form-check-label" for="roleDemandeTraducteur">DemandeTraducteur</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" onclick="sauverRoles()">Sauver</button>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script>
-    function modifierRoles(id_user) {
-        alert('Fonctionnalité de modification des rôles à venir pour l\'utilisateur ' + id_user);
-    }
+    
 
     function validerRecette(id_recette) {
         alert('Fonctionnalité de validation de la recette ' + id_recette + ' à venir');

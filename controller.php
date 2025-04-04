@@ -108,6 +108,15 @@ function CtlAjoutTraduction($id_recette, $liste, $index_l, $valeur, $langueDeTra
     ajoutTraduction($id_recette, $liste, (int)$index_l, $valeur,$langueDeTrad);
 }
 
+function CtlModifierRoles($id_user, $roles) {
+    $user = recupUserById($id_user);
+    if (empty($user)) {
+        throw new Exception('Utilisateur non trouvé.');
+    }
+    modifierRoles($id_user, $roles);
+    echo json_encode(['success' => true]);
+}
+
 
 
 ?>

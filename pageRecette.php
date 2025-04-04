@@ -459,6 +459,8 @@
     #statut.show {
         opacity: 1;
     }
+    
+    
 </style>
 </head>
 <body>
@@ -469,12 +471,24 @@
             <img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche"> 
         </div> 
         <div>
-            <form class="choix_langue">
-                <select name="">
-                    <option value="fr" id="t">Fr</option>
-                    <option value="eng">Eng</option>
-                </select>
-            </form>
+        <form class="choix_langue">
+                <select name="langue" onchange="changerLangue(this.value)">
+                    <?php //$langue = $_SESSION['langue'] ?? 'fr';
+                            if ($langue=='fr'){
+                                echo '<option value="fr" id="t" >Fr </option>
+                                <option value="eng" > Eng</option>';
+                            }
+                            else{
+                                echo '<option value="eng" > Eng</option>
+                                <option value="fr" id="t" >Fr </option>
+                                ';
+                            }
+                             ?>
+                        <!--<option value="fr" id="t" <?php //echo' (isset($_SESSION["langue"]) && $_SESSION["langue"] == "fr") ? "selected" : ""'; ?>>Fr </option>
+                        <option value="" <?php //echo' (isset($_SESSION["langue"]) && $_SESSION["langue"] == "eng") ? "selected" : ""'; ?>> Eng</option>
+                        -->
+                    </select>
+                </form>
             
             <button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc">Mon compte</button>
             <div class="conteneur_modif_c">
