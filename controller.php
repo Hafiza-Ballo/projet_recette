@@ -104,5 +104,10 @@ function CtlAfficherAdmin($id_user)
 /*function CtlAjoutRole($id_user,$role){
     AjoutRole($id_user, $role);
 }*/
+function CtlAjoutTraduction($id_recette, $liste, $index_l, $valeur, $langueDeTrad){
+    ajoutTraduction($id_recette, $liste, (int)$index_l, $valeur,$langueDeTrad);
+}
+
+
 
 ?>

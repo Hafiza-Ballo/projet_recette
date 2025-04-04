@@ -7,7 +7,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="jquery-3.7.1.js"></script>
-        <script src="affichage.js"></script>
+        <script src="affichage.js" defer></script>
         <style>
     body {
         background-color: #f4f5ec;
@@ -203,7 +203,8 @@
     </head>
 
     <body>
-            
+            <?php $langue = $_SESSION['langue'] ?? 'fr';?>
+
         <section class="haut">
             <div id="ensemble_recherche">
                 <input id="recherche_input" placeholder="recherche">
@@ -213,10 +214,21 @@
             </div>
             <div>
                 <form class="choix_langue">
-                    <select name="">
-                        <option value="fr" id="t">Fr </option>
-                        <option value="eng" > Eng</option>
-
+                <select name="langue" onchange="changerLangue(this.value)">
+                    <?php //$langue = $_SESSION['langue'] ?? 'fr';
+                            if ($langue=='fr'){
+                                echo '<option value="fr" id="t" >Fr </option>
+                                <option value="eng" > Eng</option>';
+                            }
+                            else{
+                                echo '<option value="eng" > Eng</option>
+                                <option value="fr" id="t" >Fr </option>
+                                ';
+                            }
+                             ?>
+                        <!--<option value="fr" id="t" <?php //echo' (isset($_SESSION["langue"]) && $_SESSION["langue"] == "fr") ? "selected" : ""'; ?>>Fr </option>
+                        <option value="" <?php //echo' (isset($_SESSION["langue"]) && $_SESSION["langue"] == "eng") ? "selected" : ""'; ?>> Eng</option>
+                        -->
                     </select>
                 </form>
                 

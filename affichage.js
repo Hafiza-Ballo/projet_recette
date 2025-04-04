@@ -126,7 +126,7 @@ function ajouterPhoto($idUser, $idRecette) {
   }
   
   else if (photoUrl) {
-      $.ajax({
+      $.ajax({ 
           url: 'controllerFrontal.php',
           type: 'POST',
           data: {"url": photoUrl, "id_recette": $idRecette, "id_user": $idUser},
@@ -150,8 +150,6 @@ function redirigerRecherche(idUser) {
       window.location.href = 'controllerFrontal.php?action=rechercher&mot=' + mot + '&id_user=' + idUser;
   }
 }
-
-
 function modifInfo() {
   const form = document.getElementById('infoForm');
   
@@ -240,4 +238,112 @@ function chargerCommentaires(id_recette) {
           });
       }
   });
+}
+function changerLangue(langue){
+  $.ajax({
+    method: "POST",
+    url: "changerLangue.php",
+    data: { langue: langue },
+    success: function() {
+        location.reload(); // Recharge la page après le changement
+    },
+    error:function(){
+      console.log("erreur");
+    }
+
+  })
+}
+function traduction(button,index, langue,id_recette,type_liste){
+  let btn=document.getElementById("btn_traduire"+index);
+  let divSuivante = button.nextElementSibling;
+  let box_traduction=document.querySelector(".box_traduction");
+  $.ajax({
+    method: "POST",
+    url: "changerLangue.php", 
+    success: function(){
+      if(type_liste=='ingredients' ){
+        console.log('la');
+        if(langue=='fr'){
+          divSuivante.innerHTML='<div id="test'+type_liste+index+'"><label>Quantité: </label><input class="trad" name="'+type_liste+','+index+'"  ><br><label>Nom: </label><input class="trad" name="'+type_liste+','+index+'" ><br><label>Type: </label><input class="trad" name="'+type_liste+','+index+'"  ><br> <button id="idb'+index+'" onclick="appliquerTradIngr('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Appliquer</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Annuler</button> </div>';
+        }
+        else if(langue.trim()=='eng'){
+          console.log('i');
+          divSuivante.innerHTML='<div id="test'+type_liste+index+'"><label>Quantity: </label><input class="trad" name="q'+index+'" id="q'+index+'" ><br><label>Name: </label><input class="trad" name="n'+index+'" id= "n'+index+'"><br><label>Type: </label><input class="trad" name="t'+index+'" id="t'+index+'" ><br> <button id="idb'+index+'" onclick="appliquerTradIngr('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Appliquer</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Annuler</button> </div>';
+        }
+
+
+      }
+      else{
+        divSuivante.innerHTML='<div id="test'+type_liste+index+'"><input class="trad" name="'+type_liste+','+index+'" id="id'+index+'" ><br> <button id="idb'+index+'" onclick="appliquerTrad('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Appliquer</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Annuler</button> </div>';
+
+      }
+      btn.style.display="none";
+     
+
+    },
+    error:function() {
+      console.log("erreur");
+
+    }
+   
+  })
+}
+function appliquerTrad(index,type_liste,id_recette,langue){
+  let valeurInput= document.getElementById("id"+index).value;
+  if(valeurInput.length >0){
+    $.ajax({
+      method: "POST",
+      url: "controllerFrontal.php", 
+      data: {"index":index, "valeurInput": valeurInput, "type_liste":type_liste,"id_recette":id_recette, "langue":langue},
+      success: function(e){
+        console.log(e);
+        alert("Traduction ajoutée avec succès !");
+        let btn = document.getElementById("btn_traduire" + index);
+        btn.style.display = "none";
+
+      let idSansesapace=("test"+type_liste+index).replace(/\s+/g, '');
+        let traductionDiv = document.getElementById(idSansesapace);
+        traductionDiv.remove();
+      },
+      error:function() {
+        console.log("erreur");
+      }
+    })
+  }
+  
+}
+function appliquerTradIngr(index,type_liste,id_recette,langue){
+  let valeurq= document.getElementById("q"+index).value;
+  let valeurn= document.getElementById("n"+index).value;
+  let valeurt= document.getElementById("t"+index).value;
+
+  let valeurInput=valeurq+','+valeurn+','+valeurt;
+  if(valeurInput.length>2){
+    $.ajax({
+      method: "POST",
+      url: "controllerFrontal.php", 
+      data: {"index":index, "valeurInput": valeurInput, "type_liste":type_liste,"id_recette":id_recette, "langue":langue},
+      success: function(e){
+        console.log(e);
+        alert("Traduction ajoutée avec succès !");
+        let btn = document.getElementById("btn_traduire" + index);
+        btn.style.display = "none";
+
+      let idSansesapace=("test"+type_liste+index).replace(/\s+/g, '');
+        let traductionDiv = document.getElementById(idSansesapace);
+        traductionDiv.remove();
+      },
+      error:function() {
+        console.log("erreur");
+      }
+    })
+  }
+  
+}
+function annulerTrad(index, type_liste){
+  let t=document.getElementById("test"+type_liste+index);
+  let btn=document.getElementById("btn_traduire"+index);
+  btn.style.display="block";
+  t.style.display="none";
+
 }

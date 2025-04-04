@@ -102,6 +102,33 @@ try {
     }
     
 
+    else if(isset($_POST['id_user'])  && isset($_POST['id_recette'] ) && isset($_FILES['photo'] )){
+        $id_user=$_POST['id_user'];
+        $id_recette=$_POST['id_recette'];
+        $photo=$_FILES['photo'];
+        CtlAjoutPhoto($id_user,$id_recette,$photo);
+    }
+    else if(isset($_POST['id_user'])  && isset($_POST['id_recette'] ) && isset($_POST['url'] )){
+        $id_user=$_POST['id_user'];
+        $id_recette=$_POST['id_recette'];
+        $photo=$_POST['url'];
+        CtlAjoutPhoto2($id_user,$id_recette,$photo);
+    }
+    else if (isset($_POST['id_user']) && isset($_POST['role'])){
+        echo 'ici';
+        $role=$_POST['role'];
+        $id_user=$_POST['id_user'];
+    }
+    else if(isset($_POST['index']) && isset($_POST['valeurInput']) && isset($_POST['type_liste']) && isset($_POST['langue']) && isset($_POST['id_recette'])){
+        $index= $_POST['index'];
+        $valeurInput= $_POST['valeurInput'];
+        $liste=$_POST['type_liste'];
+        $id_recette=$_POST['id_recette'];
+        $langue=$_POST['langue'];
+        echo $valeurInput." ".$liste." ".$id_recette." ".$langue ;
+        CtlAjoutTraduction($id_recette, $liste, $index, $valeurInput, $langue);
+    }
+    
     else
     {
         require_once ('connexion.php');

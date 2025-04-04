@@ -476,7 +476,24 @@
                 "type": "Baking"
             }
         ],
-        "ingredientsFR": [],
+        "ingredientsFR": [
+            [],
+            {
+                "quantity": "1 verre",
+                "name": "eau",
+                "type": "boisson"
+            },
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ],
         "steps": [
             "Simmer raisins and water over medium heat until raisins are plump, about 15 minutes.",
             "Drain raisins, reserving the liquid.",
@@ -513,7 +530,7 @@
         "name": "Blueberry Oatmeal Squares",
         "nameFR": "",
         "Author": "",
-        "Without": "",
+        "Without": [],
         "ingredients": [
             {
                 "quantity": "2-1\/2 cups",

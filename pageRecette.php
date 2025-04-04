@@ -486,12 +486,17 @@
     
     <section class="page_recette">
         <h1><?php echo $nom; ?></h1>
+        
+
         <div class="recette_principale">
+
             <div id="carouselRecette" class="carousel slide" data-bs-ride="carousel">
+                
                 <div class="carousel-inner">
                     <?php foreach ($images as $index => $image): ?>
                         <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
                             <img src="<?php echo $image; ?>" class="d-block w-100 img_sec" alt="recette">
+
                         </div>
                     <?php endforeach; ?>
                 </div>
