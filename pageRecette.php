@@ -189,15 +189,17 @@
         padding-bottom: 5px;
     }
     
+    
+    
     ul, ol {
         padding-left: 25px;
     }
     
-    ul {
+    .ingredients {
         list-style: none;
     }
     
-    ul li::before {
+    .ingredients li::before {
         content: "•";
         color: #faab66;
         font-weight: bold;
@@ -210,7 +212,6 @@
         margin: 12px 0;
         line-height: 1.6;
     }
-    
     .btn_like {
         border: none;
         background: transparent;
@@ -244,7 +245,7 @@
         background-color: #ED4B5B;
         color: white;
         border: none;
-        border-radius: 30px;
+        border-radius: 5px;
         padding: 10px 20px;
         cursor: pointer;
         font-family: 'Poppins', sans-serif;
@@ -257,14 +258,6 @@
     .btn_retour:hover {
         background-color: #d43f4e;
         transform: translateY(-2px);
-    }
-    
-    #box_preparation {
-        background-color: #f9f9f9;
-        padding: 20px;
-        border-radius: 10px;
-        margin: 20px 0;
-        border-left: 4px solid #faab66;
     }
     
     i {
@@ -459,11 +452,106 @@
     #statut.show {
         opacity: 1;
     }
+    #box_preparation {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+    }
     
+    .trad{
+        width: 70%;
+    }
+    #btn_traduire{
+        visibility: visible;
+        display:block;
     
-</style>
+    }
+    .trad_input_ingredients{
+        width: max-content;
+    }
+    .steps{
+        position: relative;
+        list-style: none;
+        padding-left: 30px;
+        margin: 0;
+    }
+    .steps li {
+        position: relative;
+        margin-bottom: 30px;
+        padding-left: 2%;
+        
+    }
+
+    .steps li::before {
+        content: "";
+        position: absolute;
+        left: -5px;
+        top: 0;
+        width: 15px;
+        height: 15px;
+        background-color: #faab66;
+        box-shadow: 2px 2px 0px #bab5f8;
+        box-shadow: 2px 2px 0px #bab5f8;
+        border-radius: 50%;
+    }
+
+    .steps li::after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 15px;
+        width: 2px;
+        height: calc(100% + 20px); /* pour relier au suivant */
+        background-color: #ccc;
+    }
+
+    .steps li:last-child::after {
+    display: none;
+    }
+    button{
+        border:solid 2px #ED4B5B;
+        border-radius: 5px;
+        background-color: white;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        color: #ED4B5B;
+    }
+    button:hover{
+        background-color: #ED4B5B;
+        color: #fff;
+    }
+    #lettre{
+        border:solid 1.5px #ED4B5B;
+        border-radius: 50%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 3%;
+        height: 5%;
+        color:#ED4B5B;
+
+    }
+    .prep{
+        height: 6%;
+        width: 4%;
+    }
+    /*.box_traduction{
+        border:solid 1px gainsboro;
+        border-radius: 4px;
+        margin-left: 30%;
+        max-width: max-content;
+        width: 100%;
+    }*/
+    
+        
+    </style>
 </head>
 <body>
+    <?php $langue = $_SESSION['langue'] ?? 'fr';?>
+
     <section class="haut">
         <?php echo $retourBtn; ?>
         <div id="ensemble_recherche">
@@ -471,24 +559,21 @@
             <img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche"> 
         </div> 
         <div>
-        <form class="choix_langue">
+            <form class="choix_langue">
                 <select name="langue" onchange="changerLangue(this.value)">
-                    <?php //$langue = $_SESSION['langue'] ?? 'fr';
-                            if ($langue=='fr'){
-                                echo '<option value="fr" id="t" >Fr </option>
-                                <option value="eng" > Eng</option>';
-                            }
-                            else{
-                                echo '<option value="eng" > Eng</option>
-                                <option value="fr" id="t" >Fr </option>
-                                ';
-                            }
-                             ?>
-                        <!--<option value="fr" id="t" <?php //echo' (isset($_SESSION["langue"]) && $_SESSION["langue"] == "fr") ? "selected" : ""'; ?>>Fr </option>
-                        <option value="" <?php //echo' (isset($_SESSION["langue"]) && $_SESSION["langue"] == "eng") ? "selected" : ""'; ?>> Eng</option>
-                        -->
-                    </select>
-                </form>
+                <?php
+                    if ($langue=='fr'){
+                        echo '<option value="fr" id="t" >Fr </option>
+                        <option value="eng" > Eng</option>';
+                    }
+                    else{
+                        echo '<option value="eng" > Eng</option>
+                        <option value="fr" id="t" >Fr </option>
+                        ';
+                    }
+                ?>
+                </select>
+            </form>
             
             <button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc">Mon compte</button>
             <div class="conteneur_modif_c">

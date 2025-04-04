@@ -254,7 +254,7 @@ function changerLangue(langue){
   })
 }
 function traduction(button,index, langue,id_recette,type_liste){
-  let btn=document.getElementById("btn_traduire"+index);
+  let btn=document.getElementById("btn_traduire"+type_liste+index);
   let divSuivante = button.nextElementSibling;
   let box_traduction=document.querySelector(".box_traduction");
   $.ajax({
@@ -262,22 +262,31 @@ function traduction(button,index, langue,id_recette,type_liste){
     url: "changerLangue.php", 
     success: function(){
       if(type_liste=='ingredients' ){
-        console.log('la');
         if(langue=='fr'){
-          divSuivante.innerHTML='<div id="test'+type_liste+index+'"><label>Quantité: </label><input class="trad" name="'+type_liste+','+index+'"  ><br><label>Nom: </label><input class="trad" name="'+type_liste+','+index+'" ><br><label>Type: </label><input class="trad" name="'+type_liste+','+index+'"  ><br> <button id="idb'+index+'" onclick="appliquerTradIngr('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Appliquer</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Annuler</button> </div>';
+          divSuivante.innerHTML='<div id="test'+type_liste+index+'"><label>Quantité: </label><input class=" trad_input_ingredients" name="'+type_liste+','+index+'"  ><br><label>Nom: </label><input class=" trad_input_ingredients" name="'+type_liste+','+index+'" ><br><label>Type: </label><input class="trad_input_ingredients" name="'+type_liste+','+index+'"  ><br> <button id="idb'+index+'" onclick="appliquerTradIngr('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Appliquer</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Annuler</button> </div>';
         }
         else if(langue.trim()=='eng'){
           console.log('i');
-          divSuivante.innerHTML='<div id="test'+type_liste+index+'"><label>Quantity: </label><input class="trad" name="q'+index+'" id="q'+index+'" ><br><label>Name: </label><input class="trad" name="n'+index+'" id= "n'+index+'"><br><label>Type: </label><input class="trad" name="t'+index+'" id="t'+index+'" ><br> <button id="idb'+index+'" onclick="appliquerTradIngr('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Appliquer</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Annuler</button> </div>';
+          divSuivante.innerHTML='<div id="test'+type_liste+index+'"><label>Quantity: </label><input class=" trad_input_ingredients" name="q'+index+'" id="q'+index+'" ><br><label>Name: </label><input class=" trad_input_ingredients" name="n'+index+'" id= "n'+index+'"><br><label>Type: </label><input class="trad_input_ingredients" name="t'+index+'" id="t'+index+'" ><br> <button id="idb'+index+'" onclick="appliquerTradIngr('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Apply</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Cancel</button> </div>';
         }
 
 
       }
       else{
-        divSuivante.innerHTML='<div id="test'+type_liste+index+'"><input class="trad" name="'+type_liste+','+index+'" id="id'+index+'" ><br> <button id="idb'+index+'" onclick="appliquerTrad('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Appliquer</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Annuler</button> </div>';
+        if(langue.trim()=='fr'){
+          divSuivante.innerHTML='<div id="test'+type_liste+index+'"><input class="trad" name="'+type_liste+','+index+'" id="id'+index+'" ><br> <button id="idb'+index+'" onclick="appliquerTrad('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Appliquer</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Annuler</button> </div>';
+
+        }
+        else if(langue.trim()=='eng'){
+          divSuivante.innerHTML='<div id="test'+type_liste+index+'"><input class="trad" name="'+type_liste+','+index+'" id="id'+index+'" ><br> <button id="idb'+index+'" onclick="appliquerTrad('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Apply</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Cancel</button> </div>';
+
+        }
 
       }
-      btn.style.display="none";
+      divSuivante.style.display = "block";
+
+      if(btn)btn.style.display="none";
+      else{console.log('no');}
      
 
     },
@@ -288,6 +297,29 @@ function traduction(button,index, langue,id_recette,type_liste){
    
   })
 }
+
+function traduction2(button,index, langue,id_recette,type_liste){
+  let btn=document.getElementById("btn_traduire"+type_liste+index);
+  let divSuivante = button.nextElementSibling;
+  let box_traduction=document.querySelector(".box_traduction");
+  box_traduction.style.display="block";
+  $.ajax({
+    method: "POST",
+    url: "changerLangue.php", 
+    success: function(){
+
+      if(btn)btn.style.display="none";
+      else{console.log('no');}
+
+    },
+    error:function() {
+      console.log("erreur");
+
+    }
+   
+  })
+}
+
 function appliquerTrad(index,type_liste,id_recette,langue){
   let valeurInput= document.getElementById("id"+index).value;
   if(valeurInput.length >0){
@@ -297,13 +329,22 @@ function appliquerTrad(index,type_liste,id_recette,langue){
       data: {"index":index, "valeurInput": valeurInput, "type_liste":type_liste,"id_recette":id_recette, "langue":langue},
       success: function(e){
         console.log(e);
-        alert("Traduction ajoutée avec succès !");
-        let btn = document.getElementById("btn_traduire" + index);
-        btn.style.display = "none";
+        if(langue.trim()=='fr'){
+          alert("Traduction ajoutée avec succès !");
+        }
+        else if(langue.trim()=='eng'){
+          alert("Translation added successfully !");
+        }
+        let btn = document.getElementById("btn_traduire"+type_liste+index);
+        if(btn)btn.style.display = "none";
+        else{
+          console.log('no');
+        }
 
       let idSansesapace=("test"+type_liste+index).replace(/\s+/g, '');
         let traductionDiv = document.getElementById(idSansesapace);
         traductionDiv.remove();
+        
       },
       error:function() {
         console.log("erreur");
@@ -325,13 +366,26 @@ function appliquerTradIngr(index,type_liste,id_recette,langue){
       data: {"index":index, "valeurInput": valeurInput, "type_liste":type_liste,"id_recette":id_recette, "langue":langue},
       success: function(e){
         console.log(e);
-        alert("Traduction ajoutée avec succès !");
-        let btn = document.getElementById("btn_traduire" + index);
-        btn.style.display = "none";
+        if(langue.trim()=='fr'){
+          alert("Traduction ajoutée avec succès !");
+        }
+        else{
+          alert("Translation added successfully !");
+        }        let btn = document.getElementById("btn_traduire"+type_liste+index);
+        if(btn){btn.style.display = "none";}
+        else{
+          console.log('no');
+        }
 
       let idSansesapace=("test"+type_liste+index).replace(/\s+/g, '');
+      console.log(idSansesapace);
         let traductionDiv = document.getElementById(idSansesapace);
         traductionDiv.remove();
+        /*let box = document.querySelector(".tr_" + index);
+        if (box) {
+          box.innerHTML = "";
+          box.style.display = "none";
+        }*/
       },
       error:function() {
         console.log("erreur");
@@ -340,11 +394,23 @@ function appliquerTradIngr(index,type_liste,id_recette,langue){
   }
   
 }
+
 function annulerTrad(index, type_liste){
   let t=document.getElementById("test"+type_liste+index);
-  let btn=document.getElementById("btn_traduire"+index);
-  btn.style.display="block";
+  let btn=document.getElementById("btn_traduire"+type_liste+index);
+  if(btn){btn.style.display="block";}
+  else{console.log('no');}
   t.style.display="none";
+  let box_traduction=document.querySelector(".box_traduction");
+  box_traduction.style.display="none";
+  /*let box = document.querySelector(".tr_" + index);
+  let btn = document.getElementById("btn_traduire" + type_liste + index);
+  
+  // Réafficher le bouton
+  if (btn) btn.style.display = "block";
+
+  // Cacher la div de traduction
+  if (box) box.style.display = "none";*/
 
 }
 

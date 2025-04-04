@@ -393,7 +393,6 @@ function recupUtilisateurs()
 }
 function ajoutTraduction($id_recette, $liste, $index_l, $valeur,$langueDeTrad)
 {
-    var_dump( $langueDeTrad);
     $f = fopen('recettes.json', 'r+');
 
     if (!flock($f, LOCK_EX)){
