@@ -1,12 +1,14 @@
 <?php
 
 function afficherAccueil($user, $recette, $likes) {
+    
     $id_user = '<div><input type="hidden" name="id_user" value="' . $user['id'] . '"></div>';
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
     $contenu = '';
     $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
-
+    
+    
     foreach ($recette as $d) {
         $nblike = $d['like'];
         $images = getImage($d['id']); 
@@ -47,9 +49,23 @@ function afficherAccueil($user, $recette, $likes) {
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Suivant</span>
                             </button>
-                        </div>
-                        <h4>' . $d["nameFR"] . '</h4>
-                        <button id="voir_r" name="voir_recette">Voir la recette</button> 
+                        </div>';
+        if(isset($_SESSION['langue'])){
+            $langue=$_SESSION['langue'];
+            if($langue=='fr'){
+                $contenu.='<h4>' . $d["nameFR"] . '</h4>
+                            <button id="voir_r" name="voir_recette">Voir la recette</button>';
+            }
+            else{
+                $contenu.='<h4>' . $d["name"] . '</h4>
+                            <button id="voir_r" name="voir_recette">See recipe</button>';
+            }
+        }
+        else{
+            $contenu.='<h4>' . $d["nameFR"] . '</h4>
+                            <button id="voir_r" name="voir_recette">Voir la recette</button>';
+        }
+                    $contenu.=  ' 
                     </form>
                     <div class="jaime">
                         <button class="btn_like" onclick="changeImgURL(this, \'' . $d["id"] . '\', \'' . $user["id"] . '\')">';
@@ -64,7 +80,7 @@ function afficherAccueil($user, $recette, $likes) {
         }
 
         $contenu .= '</button>
-                     <span id="like-count-' . $d["id"] . '">' . $nblike . '</span> j\'aime
+                     <span id="like-count-' . $d["id"] . '">' . $nblike . '</span>'.($langue == 'fr' ? 'J\'aime' : 'Like').'
                     </div>
                 </div>
             </div>';
@@ -82,7 +98,16 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
     $a_licke = false;
     $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $id_user . '\'">Retour</button>';
 
+    $steps=[];
+    $nom_ingredients=[];
 
+    if(isset($_SESSION['langue']) && traducteur($id_user)){
+        $langue=$_SESSION['langue'];
+    }
+    else{
+        $langue='fr';
+    }
+    echo $langue;
     foreach ($like as $l) {
         if ($l['id'] == $recette['id'] && $l['id_user'] == $id_user) {
             $a_licke = true;
@@ -94,58 +119,178 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
     if ($a_licke) {
         $liker_ .= '<img class="like" style="display:none" src="' . $liker . '" alt="like">
                     <img class="dislike" style="display:block" src="' . $disliker . '" alt="dislike">
-                    </button> <span id="like-count-' . $recette["id"] . '">' . $nblike . '</span> j\'aime';
+                    </button> <span id="like-count-' . $recette["id"] . '">' . $nblike . '</span> '.($langue == 'fr' ? 'J\'aime' : 'Like');
     } else {
         $liker_ .= '<img class="like" style="display:block" src="' . $liker . '" alt="like">
                     <img class="dislike" style="display:none" src="' . $disliker . '" alt="dislike">
-                    </button> <span id="like-count-' . $recette["id"] . '">' . $nblike . '</span> j\'aime';
+                    </button> <span id="like-count-' . $recette["id"] . '">' . $nblike . '</span>'.($langue == 'fr' ? 'J\'aime' : 'Like');
     }
-
-    $nom = $recette["nameFR"];
-    $images = [];
-    $images = getImage($id_recette);
-    $images[] = $recette["imageURL"];
-    $author = $recette["Author"];
-    $contenu = "";
-
-    $without = implode(", ", $recette["Without"]);
-    if (strlen($without) > 0) {
-        $contenu .= '<h4>Spécificités</h4><p>' . $without . '</p>';
-    }
-
-    if (count($recette["ingredientsFR"]) > 0) {
-        $nom_ingredientsFR = array_column($recette["ingredientsFR"], "name");
-        $contenu .= '<h4>Ingrédients</h4><ul>';
-        foreach ($nom_ingredientsFR as $n) {
-            $contenu .= '<li>' . $n . '</li>';
-        }
-        $contenu .= '</ul>';
-    }
-
-    $timers = $recette["timers"];
-    $total_t = array_sum($timers);
     
-    $contenu .= '<h4>Préparation</h4>
-                 <div id="box_preparation">
-                     <p><b>Temps total : </b>' . $total_t . ' minutes</p>
-                 </div>';
-    if (count($recette["stepsFR"]) > 0) {
-        $stepsFR = $recette["stepsFR"];
-        $contenu .= '<ul>';
-        foreach ($stepsFR as $index => $s) {
-            $contenu .= '<li><h5>ÉTAPE ' . ($index + 1) . ' : </h5> ' . $s;
-            if ($timers[$index] > 1) {
-                $contenu .= ' (pendant ' . $timers[$index] . ' minutes)</li>';
-            } else {
-                $contenu .= '</li>';
-            }
+    if($langue=='fr'){
+        $nom = $recette["nameFR"];
+        $images = []; 
+        $images = getImage($id_recette);
+        $images[] = $recette["imageURL"];
+        $author = $recette["Author"];
+        $contenu = "";
+        
+
+        $without = implode(", ", $recette["Without"]);
+        if (strlen($without) > 0) {
+            $contenu .= '<h4>Spécificités</h4><p>' . $without . '</p>';
         }
-        $contenu .= '</ul>';
+
+        if (count($recette["ingredientsFR"]) > 0) {
+            $nom_ingredients = array_column($recette["ingredientsFR"], "name");
+            $quantite_ingredients=array_column($recette["ingredientsFR"], "quantity");
+            $strIngr=htmlspecialchars(json_encode($nom_ingredients), ENT_QUOTES, "UTF-8");
+            $nom_ingredientsENG = array_column($recette["ingredients"], "name");
+
+            $contenu .= '<h4>Ingrédients</h4><ul>';
+            foreach ($nom_ingredients as $index=>$n) {
+                if(isset($quantite_ingredients[$index])){
+                    $q=$quantite_ingredients[$index];
+                    $contenu .= '<li>'.$q.' de '. $n . '</li>';
+                }
+                
+                if((isset($nom_ingredientsENG[$index+1])&&strlen($nom_ingredientsENG[$index+1])<=0)|| $recette["ingredients"]==[] ||$n==null){
+                    $contenu.='<button onclick="traduction(this,'.($index+1).',\''.$langue.'\','.$id_recette.', \'ingredients\')" id="btn_traduire'.($index+1).'">Traduire</button>
+                    <div class="box_traduction tr_'.($index+1).'">
+                    </div>';
+                    
+                }
+            }
+            $contenu .= '</ul>';
+        }
+        else{
+            $contenu.='<i>Ingrédients indisponible en francais</i><br><br>';
+        }
+
+        $timers = $recette["timers"];
+        $total_t = array_sum($timers);
+        
+        $contenu .= '<h4>Préparation</h4>
+                    <div id="box_preparation">
+                        <p><b>Temps total : </b>' . $total_t . ' minutes</p>
+                    </div>';
+        if (count($recette["stepsFR"]) > 0) {
+            $steps = $recette["stepsFR"];
+            $strStep=htmlspecialchars(json_encode($steps), ENT_QUOTES, "UTF-8");
+
+            $contenu .= '<ul>';
+            foreach ($steps as $index => $s) {
+                $contenu .= '<li><h5>ÉTAPE ' . ($index + 1) . ' : </h5> ' . $s;
+                
+                if((isset($recette["steps"][$index+1])&&strlen($recette["steps"][$index+1])<=0)|| $recette["steps"]==[]){
+                    echo $recette["steps"][$index+1];
+                    $contenu.='<button  onclick="traduction(this,'.($index+1).',\' '.$langue.' \','.$id_recette.', \'steps\')" id="btn_traduire'.($index+1).'">Traduire</button>
+                    <div class="box_traduction tr_'.($index+1).'">
+                    </div>';
+                    
+                }
+                
+                if ($timers[$index] > 1) {
+                    $contenu .= ' (pendant ' . $timers[$index] . ' minutes)</li>';
+                } else {
+                    $contenu .= '</li>';
+                }
+            }
+            $contenu .= '</ul>';
+        }
+        else{
+            $contenu.='<i>Etapes indisponible en francais</i> <br><br>';
+        }
+        
     }
+    else {
+        $nom = $recette["name"];
+        $images = [];
+        $images = getImage($id_recette);
+        $images[] = $recette["imageURL"];
+        $author = $recette["Author"];
+        $contenu = "";
+        
+
+        $without = implode(", ", $recette["Without"]);
+        if (strlen($without) > 0) {
+            $contenu .= '<h4>Specificity</h4><p>' . $without . '</p>';
+        }
+
+        if (count($recette["ingredients"]) > 0) {
+            $nom_ingredients = array_column($recette["ingredients"], "name");
+            $quantite_ingredients=array_column($recette["ingredients"], "quantity");
+
+            $nom_ingredientsFR = array_column($recette["ingredientsFR"], "name");
+
+            $strIngr=htmlspecialchars(json_encode($nom_ingredients), ENT_QUOTES, "UTF-8");
+
+            $contenu .= '<h4>Ingredients</h4><ul>';
+            foreach ($nom_ingredients as $index=>$n) {
+                if(isset($quantite_ingredients[$index])){
+                    $q=$quantite_ingredients[$index];
+                    $contenu .= '<li>'.$q.' of '. $n . '</li>';
+                }
+                if((isset($nom_ingredientsFR[$index]) && strlen($nom_ingredientsFR[$index])<=0) ||$recette["ingredientsFR"]==[]||$n==null){
+                    $contenu.='<button  onclick="traduction(this,'.($index+1).',\' '.$langue.' \','.$id_recette.', \'ingredients\')" id="btn_traduire'.($index+1).'">Translate</button>
+                    <div class="box_traduction tr_'.($index+1).'">
+                    </div>';
+                    
+                }
+            }
+            $contenu .= '</ul>';
+        }
+        else{
+            $contenu.='<i>Ingredients unavailable in English</i><br><br>';
+        }
+
+        $timers = $recette["timers"];
+        $total_t = array_sum($timers);
+        
+        $contenu .= '<h4>Preparation</h4>
+                    <div id="box_preparation">
+                        <p><b>Total time : </b>' . $total_t . ' minutes</p>
+                    </div>';
+        if (count($recette["steps"]) > 0) {
+            $steps = $recette["steps"];
+            $strStep=htmlspecialchars(json_encode($steps), ENT_QUOTES, "UTF-8");
+            $contenu .= '<ul>';
+            foreach ($steps as $index => $s) {
+                $contenu .= '<li><h5>STEP ' . ($index + 1) . ' : </h5> ' . $s;
+                
+                if((isset($recette["stepsFR"][$index+1]) && strlen($recette["stepsFR"][$index+1])<=0) ||$recette["stepsFR"]==[]){
+                    $contenu.='<button  onclick="traduction(this,'.($index+1).',\' '.$langue.' \','.$id_recette.', \'steps\')" id="btn_traduire'.($index+1).'">Translate</button>
+                    <div class="box_traduction tr_'.($index+1).'">
+                    </div>';
+                    
+                }
+                
+                if ($timers[$index] > 1) {
+                    $contenu .= ' (for ' . $timers[$index] . ' minutes)</li>';
+                } else {
+                    $contenu .= '</li>';
+                }
+            }
+            $contenu .= '</ul>';
+        }
+        else{
+            $contenu.='<i>Steps unavailable in English</i><br><br>';
+        }
+        
+        
+    }
+
+    
+    
 
     $contenu .= ($author == "Unknown") ? '<i>Par Anonyme</i>' : '<i>Par ' . $author . '</i>';
 
     require_once('pageRecette.php');
+}
+function traducteur($id_user){
+    $role=recupUserById($id_user)['role'];
+    if(in_array("Traducteur",$role)){
+        return true;
+    }
 }
 
 
@@ -223,4 +368,40 @@ function afficherRecherche($user,$recette,$likes,$mot){
     }
     }
         require_once('afficheRecherche.php');
+}
+
+function verifTraductionVide($id_recette,$liste,$index,$langue){
+    echo 'ma';
+    $f = fopen('recettes.json', 'r+');
+    
+    if (!flock($f, LOCK_EX)){
+        http_response_code(409);
+    } 
+
+    $index_l= $_POST['indexV'];
+    $liste=trim($_POST['type_listeV']);
+    $id_recette=$_POST['id_recetteV'];
+    $langue=$_POST['langueV'];
+
+    $jsonString = fread($f, filesize('recettes.json'));
+    $data = json_decode($jsonString, true); 
+    foreach($data as $index=> $r){
+        if($r['id']==$id_recette){
+            if($langue==trim('fr')){
+                if(strlen($data[$index][$liste][$index_l])>0){
+                    echo 'true';
+                    return true;
+                }
+                else{
+                    echo 'false';
+                }
+            }
+            else if($langue==trim('eng')){
+                if(strlen($data[$index][$liste.'FR'][$index_l])>0){
+                    return true;
+                }
+            }
+            
+        }
+    }
 }

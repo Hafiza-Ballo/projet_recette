@@ -111,7 +111,9 @@
                 "type": "Baking"
             }
         ],
-        "ingredientsFR": [],
+        "ingredientsFR": [
+            
+        ],
         "steps": [
             "Preheat oven to 425\u00b0F.",
             "Cut off the woody bottom part of the asparagus spears and discard.",
@@ -506,7 +508,7 @@
         "name": "Blueberry Oatmeal Squares",
         "nameFR": "",
         "Author": "",
-        "Without": "",
+        "Without": [],
         "ingredients": [
             {
                 "quantity": "2-1\/2 cups",

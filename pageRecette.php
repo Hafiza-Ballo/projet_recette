@@ -101,7 +101,7 @@
         }
         h1 {
             text-align: center;
-            color: #faab66;
+            color: #ED4B5B;
             font-weight: 700;
             margin-bottom: 20px;
         }
@@ -136,7 +136,7 @@
             text-align: left; 
         }
         h4 {
-            color: #faab66;
+            color:#ED4B5B;
             margin-top: 20px;
             font-weight: 600;
         }
@@ -196,11 +196,21 @@
             color: #777;
             font-size: 0.9em;
         }
+        .trad{
+            width: 70%;
+        }
+        #btn_traduire{
+            visibility: visible;
+            display:block;
+        
+        }
+        
     </style>
 </head>
 <body>
 <section class="haut">
 <?php
+            $langue = $_SESSION['langue'] ?? 'fr';
                 echo $retourBtn;
             ?>
             <div id="ensemble_recherche">
@@ -209,14 +219,21 @@
             </div> 
             <div>
                 <form class="choix_langue">
-                    <select name="">
-                        <option value="fr" id="t">Fr </option>
-                        <option value="eng" > Eng</option>
+                    <select name="langue" onchange="changerLangue(this.value)">
+                    <?php if ($langue=='fr'){
+                                echo '<option value="fr" id="t" >Fr </option>
+                                <option value="eng" > Eng</option>';
+                            }
+                            else{
+                                echo '<option value="eng" > Eng</option>
+                                <option value="fr" id="t" >Fr </option>
+                                ';
+                            }  ?>                  
                     </select>
                 </form>
-                
-                
-                <button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc">Mon compte</button>
+            
+                <?php echo $langue=='fr' ? '<button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc">Mon compte</button>' : '<button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc">My account</button>'; ?>
+                <!--<button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc">Mon compte</button>-->
                 <div class="conteneur_modif_c">
                     <a href="informations_perso.php">Informations personnelles</a><br>
                     <a><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Deconnexion</a>
@@ -227,12 +244,17 @@
 </section>
     <section class="page_recette">
         <h1><?php echo $nom; ?></h1>
+        
+
         <div class="recette_principale">
+
             <div id="carouselRecette" class="carousel slide" data-bs-ride="carousel">
+                
                 <div class="carousel-inner">
                     <?php foreach ($images as $index => $image): ?>
                         <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
                             <img src="<?php echo $image; ?>" class="d-block w-100 img_sec" alt="recette">
+
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -254,7 +276,7 @@
         </div>
         <input type="file" id="photoInput">
         <input type="text" id="photoUrl" placeholder="Ou entrez une URL">
-        <button id="btn_like" onclick="ajouterPhoto(<?php echo  $id_user . ',' . $id_recette ?>)">Ajouter</button>
+        <button id="btn_like" onclick="ajouterPhoto(<?php echo  $id_user . ',' . $id_recette ?>)"><?php echo $langue =='fr' ? 'Ajouter' : 'Add'; ?></button>
         <div id="statut" class="fixed-top"></div>
     </section>
     

@@ -297,39 +297,148 @@ function recupRecetteByMot($mot){
 }
 
 }
-/*function AjoutRole($id_user,$newrole){
-    $f = fopen('utilisateurs.json', 'r+');
+
+function ajoutTraduction($id_recette, $liste, $index_l, $valeur,$langueDeTrad)
+{
+    var_dump( $langueDeTrad);
+    $f = fopen('recettes.json', 'r+');
+
     if (!flock($f, LOCK_EX)){
         http_response_code(409);
     }
-
-    $jsonString = fread($f, filesize('utilisateurs.json'));
+    
+    $jsonString = fread($f, filesize('recettes.json'));
     $data = json_decode($jsonString, true); 
-    $ajoute=false;
-    foreach($data as $index=> $u){
-        if($u['id']==$id_user){
-            if(!in_array($newrole, $data[$index]['role'])){
-                $data[$index]['role'][] = $newrole;
-                $_SESSION['role']=$data[$index]['role'];
-                $ajoute=true;
-                break;
+    $liste=str_replace(' ', '', $liste);
+    foreach($data as $index=> $r){
+        if($r['id']==$id_recette){
+            
+            if(trim($langueDeTrad)=='fr'){
+                echo 'ic';
+                if($liste=='ingredients'){
+                    $valeur=explode(",",$valeur);
+                    $new = [
+                        "quantity" => trim($valeur[0]),
+                        "name" => trim($valeur[1]),
+                        "type" => trim($valeur[2])
+                    ];
+                    if(sizeof($data[$index][$liste])<=0){
+                        for( $i=0; $i<sizeof($data[$index][$liste.'FR']);$i++){
+                            if($i==$index_l-1 ){
+
+                                echo trim($valeur[0]).'  '.trim($valeur[1]).' '.trim($valeur[2]);
+                                $data[$index][$liste][] = $new;
+                            }
+                            else{
+                                $data[$index][$liste][]=[];
+
+                            }
+                        }
+
+                            
+                    }
+                    else{
+                        for( $i=0; $i<sizeof($data[$index][$liste.'FR']);$i++){
+                            if($i==$index_l-1 ){
+                                $data[$index][$liste][$i]=$new;
+                            }
+                            
+                        }
+                    }
+                         
+                }
+                else if($liste=='steps'){
+                    if(sizeof($data[$index][$liste])<=0){
+                        for( $i=0; $i<sizeof($data[$index][$liste.'FR']);$i++){
+                            if($i==$index_l-1 ){
+                                $data[$index][$liste][$i]=$valeur;
+                            }
+                            else{
+                                $data[$index][$liste][$i]= "";
+                            }
+                        }
+                    }
+                    else{
+                        for( $i=0; $i<sizeof($data[$index][$liste.'FR']);$i++){
+                            if($i==$index_l-1 ){
+                                $data[$index][$liste][$i]=$valeur;
+                            }
+                            
+                        }
+                    }
+                    
+                }
+                
             }
-            else{
-                echo 'Role existe deja';
+            
+            else if(trim($langueDeTrad)=='eng'){
+                echo 'uu';
+                $liste=str_replace(' ', '', $liste);
+                if($liste=='ingredients'){
+                    $valeur=explode(",",$valeur);
+                    $new = [
+                        "quantity" => trim($valeur[0]),
+                        "name" => trim($valeur[1]),
+                        "type" => trim($valeur[2])
+                    ];
+                    if(sizeof($data[$index][$liste.'FR'])<=0){
+                        for( $i=0; $i<sizeof($data[$index][$liste]);$i++){
+                            if($i==$index_l-1 ){
+
+                                echo trim($valeur[0]).'  '.trim($valeur[1]).' '.trim($valeur[2]);
+                                $data[$index][$liste.'FR'][] = $new;
+                            }
+                            else{
+                                $data[$index][$liste.'FR'][]=[];
+
+                            }
+                        }
+
+                            
+                    }
+                    else{
+                        for( $i=0; $i<sizeof($data[$index][$liste]);$i++){
+                            if($i==$index_l-1 ){
+                                $data[$index][$liste.'FR'][$i]=$new;
+                            }
+                            
+                        }
+                    }
+                         
+                }
+                else if($liste=='steps'){
+                    if(sizeof($data[$index][$liste.'FR'])<=0){
+                        for( $i=0; $i<sizeof($data[$index][$liste]);$i++){
+                            if($i==$index_l-1 ){
+                                $data[$index][$liste.'FR'][$i]=$valeur;
+                            }
+                            else{
+                                $data[$index][$liste.'FR'][$i]= "";
+                            }
+                        }
+                    }
+                    else{
+                        for( $i=0; $i<sizeof($data[$index][$liste.'FR']);$i++){
+                            if($i==$index_l-1 ){
+                                $data[$index][$liste.'FR'][$i]=$valeur;
+                            }
+                            
+                        }
+                    }
+                    
+                }
+                
             }
             
         }
     }
-    if($ajoute){
-        $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
-        ftruncate($f, 0);
-        fseek($f,0);
-        fwrite($f, $newJsonString);
-    }
-    
+    $valeur="";
+    $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+    ftruncate($f, 0);
+    fseek($f,0);
+    fwrite($f, $newJsonString);
     flock($f, LOCK_UN);
-    fclose($f);
+    fclose($f); 
 
-    echo json_encode(["success" => true, "newrole" => $newrole]);
 }
-*/
+
