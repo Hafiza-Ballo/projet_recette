@@ -1,0 +1,26 @@
+[
+    {
+        "id_user": "2",
+        "id_recette": "1",
+        "commentaire": "Tres bon je me suis regale !!!",
+        "nom": "Ballo",
+        "prenom": "Hafiza",
+        "date": "2025-04-03 09:11:50"
+    },
+    {
+        "id_user": "2",
+        "id_recette": "1",
+        "commentaire": "parfait",
+        "nom": "Ballo",
+        "prenom": "Hafiza",
+        "date": "2025-04-03 09:22:57"
+    },
+    {
+        "id_user": "2",
+        "id_recette": "1",
+        "commentaire": "incroyable",
+        "nom": "Ballo",
+        "prenom": "Hafiza",
+        "date": "2025-04-03 10:30:59"
+    }
+]

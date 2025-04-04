@@ -1,11 +1,15 @@
 <?php
 
 function afficherAccueil($user, $recette, $likes) {
-    
+    if ($user)
     $id_user = '<div><input type="hidden" name="id_user" value="' . $user['id'] . '"></div>';
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
     $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$user['id'] . '">Informations personnelles</a>';
+    if (in_array('admin', $user['role']))
+    {
+        $infosBtn .= '<a href="controllerFrontal.php?action=admin&id_user=' .$user['id'] . '">Espace Admin</a>';
+    }
     $contenu = '';
     $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
     
@@ -333,6 +337,10 @@ function afficherRecherche($user,$recette,$likes,$mot){
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
     $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$user['id'] . '">Informations personnelles</a>';
+    if (!in_array('admin', $user['role']))
+    {
+        $infosBtn .= '<br><a href="controllerFrontal.php?action=admin&id_user=' .$user['id'] . '">Espace Admin</a>';
+    }
     $contenu = '';
     $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">Retour</button>';
     $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
@@ -405,7 +413,7 @@ function afficherRecherche($user,$recette,$likes,$mot){
 }
 function afficherInfo($user){
     $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">Retour</button>';
-
+    $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$user['id'] . '">Informations personnelles</a>';
     $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
     $id_user= '<input type="hidden" name="id" value="' .$user['id'] .'">';
     $nom = '<input type="text" class="form-control" name="nom" value="'. $user['nom'] . '" required>';
@@ -433,4 +441,8 @@ function afficherInfo($user){
     $btn = '<button type="button" onclick="modifInfo()">Modifier</button>';
 
     require_once('informations_perso.php');
+}
+
+function afficherAdmin($user, $utilisateurs, $recettes) {
+    require_once('admin.php');
 }

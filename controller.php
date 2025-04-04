@@ -77,6 +77,33 @@ function CtlMofifInfo($id,$nom, $prenom, $mail, $roles){
     $user=modifInfo($id,$nom, $prenom, $mail, $roles);
 }
 
+function  CtlAjouterCommentaire($id_user, $id_recette, $commentaire) 
+{
+    $user = recupUserById($id_user);
+    if (empty($user)) {
+        throw new Exception('Utilisateur non trouvé.');
+    }
+    ajouterCommentaire($id_user, $id_recette, $commentaire, $user['nom'], $user['prenom']);
+    echo json_encode(['success' => true]);
+}
+
+function CtlRecupCommentaires($id_recette)
+{
+    return recupCommentaires($id_recette);
+}
+function CtlAfficherAdmin($id_user)
+{
+    $user = recupUserById($id_user); 
+    if (!in_array('admin', $user['role'])) {
+        throw new Exception('Accès refusé : vous n\'êtes pas administrateur.');
+    }
+    $utilisateurs = recupUtilisateurs() ;
+    $recettes = recupRecette(); 
+    afficherAdmin($user, $utilisateurs, $recettes);
+}
+/*function CtlAjoutRole($id_user,$role){
+    AjoutRole($id_user, $role);
+}*/
 function CtlAjoutTraduction($id_recette, $liste, $index_l, $valeur, $langueDeTrad){
     ajoutTraduction($id_recette, $liste, (int)$index_l, $valeur,$langueDeTrad);
 }

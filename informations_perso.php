@@ -9,215 +9,242 @@
         <script src="jquery-3.7.1.js"></script>
         <script src="affichage.js"></script>
         <style>
-    body {
-        background-color: #f4f5ec;
-        font-family: 'Poppins', sans-serif;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
+            body {
+                background-color: #f4f5ec;
+                font-family: 'Poppins', sans-serif;
+                color: #333;
+                margin: 0;
+                padding: 0;
+            }
 
-    
-    .haut {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background-color: #fff;
-        padding: 15px 20px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 1000;
-    }
-    #ensemble_recherche {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin: 0 auto;
-    }
-    #ensemble_recherche input {
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        width: 200px;
-    }
-    .icone_recherche {
-        height: 20px;
-        width: 20px;
-    }
-    .choix_langue {
-        position: absolute;
-        right: 15%;
-        top: 20px;
-    }
-    .choix_langue select {
-        padding: 5px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-    #mon_compte {
-        right: 20px;
-        top: 10px;
-        background-color: transparent;
-        border: none;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-    #user_mc {
-        height: 25px;
-        width: 25px;
-    }
-    .conteneur_modif_c {
-        visibility: hidden;
-        background-color: #fff;
-        border-radius: 10px;
-        width: 200px;
-        padding: 15px;
-        position: fixed;
-        right: 20px;
-        top: 50px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-    .conteneur_modif_c a {
-        display: block;
-        margin: 10px 0;
-        color: #ED4B5B;
-        text-decoration: none;
-    }
-    #deconnexion_img {
-        height: 20px;
-        width: 20px;
-        vertical-align: middle;
-        margin-right: 5px;
-    }
+            .haut {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                background-color: #fff;
+                padding: 15px 20px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 1000;
+            }
+            
+            #ensemble_recherche {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin: 0 auto;
+            }
+            
+            #ensemble_recherche input {
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                width: 200px;
+            }
+            
+            .icone_recherche {
+                height: 20px;
+                width: 20px;
+            }
+            
+            .choix_langue {
+                position: absolute;
+                right: 15%;
+                top: 20px;
+            }
+            
+            .choix_langue select {
+                padding: 5px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+            }
+            
+            #mon_compte {
+                right: 20px;
+                top: 10px;
+                background-color: transparent;
+                border: none;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            
+            #user_mc {
+                height: 25px;
+                width: 25px;
+            }
+            
+            .conteneur_modif_c {
+                visibility: hidden;
+                background-color: #fff;
+                border-radius: 10px;
+                width: 200px;
+                padding: 15px;
+                position: fixed;
+                right: 20px;
+                top: 50px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .conteneur_modif_c a {
+                display: block;
+                margin: 10px 0;
+                color: #ED4B5B;
+                text-decoration: none;
+            }
+            
+            #deconnexion_img {
+                height: 20px;
+                width: 20px;
+                vertical-align: middle;
+                margin-right: 5px;
+            }
 
-    .principale_ensemble {
-    width: 90%;
-    max-width: 1200px;
-    margin: 100px auto 40px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 30px;
-    box-sizing: border-box; 
-}
-.jaime {
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    gap: 8px; 
-}
-#carouselRecette {
-    width: 600px; 
-    height: 350px; 
-    margin: 0 auto; 
-    overflow: hidden; 
-    border-radius: 10px; 
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
-}
+            .principale_ensemble {
+                width: 90%;
+                max-width: 1200px;
+                margin: 100px auto 40px auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+                box-sizing: border-box;
+            }
+            
+            .jaime {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            #carouselRecette {
+                width: 600px;
+                height: 350px;
+                margin: 0 auto;
+                overflow: hidden;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
 
-#carouselRecette .carousel-item img {
-    width: 100%;
-    height: 350px; 
-    object-fit: cover; 
-}
+            #carouselRecette .carousel-item img {
+                width: 100%;
+                height: 350px;
+                object-fit: cover;
+            }
 
-.carousel-item {
-    height: 350px;
-}
-.recette_card {
-    width: 100%; 
-    max-width: none; 
-    margin: 0; 
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s ease;
-    box-sizing: border-box;
-}
-    .recette_card:hover {
-        transform: translateY(-5px);
-    }
-    .principale_image {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin-bottom: 15px;
-    }
-    h4 {
-        color: #faab66;
-        margin: 10px 0;
-        font-weight: 600;
-    }
-    .btn_like {
-        border: none;
-        background: transparent;
-        cursor: pointer;
-        transition: transform 0.2s ease;
-        width: 30px;
-        height: 30px;
-        display: inline-block;
-    }
-    .btn_like:hover {
-        transform: scale(1.1);
-    }
-    .like, .dislike {
-        width: 100%;
-        height: 100%;
-        transition: opacity 0.3s ease;
-    }
-    .like {
-        display: block;
-    }
-    .dislike {
-        display: none;
-    }
-    #voir_r {
-        background-color: #ED4B5B;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 8px 15px;
-        margin-top: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    #voir_r:hover {
-        background-color: #d43f4e;
-    }
-    a {
-        text-decoration: none;
-        color: #ED4B5B;
-    }
-    .btn_retour {
-    
-    bottom: 20px;
-    left: 20px;
-    background-color: #ED4B5B;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-}
-.btn_retour:hover {
-    background-color: #d43f4e;
-}
-</style> 
+            .carousel-item {
+                height: 350px;
+            }
+            
+            .recette_card {
+                width: 100%;
+                max-width: none;
+                margin: 0;
+                background-color: #fff;
+                border-radius: 10px;
+                padding: 15px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                transition: transform 0.2s ease;
+                box-sizing: border-box;
+            }
+            
+            .recette_card:hover {
+                transform: translateY(-5px);
+            }
+            
+            .principale_image {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-bottom: 15px;
+            }
+            
+            h4 {
+                color: #faab66;
+                margin: 10px 0;
+                font-weight: 600;
+            }
+            
+            .btn_like {
+                border: none;
+                background: transparent;
+                cursor: pointer;
+                transition: transform 0.2s ease;
+                width: 30px;
+                height: 30px;
+                display: inline-block;
+            }
+            
+            .btn_like:hover {
+                transform: scale(1.1);
+            }
+            
+            .like, .dislike {
+                width: 100%;
+                height: 100%;
+                transition: opacity 0.3s ease;
+            }
+            
+            .like {
+                display: block;
+            }
+            
+            .dislike {
+                display: none;
+            }
+            
+            #voir_r {
+                background-color: #ED4B5B;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 8px 15px;
+                margin-top: 10px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            
+            #voir_r:hover {
+                background-color: #d43f4e;
+            }
+            
+            a {
+                text-decoration: none;
+                color: #ED4B5B;
+            }
+            
+            .btn_retour {
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                background-color: #ED4B5B;
+                color: white;
+                border: none;
+                border-radius: 30px;
+                padding: 10px 20px;
+                cursor: pointer;
+                font-family: 'Poppins', sans-serif;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                z-index: 1000;
+                box-shadow: 0 3px 10px rgba(237, 75, 91, 0.3);
+            }
+            
+            .btn_retour:hover {
+                background-color: #d43f4e;
+                transform: translateY(-2px);
+            }
+        </style> 
     </head>
 
     <body>
