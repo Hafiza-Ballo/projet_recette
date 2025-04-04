@@ -189,15 +189,17 @@
         padding-bottom: 5px;
     }
     
+    
+    
     ul, ol {
         padding-left: 25px;
     }
     
-    ul {
+    .ingredients {
         list-style: none;
     }
     
-    ul li::before {
+    .ingredients li::before {
         content: "•";
         color: #faab66;
         font-weight: bold;
@@ -210,7 +212,6 @@
         margin: 12px 0;
         line-height: 1.6;
     }
-    
     .btn_like {
         border: none;
         background: transparent;
@@ -467,7 +468,7 @@
     
     }
     .trad_input_ingredients{
-        width: 20%;
+        width: max-content;
     }
     .steps{
         position: relative;
@@ -485,11 +486,11 @@
     .steps li::before {
         content: "";
         position: absolute;
-        left: 11px;
+        left: -5px;
         top: 0;
         width: 15px;
         height: 15px;
-        background-color: #ED4B5B;
+        background-color: #faab66;
         box-shadow: 2px 2px 0px #bab5f8;
         box-shadow: 2px 2px 0px #bab5f8;
         border-radius: 50%;
@@ -537,10 +538,20 @@
         height: 6%;
         width: 4%;
     }
+    /*.box_traduction{
+        border:solid 1px gainsboro;
+        border-radius: 4px;
+        margin-left: 30%;
+        max-width: max-content;
+        width: 100%;
+    }*/
+    
         
     </style>
 </head>
 <body>
+    <?php $langue = $_SESSION['langue'] ?? 'fr';?>
+
     <section class="haut">
         <?php echo $retourBtn; ?>
         <div id="ensemble_recherche">
@@ -549,9 +560,18 @@
         </div> 
         <div>
             <form class="choix_langue">
-                <select name="">
-                    <option value="fr" id="t">Fr</option>
-                    <option value="eng">Eng</option>
+                <select name="langue" onchange="changerLangue(this.value)">
+                <?php
+                    if ($langue=='fr'){
+                        echo '<option value="fr" id="t" >Fr </option>
+                        <option value="eng" > Eng</option>';
+                    }
+                    else{
+                        echo '<option value="eng" > Eng</option>
+                        <option value="fr" id="t" >Fr </option>
+                        ';
+                    }
+                ?>
                 </select>
             </form>
             

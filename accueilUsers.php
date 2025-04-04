@@ -215,20 +215,17 @@
             <div>
                 <form class="choix_langue">
                 <select name="langue" onchange="changerLangue(this.value)">
-                    <?php //$langue = $_SESSION['langue'] ?? 'fr';
-                            if ($langue=='fr'){
-                                echo '<option value="fr" id="t" >Fr </option>
-                                <option value="eng" > Eng</option>';
-                            }
-                            else{
-                                echo '<option value="eng" > Eng</option>
-                                <option value="fr" id="t" >Fr </option>
-                                ';
-                            }
-                             ?>
-                        <!--<option value="fr" id="t" <?php //echo' (isset($_SESSION["langue"]) && $_SESSION["langue"] == "fr") ? "selected" : ""'; ?>>Fr </option>
-                        <option value="" <?php //echo' (isset($_SESSION["langue"]) && $_SESSION["langue"] == "eng") ? "selected" : ""'; ?>> Eng</option>
-                        -->
+                    <?php
+                        if ($langue=='fr'){
+                            echo '<option value="fr" id="t" >Fr </option>
+                            <option value="eng" > Eng</option>';
+                        }
+                        else{
+                            echo '<option value="eng" > Eng</option>
+                            <option value="fr" id="t" >Fr </option>
+                            ';
+                        }
+                    ?>
                     </select>
                 </form>
                 

@@ -152,7 +152,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
             $strIngr=htmlspecialchars(json_encode($nom_ingredients), ENT_QUOTES, "UTF-8");
             $nom_ingredientsENG = array_column($recette["ingredients"], "name");
 
-            $contenu.='<ul>';
+            $contenu.='<ul class="ingredients">';
             foreach ($nom_ingredients as $index=>$n) {
                 if(isset($quantite_ingredients[$index])){
                     $q=$quantite_ingredients[$index];
@@ -196,7 +196,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
             $steps = $recette["stepsFR"];
             $strStep=htmlspecialchars(json_encode($steps), ENT_QUOTES, "UTF-8");
 
-            $contenu .= '<ul>';
+            $contenu .= '<ul class="steps">';
             foreach ($steps as $index => $s) {
                 $contenu .= '<li><h5>ÉTAPE ' . ($index + 1) . ' : </h5> ' . $s;
                 if(traducteur($id_user)){
@@ -245,7 +245,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
 
             $strIngr=htmlspecialchars(json_encode($nom_ingredients), ENT_QUOTES, "UTF-8");
 
-            $contenu.='<ul>';
+            $contenu.='<ul class="ingredients">';
             foreach ($nom_ingredients as $index=>$n) {
                 if(isset($quantite_ingredients[$index])){
                     $q=$quantite_ingredients[$index];
