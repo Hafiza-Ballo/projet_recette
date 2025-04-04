@@ -372,39 +372,34 @@ function afficherRecherche($user,$recette,$likes,$mot){
     }
         require_once('afficheRecherche.php');
 }
+function afficherInfo($user){
+    $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">Retour</button>';
 
-function verifTraductionVide($id_recette,$liste,$index,$langue){
-    echo 'ma';
-    $f = fopen('recettes.json', 'r+');
-    
-    if (!flock($f, LOCK_EX)){
-        http_response_code(409);
-    } 
-
-    $index_l= $_POST['indexV'];
-    $liste=trim($_POST['type_listeV']);
-    $id_recette=$_POST['id_recetteV'];
-    $langue=$_POST['langueV'];
-
-    $jsonString = fread($f, filesize('recettes.json'));
-    $data = json_decode($jsonString, true); 
-    foreach($data as $index=> $r){
-        if($r['id']==$id_recette){
-            if($langue==trim('fr')){
-                if(strlen($data[$index][$liste][$index_l])>0){
-                    echo 'true';
-                    return true;
-                }
-                else{
-                    echo 'false';
-                }
-            }
-            else if($langue==trim('eng')){
-                if(strlen($data[$index][$liste.'FR'][$index_l])>0){
-                    return true;
-                }
-            }
-            
-        }
+    $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
+    $id_user= '<input type="hidden" name="id" value="' .$user['id'] .'">';
+    $nom = '<input type="text" class="form-control" name="nom" value="'. $user['nom'] . '" required>';
+    $prenom = '<input type="text" class="form-control" name="prenom" value=" ' .  $user['prenom'] . '" required>';
+    $mail = '<input type="email" class="form-control" name="mail" value="'.  $user['mail'] . '" required>';
+    $roles = '';
+    foreach ($user['role'] as $role): 
+        $roles .= '<li>'. $role .'</li>';
+    endforeach;
+    $demandeRoles = '';
+    if (!in_array('DemandeChef', $user['role']) && !in_array('Chef', $user['role'])) {
+        $demandeRoles .= '
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="demande_roles[]" id="demande-chef" value="DemandeChef">
+            <label class="form-check-label" for="demande-chef">Demander le rôle Chef</label>
+        </div>';
     }
+    if (!in_array('DemandeTraducteur', $user['role']) && !in_array('Traducteur', $user['role'])) {
+        $demandeRoles .= '
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="demande_roles[]" id="demande-traducteur" value="DemandeTraducteur">
+            <label class="form-check-label" for="demande-traducteur">Demander le rôle Traducteur</label>
+        </div>';
+    }
+    $btn = '<button type="button" onclick="modifInfo()">Modifier</button>';
+
+    require_once('informations_perso.php');
 }

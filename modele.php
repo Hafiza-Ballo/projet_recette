@@ -297,7 +297,47 @@ function recupRecetteByMot($mot){
 }
 
 }
+function modifInfo($id_user, $nom, $prenom, $mail, $roles){
+    $f = fopen('utilisateurs.json', 'r+');
+    if (!flock($f, LOCK_EX)){
+        http_response_code(409);
+    }
+    $jsonString = fread($f, filesize('utilisateurs.json'));
+    $users = json_decode($jsonString, true);
+    $trouve = false;
+    foreach ($users as &$user) {
+        if ($user['id'] == $id_user) {
+            if (isset($nom)) $user['nom'] = $nom;
+            if (isset($prenom)) $user['prenom'] = $prenom;
+            if (isset($mail)) $user['mail'] = $mail;
+            if (isset($roles) && is_array($roles)) {
+                
 
+                foreach ($roles as $newRole) {
+                    if (is_string($newRole) && !in_array($newRole, $user['role'])) {
+                        $user['role'][] = $newRole;
+                    }
+                
+            }
+
+            }
+            $trouve = true;
+            break;
+        }
+    }
+    if (!$trouve) {
+        flock($f, LOCK_UN);
+        fclose($f);
+        echo json_encode(['success' => false, 'message' => 'Utilisateur non trouvé']);
+        return;
+    }
+    ftruncate($f, 0);
+    fseek($f, 0);
+    fwrite($f, json_encode($users, JSON_PRETTY_PRINT));
+    flock($f, LOCK_UN);
+    fclose($f);
+    echo json_encode(['success' => true, 'message' => 'Modification réussie']);
+}
 function ajoutTraduction($id_recette, $liste, $index_l, $valeur,$langueDeTrad)
 {
     var_dump( $langueDeTrad);
