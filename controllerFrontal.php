@@ -47,6 +47,37 @@ try {
         $roles = json_decode($_POST['demande_roles'], true);
         CtlMofifInfo($id_user, $nom, $prenom, $mail, $roles);
         echo json_encode(['success' => true]);
+    }else if (isset($_GET['action']) && $_GET['action'] === 'admin') {
+        $id_user = $_GET['id_user'];
+        CtlAfficherAdmin($id_user);
+    }
+    
+    else if(isset($_POST['id_user'])  && isset($_POST['id_recette'] ) && isset($_FILES['photo'] )){
+        $id_user=$_POST['id_user'];
+        $id_recette=$_POST['id_recette'];
+        $photo=$_FILES['photo'];
+        CtlAjoutPhoto($id_user,$id_recette,$photo);
+    }
+    else if(isset($_POST['id_user'])  && isset($_POST['id_recette'] ) && isset($_POST['url'] )){
+        $id_user=$_POST['id_user'];
+        $id_recette=$_POST['id_recette'];
+        $photo=$_POST['url'];
+        CtlAjoutPhoto2($id_user,$id_recette,$photo);
+    }
+    else if (isset($_POST['id_user']) && isset($_POST['role'])){
+        echo 'ici';
+        $role=$_POST['role'];
+        $id_user=$_POST['id_user'];
+    }else if (isset($_POST['id_user']) && isset($_POST['id_recette']) && isset($_POST['commentaire'])) {
+        $id_user = $_POST['id_user'];
+        $id_recette = $_POST['id_recette'];
+        $commentaire = $_POST['commentaire'];
+        CtlAjouterCommentaire($id_user, $id_recette, $commentaire);
+    }
+    else if (isset($_POST['action']) && $_POST['action'] === 'get_commentaires' && isset($_POST['id_recette'])) {
+        $id_recette = $_POST['id_recette'];
+        $commentaires = CtlRecupCommentaires($id_recette);
+        echo json_encode($commentaires);
     }
     else if(isset($_GET['action'])){
         switch ($_GET['action']) {
@@ -69,23 +100,7 @@ try {
         }
         
     }
-    else if(isset($_POST['id_user'])  && isset($_POST['id_recette'] ) && isset($_FILES['photo'] )){
-        $id_user=$_POST['id_user'];
-        $id_recette=$_POST['id_recette'];
-        $photo=$_FILES['photo'];
-        CtlAjoutPhoto($id_user,$id_recette,$photo);
-    }
-    else if(isset($_POST['id_user'])  && isset($_POST['id_recette'] ) && isset($_POST['url'] )){
-        $id_user=$_POST['id_user'];
-        $id_recette=$_POST['id_recette'];
-        $photo=$_POST['url'];
-        CtlAjoutPhoto2($id_user,$id_recette,$photo);
-    }
-    else if (isset($_POST['id_user']) && isset($_POST['role'])){
-        echo 'ici';
-        $role=$_POST['role'];
-        $id_user=$_POST['id_user'];
-    }
+    
 
     else
     {

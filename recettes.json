@@ -83,7 +83,8 @@
         "originalURL": "http:\/\/www.food.com\/recipe\/to-die-for-crock-pot-roast-27208",
         "like": 8,
         "commentaires": [],
-        "id": 1
+        "id": 1,
+        "statut": "valide"
     },
     {
         "name": "Roasted Asparagus",
@@ -141,7 +142,8 @@
         "originalURL": "http:\/\/www.food.com\/recipe\/roasted-asparagus-50847",
         "like": 6,
         "commentaires": [],
-        "id": 2
+        "id": 2,
+        "statut": "valide"
     },
     {
         "name": "Curried Lentils and Rice",
@@ -199,7 +201,8 @@
         "originalURL": "#",
         "like": 3,
         "commentaires": [],
-        "id": 3
+        "id": 3,
+        "statut": "valide"
     },
     {
         "name": "Big Night Pizza",
@@ -274,7 +277,8 @@
         "originalURL": "#",
         "like": 0,
         "commentaires": [],
-        "id": 4
+        "id": 4,
+        "statut": "valide"
     },
     {
         "name": "Cranberry and Apple Stuffed Acorn Squash Recipe",
@@ -342,7 +346,8 @@
         "originalURL": "",
         "like": 2,
         "commentaires": [],
-        "id": 5
+        "id": 5,
+        "statut": "valide"
     },
     {
         "name": "Mic's Yorkshire Puds",
@@ -401,7 +406,8 @@
         "originalURL": "https:\/\/fr.wikipedia.org\/wiki\/Yorkshire_pudding",
         "like": 0,
         "commentaires": [],
-        "id": 6
+        "id": 6,
+        "statut": "valide"
     },
     {
         "name": "Old-Fashioned Oatmeal Cookies",
@@ -500,7 +506,8 @@
         "originalURL": "#",
         "like": 8,
         "commentaires": [],
-        "id": 7
+        "id": 7,
+        "statut": "valide"
     },
     {
         "name": "Blueberry Oatmeal Squares",
@@ -585,7 +592,8 @@
         "originalURL": "http:\/\/www.canadianliving.com\/food\/blueberry_oatmeal_squares.php",
         "like": 0,
         "commentaires": [],
-        "id": 8
+        "id": 8,
+        "statut": "valide"
     },
     {
         "name": "Curried chicken salad",
@@ -682,6 +690,7 @@
         "originalURL": "http:\/\/www.chatelaine.com\/recipe\/stovetop-cooking-method\/curried-chicken-salad\/",
         "like": 4,
         "commentaires": [],
-        "id": 9
+        "id": 9,
+        "statut": "valide"
     }
 ]

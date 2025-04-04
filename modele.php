@@ -339,6 +339,59 @@ function modifInfo($id_user, $nom, $prenom, $mail, $roles){
     fclose($f);
     echo json_encode(['success' => true, 'message' => 'Modification réussie']);
 }
+
+function ajouterCommentaire($id_user, $id_recette, $commentaire, $nom, $prenom)
+{
+    $fichier = 'commentaires.json';
+    if (file_exists($fichier)) {
+        $commentaires = json_decode(file_get_contents($fichier), true);
+    } else {
+        $commentaires = [];
+    }
+
+    $nouveauCommentaire = [
+        'id_user' => $id_user,
+        'id_recette' => $id_recette,
+        'commentaire' => $commentaire,
+        'nom' => $nom,
+        'prenom' => $prenom,
+        'date' => date('Y-m-d H:i:s') 
+    ];
+
+    $commentaires[] = $nouveauCommentaire;
+    $json = json_encode($commentaires, JSON_PRETTY_PRINT);
+    file_put_contents($fichier, $json);
+}
+
+function recupCommentaires($id_recette) {
+    $fichier = 'commentaires.json';
+    if (file_exists($fichier)) {
+        $commentaires = json_decode(file_get_contents($fichier), true);
+        $result = [];
+        foreach ($commentaires as $commentaire) {
+            if ($commentaire['id_recette'] == $id_recette) {
+                $result[] = $commentaire;
+            }
+        }
+        return $result;
+    }
+    return [];
+}
+
+function recupUtilisateurs()
+{
+    if (file_exists('utilisateurs.json')) {
+        $f = fopen('utilisateurs.json', 'r+');
+    
+        if (!flock($f, LOCK_EX)){
+            http_response_code(409);
+        } 
+    
+        $jsonString = fread($f, filesize('utilisateurs.json'));
+        $data = json_decode($jsonString, true); 
+        return $data;
+    }
+}
 /*function AjoutRole($id_user,$newrole){
     $f = fopen('utilisateurs.json', 'r+');
     if (!flock($f, LOCK_EX)){

@@ -189,10 +189,55 @@ function modifInfo() {
         statut.html('<div class="alert alert-success alert-dismissible fade show" role="alert">Modification réussie !!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
         setTimeout(() => {
           window.location.reload();
-      }, 1500);
+      }, 100);
       },
       error: function() {
         statut.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Erreur lors de la modification<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+      }
+  });
+}
+
+function posterCommentaire(id_user, id_recette) {
+  let commentaire = document.getElementById('commentText').value;
+  if (commentaire.trim() === '') {
+      alert('Veuillez entrer un commentaire !');
+      return;
+  }
+
+  $.ajax({
+      url: 'controllerFrontal.php',
+      type: 'POST',
+      data: {
+          id_user: id_user,
+          id_recette: id_recette,
+          commentaire: commentaire
+      },
+      success: function(response) {
+          document.getElementById('commentText').value = '';
+          alert('Commentaire posté avec succès !');
+          chargerCommentaires(id_recette); 
+      },
+      error: function() {
+          alert('Erreur lors de l\'envoi du commentaire.');
+      }
+  });
+}
+
+function chargerCommentaires(id_recette) {
+  $.ajax({
+      url: 'controllerFrontal.php',
+      type: 'POST',
+      data: {
+          action: 'get_commentaires',
+          id_recette: id_recette
+      },
+      success: function(response) {
+          let commentaires = JSON.parse(response);
+          let commentList = document.getElementById('commentList');
+          commentList.innerHTML = '';
+          commentaires.forEach(function(comment) {
+              commentList.innerHTML += '<div class="comment-item">' + comment.prenom + ' ' + comment.nom + ': ' + comment.commentaire + '</div>';
+          });
       }
   });
 }
