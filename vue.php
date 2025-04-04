@@ -85,7 +85,7 @@ function afficherAccueil($user, $recette, $likes) {
         }
 
         $contenu .= '</button>
-                     <span id="like-count-' . $d["id"] . '">' . $nblike . '</span>'.($langue == 'fr' ? ' J\'' : ' Like').'
+                     <span id="like-count-' . $d["id"] . '">' . $nblike . '</span>'.($langue == 'fr' ? ' J\'aime' : ' Like').'
                     </div>
                 </div>
             </div>';

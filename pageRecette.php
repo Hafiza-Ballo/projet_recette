@@ -244,7 +244,7 @@
         background-color: #ED4B5B;
         color: white;
         border: none;
-        border-radius: 30px;
+        border-radius: 5px;
         padding: 10px 20px;
         cursor: pointer;
         font-family: 'Poppins', sans-serif;
@@ -257,14 +257,6 @@
     .btn_retour:hover {
         background-color: #d43f4e;
         transform: translateY(-2px);
-    }
-    
-    #box_preparation {
-        background-color: #f9f9f9;
-        padding: 20px;
-        border-radius: 10px;
-        margin: 20px 0;
-        border-left: 4px solid #faab66;
     }
     
     i {
@@ -459,112 +451,92 @@
     #statut.show {
         opacity: 1;
     }
-</style>
-            bottom: 20px;
-            left: 20px;
-            background-color: #ED4B5B;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            z-index: 1000;
-        }
-        .btn_retour:hover {
-            background-color: #d43f4e;
-        }
-        #box_preparation {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-        }
-        i {
-            color: #777;
-            font-size: 0.9em;
-        }
-        .trad{
-            width: 70%;
-        }
-        #btn_traduire{
-            visibility: visible;
-            display:block;
+    #box_preparation {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+    }
+    
+    .trad{
+        width: 70%;
+    }
+    #btn_traduire{
+        visibility: visible;
+        display:block;
+    
+    }
+    .trad_input_ingredients{
+        width: 20%;
+    }
+    .steps{
+        position: relative;
+        list-style: none;
+        padding-left: 30px;
+        margin: 0;
+    }
+    .steps li {
+        position: relative;
+        margin-bottom: 30px;
+        padding-left: 2%;
         
-        }
-        .trad_input_ingredients{
-            width: 20%;
-        }
-        .steps{
-            position: relative;
-            list-style: none;
-            padding-left: 30px;
-            margin: 0;
-        }
-        .steps li {
-            position: relative;
-            margin-bottom: 30px;
-            padding-left: 2%;
-            
-        }
+    }
 
-        .steps li::before {
-            content: "";
-            position: absolute;
-            left: -5px;
-            top: 0;
-            width: 15px;
-            height: 15px;
-            background-color: #ED4B5B;
-            box-shadow: 2px 2px 0px #bab5f8;
-            box-shadow: 2px 2px 0px #bab5f8;
-            border-radius: 50%;
-        }
+    .steps li::before {
+        content: "";
+        position: absolute;
+        left: 11px;
+        top: 0;
+        width: 15px;
+        height: 15px;
+        background-color: #ED4B5B;
+        box-shadow: 2px 2px 0px #bab5f8;
+        box-shadow: 2px 2px 0px #bab5f8;
+        border-radius: 50%;
+    }
 
-        .steps li::after {
-            content: "";
-            position: absolute;
-            left: 4px;
-            top: 15px;
-            width: 2px;
-            height: calc(100% + 20px); /* pour relier au suivant */
-            background-color: #ccc;
-        }
+    .steps li::after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 15px;
+        width: 2px;
+        height: calc(100% + 20px); /* pour relier au suivant */
+        background-color: #ccc;
+    }
 
-        .steps li:last-child::after {
-        display: none;
-        }
-        button{
-            border:solid 2px #ED4B5B;
-            border-radius: 5px;
-            background-color: white;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            color: #ED4B5B;
-        }
-        button:hover{
-            background-color: #ED4B5B;
-            color: #fff;
-        }
-        #lettre{
-            border:solid 1.5px #ED4B5B;
-            border-radius: 50%;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 3%;
-            height: 5%;
-            color:#ED4B5B;
+    .steps li:last-child::after {
+    display: none;
+    }
+    button{
+        border:solid 2px #ED4B5B;
+        border-radius: 5px;
+        background-color: white;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        color: #ED4B5B;
+    }
+    button:hover{
+        background-color: #ED4B5B;
+        color: #fff;
+    }
+    #lettre{
+        border:solid 1.5px #ED4B5B;
+        border-radius: 50%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 3%;
+        height: 5%;
+        color:#ED4B5B;
 
-        }
-        .prep{
-            height: 6%;
-            width: 4%;
-        }
+    }
+    .prep{
+        height: 6%;
+        width: 4%;
+    }
         
     </style>
 </head>
