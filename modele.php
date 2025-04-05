@@ -552,3 +552,4 @@ function modifierRoles($id_user, $roles) {
     $json = json_encode($utilisateurs, JSON_PRETTY_PRINT);
     file_put_contents($fichier, $json);
 }
+

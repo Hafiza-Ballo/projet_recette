@@ -376,12 +376,14 @@
                                 <tr>
                                     <td><?php echo $r['id']; ?></td>
                                     <td><?php echo $r['nameFR']; ?></td>
-                                    <td><?php echo $r['Author']; ?></td>
-                                    <td><?php echo isset($r['statut']) ? $r['statut'] : 'attente'; ?></td>
+                                    <td><?php echo $r['Author']; ?></td>                  
+                                    <td><?php echo $r['statut']; ?></td>
                                     <td>
-                                        <button class="btn-action" onclick="validerRecette(<?php echo $r['id']; ?>)">Valider</button>
-                                        <button class="btn-action" onclick="modifierRecette(<?php echo $r['id']; ?>)">Modifier</button>
-                                        <button class="btn-action" onclick="supprimerRecette(<?php echo $r['id']; ?>)">Supprimer</button>
+                                    <form method="post" action="controllerFrontal.php" style="display:inline;">
+                                        <input type="hidden" name="id_user" value="<?php echo $user['id']; ?>">
+                                        <input type="hidden" name="id_recette" value="<?php echo $r['id']; ?>">
+                                        <button class="btn-action" name="voir_recette">Voir recette</button>
+                                    </form>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -438,7 +440,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary" onclick="sauverRoles()">Sauver</button>
+                <button type="button" class="btn btn-primary" onclick="sauverRoles()">Enregistrer</button>
             </div>
         </div>
     </div>

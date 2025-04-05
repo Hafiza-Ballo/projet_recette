@@ -239,21 +239,21 @@
     }
     
     .btn_retour {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        background-color: #ED4B5B;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        cursor: pointer;
-        font-family: 'Poppins', sans-serif;
-        font-size: 16px;
-        transition: all 0.3s ease;
-        z-index: 1000;
-        box-shadow: 0 3px 10px rgba(237, 75, 91, 0.3);
-    }
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                background-color: #ED4B5B;
+                color: white;
+                border: none;
+                border-radius: 30px;
+                padding: 10px 20px;
+                cursor: pointer;
+                font-family: 'Poppins', sans-serif;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                z-index: 1000;
+                box-shadow: 0 3px 10px rgba(237, 75, 91, 0.3);
+            }
     
     .btn_retour:hover {
         background-color: #d43f4e;
@@ -538,6 +538,7 @@
         height: 6%;
         width: 4%;
     }
+    
     /*.box_traduction{
         border:solid 1px gainsboro;
         border-radius: 4px;
