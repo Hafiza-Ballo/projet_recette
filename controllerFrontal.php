@@ -79,6 +79,33 @@ try {
         $commentaires = CtlRecupCommentaires($id_recette);
         echo json_encode($commentaires);
     }
+    else if (isset($_POST['action']) && $_POST['action'] === 'ajouter_recette') {
+        $id_user = $_POST['id_user'];
+        $langue = $_POST['langue'];
+        $name = ($langue === 'eng') ? $_POST['name'] : '';
+        $nameFR = ($langue === 'fr') ? $_POST['nameFR'] : '';
+        $ingredients = ($langue === 'eng') ? $_POST['ingredients'] : '';
+        $ingredientsFR = ($langue === 'fr') ? $_POST['ingredientsFR'] : '';
+        $steps = ($langue === 'eng') ? $_POST['steps'] : '';
+        $stepsFR = ($langue === 'fr') ? $_POST['stepsFR'] : '';
+        $without = $_POST['without'];
+        $timers = $_POST['timers'];
+        $photo_file = isset($_FILES['photo_file']) && $_FILES['photo_file']['error'] === UPLOAD_ERR_OK ? $_FILES['photo_file'] : null;
+        $photo_url = $_POST['photo_url'] ?? '';
+        CtlAjouterRecette($id_user, $langue, $name, $nameFR, $ingredients, $ingredientsFR, $steps, $stepsFR, $without, $timers, $photo_file, $photo_url);
+    }
+    else if (isset($_GET['action']) && $_GET['action'] === 'proposer_recette') {
+        $id_user = $_GET['id_user'];
+        $user = recupUserById($id_user); 
+        if (!in_array('Chef', $user['role'])) {
+            throw new Exception('Accès refusé : vous n\'êtes pas chef.');
+        }
+        require_once('nvrecette.php'); 
+    }
+    else if (isset($_GET['action']) && $_GET['action'] === 'mes_recettes') {
+        $id_user = $_GET['id_user'];
+        CtlAfficherMesRecettes($id_user);
+    }
     else if(isset($_GET['action'])){
         switch ($_GET['action']) {
             case 'retour_accueil':
@@ -99,6 +126,23 @@ try {
                 break;
         }
         
+    }
+    else if (isset($_POST['action']) && $_POST['action'] === 'modifier_recette') {
+        $id_user = $_POST['id_user'];
+        $id_recette = $_POST['id_recette'];
+        $langue = $_SESSION['langue'] ?? 'fr';
+        $name = ($langue === 'eng') ? $_POST['name'] : '';
+        $nameFR = ($langue === 'fr') ? $_POST['nameFR'] : '';
+        $without = $_POST['without'];
+        $ingredients = ($langue === 'eng') ? $_POST['ingredients'] : '';
+        $ingredientsFR = ($langue === 'fr') ? $_POST['ingredientsFR'] : '';
+        $steps = ($langue === 'eng') ? $_POST['steps'] : '';
+        $stepsFR = ($langue === 'fr') ? $_POST['stepsFR'] : '';
+        $timers = $_POST['timers'];
+        $photo_file = isset($_FILES['photo_file']) && $_FILES['photo_file']['error'] === UPLOAD_ERR_OK ? $_FILES['photo_file'] : null;
+        $photo_url = $_POST['photo_url'] ?? '';
+        $author = $_POST['author'];
+        CtlModifierRecette($id_user, $id_recette, $langue, $name, $nameFR, $without, $ingredients, $ingredientsFR, $steps, $stepsFR, $timers, $photo_file, $photo_url, $author);
     }
     
 

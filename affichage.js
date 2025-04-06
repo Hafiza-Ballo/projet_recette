@@ -463,3 +463,77 @@ function sauverRoles() {
         }
     });
 }
+
+function changerLangue2() {
+  var langue = document.getElementById('langue').value;
+  if (langue === 'fr') {
+      document.querySelector('.lang-fr').style.display = 'block';
+      document.querySelector('.lang-eng').style.display = 'none';
+      champsRequis('.lang-fr', true);
+      champsRequis('.lang-eng', false);
+  } else {
+      document.querySelector('.lang-fr').style.display = 'none';
+      document.querySelector('.lang-eng').style.display = 'block';
+      champsRequis('.lang-fr', false);
+      champsRequis('.lang-eng', true);
+  }
+}
+
+function champsRequis(container, required) {
+  var inputs = document.querySelectorAll(container + ' input, ' + container + ' textarea');
+  inputs.forEach(function(input) {
+      input.required = required;
+  });
+}
+
+
+
+function editMode() {
+    var viewElements = document.querySelectorAll('.view-mode');
+    var editElements = document.querySelectorAll('.edit-mode');
+    var editButton = document.getElementById('editButton');
+    var saveButton = document.getElementById('saveButton');
+
+    viewElements.forEach(function(el) {
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    });
+    editElements.forEach(function(el) {
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    });
+
+    editButton.style.display = editButton.style.display === 'none' ? 'inline-block' : 'none';
+    saveButton.style.display = saveButton.style.display === 'none' ? 'inline-block' : 'none';
+}
+
+function sauverRecette(id_recette,id_user) {
+    var formData = new FormData();
+    formData.append('action', 'modifier_recette');
+    formData.append('id_user',  id_user);
+    formData.append('id_recette', id_recette);
+    formData.append('name', document.querySelector('input[name="name"]')?.value || '');
+    formData.append('nameFR', document.querySelector('input[name="nameFR"]')?.value || '');
+    formData.append('without', document.querySelector('input[name="without"]').value);
+    formData.append('ingredients', document.querySelector('textarea[name="ingredients"]')?.value || '');
+    formData.append('ingredientsFR', document.querySelector('textarea[name="ingredientsFR"]')?.value || '');
+    formData.append('steps', document.querySelector('textarea[name="steps"]')?.value || '');
+    formData.append('stepsFR', document.querySelector('textarea[name="stepsFR"]')?.value || '');
+    formData.append('timers', document.querySelector('input[name="timers"]').value);
+    formData.append('photo_file', document.getElementById('photo_file').files[0] || null);
+    formData.append('photo_url', document.querySelector('input[name="photo_url"]').value);
+    formData.append('author', document.querySelector('input[name="author"]').value);
+
+    $.ajax({
+        url: 'controllerFrontal.php',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            alert('Recette mise à jour !');
+            location.reload();
+        },
+        error: function() {
+            alert('Erreur lors de la mise à jour de la recette.');
+        }
+    });
+}

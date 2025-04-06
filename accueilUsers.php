@@ -39,7 +39,7 @@
     #ensemble_recherche input {
         padding: 8px;
         border: 1px solid #ccc;
-        border-radius: 5px;
+        border-radius: 30px;
         width: 200px;
     }
     .icone_recherche {
@@ -211,6 +211,8 @@
                 <?php
                 echo $rechercheBtn;
             ?>
+            <?php echo $proposerRecetteBtn; ?>
+            <?php echo $mesRecettesBtn; ?>
             </div>
             <div>
                 <form class="choix_langue">

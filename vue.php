@@ -12,7 +12,14 @@ function afficherAccueil($user, $recette, $likes) {
     }
     $contenu = '';
     $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
-    
+    $proposerRecetteBtn="";
+    $mesRecettesBtn = "";
+    if (in_array('Chef', $user['role']))
+    {
+        $proposerRecetteBtn = '<a href="controllerFrontal.php?action=proposer_recette&id_user=' . $user['id'] . '" class="btn-action">Proposer une recette</a>' ;
+        $mesRecettesBtn = '<a href="controllerFrontal.php?action=mes_recettes&id_user=' . $user['id'] . '" class="btn-action">Mes recettes</a>'; 
+    }
+      
     if(isset($_SESSION['langue']) ){
         $langue=$_SESSION['langue'];
     }

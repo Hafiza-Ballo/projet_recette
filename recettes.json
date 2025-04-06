@@ -84,7 +84,8 @@
         "like": 8,
         "commentaires": [],
         "id": 1,
-        "statut": "valide"
+        "statut": "valide",
+        "id_auteur": 1
     },
     {
         "name": "Roasted Asparagus",
@@ -154,7 +155,8 @@
         "like": 6,
         "commentaires": [],
         "id": 2,
-        "statut": "attente"
+        "statut": "attente",
+        "id_auteur": 1
     },
     {
         "name": "Curried Lentils and Rice",
@@ -213,7 +215,8 @@
         "like": 3,
         "commentaires": [],
         "id": 3,
-        "statut": "valide"
+        "statut": "valide",
+        "id_auteur": 1
     },
     {
         "name": "Big Night Pizza",
@@ -289,7 +292,8 @@
         "like": 0,
         "commentaires": [],
         "id": 4,
-        "statut": "valide"
+        "statut": "valide",
+        "id_auteur": 1
     },
     {
         "name": "Cranberry and Apple Stuffed Acorn Squash Recipe",
@@ -358,7 +362,8 @@
         "like": 2,
         "commentaires": [],
         "id": 5,
-        "statut": "valide"
+        "statut": "valide",
+        "id_auteur": 1
     },
     {
         "name": "Mic's Yorkshire Puds",
@@ -418,7 +423,8 @@
         "like": 0,
         "commentaires": [],
         "id": 6,
-        "statut": "valide"
+        "statut": "valide",
+        "id_auteur": 1
     },
     {
         "name": "Old-Fashioned Oatmeal Cookies",
@@ -535,7 +541,8 @@
         "like": 8,
         "commentaires": [],
         "id": 7,
-        "statut": "valide"
+        "statut": "valide",
+        "id_auteur": 1
     },
     {
         "name": "Blueberry Oatmeal Squares",
@@ -621,7 +628,8 @@
         "like": 0,
         "commentaires": [],
         "id": 8,
-        "statut": "valide"
+        "statut": "valide",
+        "id_auteur": 1
     },
     {
         "name": "Curried chicken salad",
@@ -719,6 +727,84 @@
         "like": 4,
         "commentaires": [],
         "id": 9,
-        "statut": "valide"
+        "statut": "valide",
+        "id_auteur": 1
+    },
+    {
+        "name": "",
+        "nameFR": "thiep YAPP",
+        "Author": "Ballo Hafiza",
+        "Without": [
+            "nogluten,nono"
+        ],
+        "ingredients": [],
+        "ingredientsFR": [
+            {
+                "quantity": "1",
+                "name": "viande",
+                "type": "viande"
+            },
+            {
+                "quantity": "null",
+                "name": "blllaaaa",
+                "type": "bla"
+            }
+        ],
+        "steps": [
+            "fhbezfebzfe",
+            "fezfzfzfz"
+        ],
+        "stepsFR": [
+            "mettre l'eau",
+            "mettre viande"
+        ],
+        "timers": [
+            1,
+            2
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 0,
+        "commentaires": [],
+        "id": 10,
+        "statut": "attente",
+        "id_auteur": 2
+    },
+    {
+        "name": "thieppp",
+        "nameFR": "",
+        "Author": "Ballo Hafiza",
+        "Without": [
+            "nogluten,nono"
+        ],
+        "ingredients": [
+            {
+                "quantity": "1",
+                "name": "alalal",
+                "type": "ffz"
+            },
+            {
+                "quantity": null,
+                "name": "fzf",
+                "type": null
+            }
+        ],
+        "ingredientsFR": [],
+        "steps": [
+            "fhbezfebzfe",
+            "fezfzfzfz"
+        ],
+        "stepsFR": [],
+        "timers": [
+            1,
+            2
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 0,
+        "commentaires": [],
+        "id": 11,
+        "statut": "attente",
+        "id_auteur": 2
     }
 ]

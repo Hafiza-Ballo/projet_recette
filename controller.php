@@ -117,6 +117,75 @@ function CtlModifierRoles($id_user, $roles) {
     echo json_encode(['success' => true]);
 }
 
+function CtlAjouterRecette($id_user, $langue, $name, $nameFR, $ingredients, $ingredientsFR, $steps, $stepsFR, $without, $timers, $photo_file, $photo_url) {
+    $user = recupUserById($id_user);
+    if (!in_array('Chef', $user['role'])) {
+        throw new Exception('Accès refusé : vous n\'êtes pas chef.');
+    }
+    if (($langue === 'fr' && (empty($nameFR) || empty($ingredientsFR) || empty($stepsFR))) || 
+        ($langue === 'eng' && (empty($name) || empty($ingredients) || empty($steps)))) {
+        throw new Exception('Tous les champs obligatoires doivent être remplis pour la langue choisie.');
+    }
+    if (empty($timers)) {
+        throw new Exception('Les temps sont obligatoires.');
+    }
+
+    $photo = '';
+    if ($photo_file) {
+        $uploadDir = 'images/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        $photo = $uploadDir . basename($photo_file['name']);
+        move_uploaded_file($photo_file['tmp_name'], $photo);
+    } elseif (!empty($photo_url)) {
+        $photo = $photo_url;
+    }
+
+    ajouterRecette($id_user, $langue, $name, $nameFR, $ingredients, $ingredientsFR, $steps, $stepsFR, $without, $timers, $photo, $user['nom'] . ' ' . $user['prenom']);
+    echo '<script>alert("Recette proposée avec succès !"); window.location.href="controllerFrontal.php?action=retour_accueil&id_user=' . $id_user . '";</script>';
+}
+
+function CtlAfficherMesRecettes($id_user) {
+    $user = recupUserById($id_user);
+    if (!in_array('Chef', $user['role'])) {
+        throw new Exception('Accès refusé : vous n\'êtes pas chef.');
+    }
+    $recettes = recupRecettesByAuteur($id_user); 
+    $likes = recupLike();
+    afficherAccueil($user, $recettes, $likes); 
+}
+
+function CtlModifierRecette($id_user, $id_recette, $langue, $name, $nameFR, $without, $ingredients, $ingredientsFR, $steps, $stepsFR, $timers, $photo_file, $photo_url, $author) {
+    $user = recupUserById($id_user);
+    $recette = recupRecetteById($id_recette);
+    if (!in_array('Chef', $user['role']) || $recette['id_auteur'] != $id_user) {
+        throw new Exception('Accès refusé : vous ne pouvez pas modifier cette recette.');
+    }
+    if (($langue === 'fr' && (empty($nameFR) || empty($ingredientsFR) || empty($stepsFR))) || 
+        ($langue === 'eng' && (empty($name) || empty($ingredients) || empty($steps)))) {
+        throw new Exception('Tous les champs obligatoires doivent être remplis.');
+    }
+    if (empty($timers)) {
+        throw new Exception('Les temps sont obligatoires.');
+    }
+
+    $photo = $recette['imageURL'];
+    if ($photo_file) {
+        $uploadDir = 'images/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        $photo = $uploadDir . basename($photo_file['name']);
+        move_uploaded_file($photo_file['tmp_name'], $photo);
+    } elseif (!empty($photo_url)) {
+        $photo = $photo_url;
+    }
+
+    modifierRecette($id_recette, $langue, $name, $nameFR, $without, $ingredients, $ingredientsFR, $steps, $stepsFR, $timers, $photo, $author);
+    echo json_encode(['success' => true]);
+}
+
 
 
 ?>

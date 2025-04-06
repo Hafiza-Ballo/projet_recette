@@ -4,10 +4,12 @@ function inscription($nom, $prenom, $mail, $role, $mdp, $isCuisinier)
     $fichier = 'utilisateurs.json';
     if (file_exists($fichier)) {
         $utilisateurs = json_decode(file_get_contents($fichier), true);
+        $newId = max(array_column($utilisateurs, 'id')) + 1;
     } else {
         $utilisateurs = [];
     }
     $new = [
+        'id' => $newId,
         'nom' => $nom,
         'prenom' => $prenom,
         'mail' => $mail,
@@ -553,3 +555,148 @@ function modifierRoles($id_user, $roles) {
     file_put_contents($fichier, $json);
 }
 
+function ajouterRecette($id_user, $langue, $name, $nameFR, $ingredients, $ingredientsFR, $steps, $stepsFR, $without, $timers, $photo, $author) {
+    $f = fopen('recettes.json', 'r+');
+    if (!flock($f, LOCK_EX)) {
+        http_response_code(409);
+        return;
+    }
+    $jsonString = fread($f, filesize('recettes.json'));
+    $data = json_decode($jsonString, true);
+
+    $newId = max(array_column($data, 'id')) + 1;
+    $newRecette = [
+        'name' => '',
+        'nameFR' => '',
+        'Author' => $author,
+        'Without' => $without ? explode(', ', $without) : [],
+        'ingredients' => [],
+        'ingredientsFR' => [],
+        'steps' => [],
+        'stepsFR' => [],
+        'timers' => array_map('intval', explode(',', $timers)),
+        'imageURL' => $photo ?: '',
+        'originalURL' => '',
+        'like' => 0,
+        'commentaires' => [],
+        'id' => $newId,
+        'statut' => 'attente',
+        'id_auteur' => (int)$id_user
+    ];
+
+    // Traitement des ingrédients et étapes selon la langue
+    if ($langue === 'eng') {
+        $newRecette['name'] = $name;
+        $ingredientLines = explode("\n", $ingredients);
+        foreach ($ingredientLines as $line) {
+            $parts = explode(',', trim($line));
+            if (count($parts) >= 3) {
+                $newRecette['ingredients'][] = [
+                    'quantity' => trim($parts[0]) ?: null, 
+                    'name' => trim($parts[1]) ?: null,
+                    'type' => trim($parts[2]) ?: null
+                ];
+            }
+        }
+        $newRecette['steps'] = array_map('trim', explode("\n", $steps));
+    }
+    if ($langue === 'fr') {
+        $newRecette['nameFR'] = $nameFR;
+        $ingredientLines = explode("\n", $ingredientsFR);
+        foreach ($ingredientLines as $line) {
+            $parts = explode(',', trim($line));
+            if (count($parts) >= 3) {
+                $newRecette['ingredientsFR'][] = [
+                    'quantity' => trim($parts[0]) ?: null, 
+                    'name' => trim($parts[1]) ?: null,
+                    'type' => trim($parts[2]) ?: null
+                ];
+            }
+        }
+        $newRecette['stepsFR'] = array_map('trim', explode("\n", $stepsFR));
+    }
+
+    $data[] = $newRecette;
+    $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+    ftruncate($f, 0);
+    fseek($f, 0);
+    fwrite($f, $newJsonString);
+    flock($f, LOCK_UN);
+    fclose($f);
+}
+
+function modifierRecette($id_recette, $langue, $name, $nameFR, $without, $ingredients, $ingredientsFR, $steps, $stepsFR, $timers, $photo, $author) {
+    $f = fopen('recettes.json', 'r+');
+    if (!flock($f, LOCK_EX)) {
+        http_response_code(409);
+        return;
+    }
+    $jsonString = fread($f, filesize('recettes.json'));
+    $data = json_decode($jsonString, true);
+
+    foreach ($data as &$recette) {
+        if ($recette['id'] == $id_recette) {
+            if ($langue === 'eng') {
+                $recette['name'] = $name;
+                $recette['ingredients'] = [];
+                $ingredientLines = array_filter(explode("\n", $ingredients), 'strlen');
+                foreach ($ingredientLines as $line) {
+                    $parts = explode(',', trim($line));
+                    if (count($parts) >= 3) {
+                        $recette['ingredients'][] = [
+                            'quantity' => trim($parts[0]) ?: 'null',
+                            'name' => trim($parts[1]) ?: 'null',
+                            'type' => trim($parts[2]) ?: 'null'
+                        ];
+                    }
+                }
+                $recette['steps'] = array_filter(explode("\n", $steps), 'strlen');
+            } elseif ($langue === 'fr') {
+                $recette['nameFR'] = $nameFR;
+                $recette['ingredientsFR'] = [];
+                $ingredientLines = array_filter(explode("\n", $ingredientsFR), 'strlen');
+                foreach ($ingredientLines as $line) {
+                    $parts = explode(',', trim($line));
+                    if (count($parts) >= 3) {
+                        $recette['ingredientsFR'][] = [
+                            'quantity' => trim($parts[0]) ?: 'null',
+                            'name' => trim($parts[1]) ?: 'null',
+                            'type' => trim($parts[2]) ?: 'null'
+                        ];
+                    }
+                }
+                $recette['stepsFR'] = array_filter(explode("\n", $stepsFR), 'strlen');
+            }
+            $recette['Without'] = $without ? explode(', ', $without) : [];
+            $recette['timers'] = array_map('intval', explode(',', $timers));
+            $recette['imageURL'] = $photo;
+            $recette['Author'] = $author;
+            break;
+        }
+    }
+
+    $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+    ftruncate($f, 0);
+    fseek($f, 0);
+    fwrite($f, $newJsonString);
+    flock($f, LOCK_UN);
+    fclose($f);
+}
+
+function recupRecettesByAuteur($id_auteur) {
+    if (file_exists('recettes.json')) {
+        $f = fopen('recettes.json', 'r+');
+        if (!flock($f, LOCK_EX)) {
+            http_response_code(409);
+            return [];
+        }
+        $jsonString = fread($f, filesize('recettes.json'));
+        $data = json_decode($jsonString, true);
+        flock($f, LOCK_UN);
+        fclose($f);
+        return array_filter($data, function($recette) use ($id_auteur) {
+            return $recette['id_auteur'] == $id_auteur;
+        });
+    }
+    return [];
+}
