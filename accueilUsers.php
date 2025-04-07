@@ -207,12 +207,12 @@
 
         <section class="haut">
             <div id="ensemble_recherche">
-                <input id="recherche_input" placeholder="recherche">
+            <input placeholder="<?php echo $langue == 'fr' ? 'Rechercher' : 'Search'; ?>..." >
                 <?php
                 echo $rechercheBtn;
             ?>
             <?php echo $proposerRecetteBtn; ?>
-            <?php echo $mesRecettesBtn; ?>
+            
             </div>
             <div>
                 <form class="choix_langue">
@@ -237,6 +237,7 @@
                     <?php
                     echo $infosBtn;
                     ?>
+                    <?php echo $mesRecettesBtn; ?>
                     <a><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Deconnexion</a>
                 </div>
                 

@@ -222,6 +222,7 @@
     
     .btn_like:hover {
         transform: scale(1.1);
+        background-color: #fff;
     }
     
     .like, .dislike {
@@ -546,7 +547,15 @@
         max-width: max-content;
         width: 100%;
     }*/
-    
+    #divTradNom{
+        display:none;
+    }
+    #btn_traduirenomRecette0{
+        margin-left: 90%;
+    }
+    input, label{
+        margin-bottom: 1%;
+    }
         
     </style>
 </head>
@@ -556,7 +565,7 @@
     <section class="haut">
         <?php echo $retourBtn; ?>
         <div id="ensemble_recherche">
-            <input placeholder="Rechercher...">
+            <input placeholder="<?php echo $langue == 'fr' ? 'Rechercher' : 'Search'; ?>..." >
             <img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche"> 
         </div> 
         <div>
@@ -576,17 +585,42 @@
                 </select>
             </form>
             
-            <button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc">Mon compte</button>
+            <button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc"><?php echo $langue == 'fr' ? 'Mon compte' : 'My account'; ?></button>
             <div class="conteneur_modif_c">
                 <?php echo $infosBtn; ?>
-                <a><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Déconnexion</a>
+                <a><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue == 'fr' ? 'Déconnexion' : 'Deconnexion'; ?></a>
             </div>
         </div>
     </section>
     
     <section class="page_recette">
         <h1><?php echo $nom; ?></h1>
-        
+        <?php 
+        if($langue == 'fr'){
+            if(strlen($recette['name'])<=0){
+                echo'<button onclick="effacerBtn()" id="btn_traduirenomRecette0">Traduire</button>
+                        <div class="box_traduction" id="divTradNom">
+                            <div class="testnomRecette0">
+                                <input type="text" class="trad_input_nom" id="id0" >
+                                <button id="idb0" onclick="appliquerTrad(0,\'nomRecette\','.$id_recette.',\' '.$langue.' \' )"> Appliquer</button> <button  id="idann0"onclick="annulerTrad(0,\'nomRecette\')">Annuler</button> </div>
+                            </div>
+                        </div>';
+            }
+            
+        }
+        else{
+            if(strlen($recette['nameFR'])<=0){
+                echo'<button onclick="effacerBtn()" id="btn_traduirenomRecette0">Translate</button>
+                        <div class="box_traduction" id="divTradNom">
+                            <div id="testnomRecette0">
+                                <input type="text" class="trad_input_nom" id="id0" >
+                                <button id="idb0" onclick="appliquerTrad(0,\'nomRecette\','.$id_recette.',\' '.$langue.' \' )"> Apply</button> <button  id="idann0"onclick="annulerTrad(0,\'nomRecette\')">Cancel</button> </div>
+                            </div>
+
+                        </div>';
+            }
+        }
+        ?>
 
         <div class="recette_principale">
 
@@ -619,21 +653,21 @@
                     <h4>Ajouter une photo</h4>
                     <div class="upload-options">
                         <div class="upload-option">
-                            <label for="photoInput">Télécharger depuis votre appareil :</label>
+                            <label for="photoInput"><?php echo $langue == 'fr' ? 'Télécharger depuis votre appareil': 'Upload from your device';?> :</label>
                             <input type="file" id="photoInput" accept="image/*">
                         </div>
                         <div class="upload-option">
-                            <label for="photoUrl">Ou via une URL :</label>
+                            <label for="photoUrl"><?php echo $langue == 'fr' ? 'Ou via une URL' : 'Or from a URL';?> :</label>
                             <input type="text" id="photoUrl" placeholder="https://example.com/image.jpg">
                         </div>
                     </div>
-                    <button id="btn_like" onclick="ajouterPhoto(<?php echo $id_user . ',' . $id_recette ?>)">Ajouter une photo</button>
+                    <button id="btn_like" onclick="ajouterPhoto(<?php echo $id_user . ',' . $id_recette ?>)"><?php echo $langue == 'fr' ? 'Ajouter une photo' : 'Add a picture';?></button>
                 </div>
                 
                 <div class="comment-section">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#commentModal">Voir les avis</a>
-                    <textarea class="comment-input" id="commentText" placeholder="Partagez votre expérience avec cette recette..."></textarea>
-                    <button class="comment-btn" onclick="posterCommentaire(<?php echo $id_user . ',' . $id_recette; ?>)">Poster un commentaire</button>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#commentModal"><?php echo $langue == 'fr' ? 'Voir les avis' : 'View reviews'; ?></a>
+                    <textarea class="comment-input" id="commentText" placeholder="<?php echo $langue == 'fr' ? 'Partagez votre expérience avec cette recette' : 'Share your experience with this recipe';?>..."></textarea>
+                    <button class="comment-btn" onclick="posterCommentaire(<?php echo $id_user . ',' . $id_recette; ?>)">"<?php echo $langue == 'fr' ? 'Poster un commentaire' : 'Post a comment';?></button>
                 </div>
             </div>
         </div>

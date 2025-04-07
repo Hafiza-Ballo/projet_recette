@@ -272,7 +272,7 @@ function traduction(button,index, langue,id_recette,type_liste){
 
 
       }
-      else{
+      else if(type_liste=='steps'){
         if(langue.trim()=='fr'){
           divSuivante.innerHTML='<div id="test'+type_liste+index+'"><input class="trad" name="'+type_liste+','+index+'" id="id'+index+'" ><br> <button id="idb'+index+'" onclick="appliquerTrad('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Appliquer</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Annuler</button> </div>';
 
@@ -283,6 +283,7 @@ function traduction(button,index, langue,id_recette,type_liste){
         }
 
       }
+      
       divSuivante.style.display = "block";
 
       if(btn)btn.style.display="none";
@@ -342,8 +343,11 @@ function appliquerTrad(index,type_liste,id_recette,langue){
         }
 
       let idSansesapace=("test"+type_liste+index).replace(/\s+/g, '');
-        let traductionDiv = document.getElementById(idSansesapace);
-        traductionDiv.remove();
+      console.log(idSansesapace);
+      let traductionDiv = document.getElementById(idSansesapace);
+      if(traductionDiv)traductionDiv.remove();
+      else{
+        console.log('ptv');}
         
       },
       error:function() {
@@ -371,7 +375,8 @@ function appliquerTradIngr(index,type_liste,id_recette,langue){
         }
         else{
           alert("Translation added successfully !");
-        }        let btn = document.getElementById("btn_traduire"+type_liste+index);
+        }        
+        let btn = document.getElementById("btn_traduire"+type_liste+index);
         if(btn){btn.style.display = "none";}
         else{
           console.log('no');
@@ -400,7 +405,7 @@ function annulerTrad(index, type_liste){
   let btn=document.getElementById("btn_traduire"+type_liste+index);
   if(btn){btn.style.display="block";}
   else{console.log('no');}
-  t.style.display="none";
+  if(t)t.style.display="none";
   let box_traduction=document.querySelector(".box_traduction");
   box_traduction.style.display="none";
   /*let box = document.querySelector(".tr_" + index);
@@ -416,7 +421,13 @@ function annulerTrad(index, type_liste){
 
 
 
-
+function effacerBtn(){
+  let btn=document.getElementById("btn_traduirenomRecette0");
+  let divSuivante = document.getElementById("divTradNom");
+  if(btn)btn.style.display="none";
+  if(divSuivante)divSuivante.style.display="block";
+  else{console.log('no');}
+}
 
 function modifierRoles(id_user, roles) {
     document.getElementById('userId').value = id_user;
