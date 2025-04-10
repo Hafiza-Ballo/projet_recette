@@ -238,7 +238,7 @@
                     echo $infosBtn;
                     ?>
                     <?php echo $mesRecettesBtn; ?>
-                    <a><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Deconnexion</a>
+                    <a href="controllerFrontal.php?action=deconnexion"><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Deconnexion</a>
                 </div>
                 
     

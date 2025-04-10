@@ -731,80 +731,177 @@
         "id_auteur": 1
     },
     {
-        "name": "",
-        "nameFR": "thiep YAPP",
-        "Author": "Ballo Hafiza",
+        "name": "Thiebou Yapp",
+        "nameFR": "Riz à la viande sénégalais",
+        "Author": "Unknown",
         "Without": [
-            "nogluten,nono"
-        ],
-        "ingredients": [],
-        "ingredientsFR": [
-            {
-                "quantity": "1",
-                "name": "viande",
-                "type": "viande"
-            },
-            {
-                "quantity": "null",
-                "name": "blllaaaa",
-                "type": "bla"
-            }
-        ],
-        "steps": [
-            "fhbezfebzfe",
-            "fezfzfzfz"
-        ],
-        "stepsFR": [
-            "mettre l'eau",
-            "mettre viande"
-        ],
-        "timers": [
-            1,
-            2
-        ],
-        "imageURL": "",
-        "originalURL": "",
-        "like": 0,
-        "commentaires": [],
-        "id": 10,
-        "statut": "attente",
-        "id_auteur": 2
-    },
-    {
-        "name": "thieppp",
-        "nameFR": "",
-        "Author": "Ballo Hafiza",
-        "Without": [
-            "nogluten,nono"
+            "NoMilk"
         ],
         "ingredients": [
             {
-                "quantity": "1",
-                "name": "alalal",
-                "type": "ffz"
+                "quantity": "500g",
+                "name": "beef (cut into cubes)",
+                "type": "Meat"
             },
             {
-                "quantity": null,
-                "name": "fzf",
-                "type": null
+                "quantity": "2 cups",
+                "name": "rice (broken rice preferred)",
+                "type": "Grain"
+            },
+            {
+                "quantity": "2",
+                "name": "onions (chopped)",
+                "type": "Vegetable"
+            },
+            {
+                "quantity": "2",
+                "name": "carrots (cut in chunks)",
+                "type": "Vegetable"
+            },
+            {
+                "quantity": "2",
+                "name": "garlic cloves (minced)",
+                "type": "Vegetable"
+            },
+            {
+                "quantity": "1",
+                "name": "tomato (grated or crushed)",
+                "type": "Vegetable"
+            },
+            {
+                "quantity": "2 tbsp",
+                "name": "tomato paste",
+                "type": "Condiments"
+            },
+            {
+                "quantity": "1",
+                "name": "bouillon cube",
+                "type": "Condiments"
+            },
+            {
+                "quantity": "1 tsp",
+                "name": "black pepper",
+                "type": "Spice"
+            },
+            {
+                "quantity": "to taste",
+                "name": "salt",
+                "type": "Spice"
+            },
+            {
+                "quantity": "4 tbsp",
+                "name": "vegetable oil",
+                "type": "Oil"
+            },
+            {
+                "quantity": "500 ml",
+                "name": "water",
+                "type": "Drinks"
             }
         ],
-        "ingredientsFR": [],
-        "steps": [
-            "fhbezfebzfe",
-            "fezfzfzfz"
+        "ingredientsFR": [
+            {
+                "quantity": "500g",
+                "name": "boeuf (coupé en cubes)",
+                "type": "Viande"
+            },
+            {
+                "quantity": "2 verres",
+                "name": "riz cassé",
+                "type": "Céréale"
+            },
+            {
+                "quantity": "2",
+                "name": "oignons (hachés)",
+                "type": "Légume"
+            },
+            {
+                "quantity": "2",
+                "name": "carottes (coupées en morceaux)",
+                "type": "Légume"
+            },
+            {
+                "quantity": "2",
+                "name": "gousses d'ail (émincées)",
+                "type": "Légume"
+            },
+            {
+                "quantity": "1",
+                "name": "tomate (râpée ou écrasée)",
+                "type": "Légume"
+            },
+            {
+                "quantity": "2 càs",
+                "name": "concentré de tomate",
+                "type": "Condiment"
+            },
+            {
+                "quantity": "1",
+                "name": "cube bouillon",
+                "type": "Condiment"
+            },
+            {
+                "quantity": "1 càc",
+                "name": "poivre noir",
+                "type": "Épice"
+            },
+            {
+                "quantity": "sel selon goût",
+                "name": "sel",
+                "type": "Épice"
+            },
+            {
+                "quantity": "4 càs",
+                "name": "huile végétale",
+                "type": "Huile"
+            },
+            {
+                "quantity": "500 ml",
+                "name": "eau",
+                "type": "Boisson"
+            }
         ],
-        "stepsFR": [],
+        "steps": [
+            "Heat oil in a large pot and brown the beef cubes.",
+            "Add chopped onions, garlic, and stir until golden.",
+            "Add tomato, tomato paste, and let cook for 5 minutes.",
+            "Season with salt, pepper, and the bouillon cube.",
+            "Add water and bring to a boil.",
+            "Add the carrots and simmer for 10 minutes.",
+            "Add washed rice and reduce heat.",
+            "Let the rice absorb the liquid while cooking for 25-30 minutes.",
+            "Stir occasionally and check seasoning before serving."
+        ],
+        "stepsFR": [
+            "Chauffer l'huile dans une grande marmite et faire revenir les cubes de viande.",
+            "Ajouter les oignons hachés, l'ail, et faire revenir jusqu'à coloration.",
+            "Ajouter la tomate, le concentré, et laisser cuire 5 minutes.",
+            "Assaisonner avec du sel, poivre, et le cube bouillon.",
+            "Ajouter l'eau et porter à ébullition.",
+            "Ajouter les carottes et laisser mijoter 10 minutes.",
+            "Ajouter le riz préalablement lavé et réduire le feu.",
+            "Laisser le riz absorber le liquide pendant 25 à 30 minutes.",
+            "Remuer de temps en temps et ajuster l'assaisonnement avant de servir."
+        ],
         "timers": [
+            5,
+            5,
+            5,
             1,
+            5,
+            10,
+            1,
+            30,
             2
         ],
-        "imageURL": "",
-        "originalURL": "",
+        "imageURL": "https://reen-epices.com/wp-content/uploads/2021/03/20_Thiebou-yapp-Recette.png",
+        "originalURL": "https://aistoucuisine.com/publications/thiebou-yaap",
         "like": 0,
         "commentaires": [],
-        "id": 11,
-        "statut": "attente",
+        "id": 10,
+        "statut": "valide",
         "id_auteur": 2
     }
+    
+    
 ]
