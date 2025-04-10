@@ -114,7 +114,6 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
     }
     $nblike=$recette['like'];
     $a_licke = false;
-    $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $id_user . '\'">Retour</button>';
 
     $steps=[];
     $nom_ingredients=[];
@@ -124,8 +123,9 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
     }
     else{
         $langue='fr';
-    }
-    echo $langue;
+    }    
+    $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $id_user . '\'">' . ($langue == "fr" ? "Retour" : "Go back") . '</button>';
+
     foreach ($like as $l) {
         if ($l['id'] == $recette['id'] && $l['id_user'] == $id_user) {
             $a_licke = true;
@@ -175,7 +175,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                         $contenu.='<button onclick="traduction(this,'.($index+1).',\''.$langue.'\','.$id_recette.', \'ingredients\')" id="btn_traduireingredients'.($index+1).'">Traduire</button>
                                    <div class="box_traduction tr_'.($index+1).'"></div>';
                     }
-                    else if($nom_ingredientsENG[$index]==null){
+                    else if(isset($recette["ingredients"][$index]) && array_key_exists($index,$nom_ingredientsENG)&& $nom_ingredientsENG[$index]==null){
                         $x='testingredients'.($index+1);
                         $contenu.='<button onclick="traduction2(this,'.($index+1).',\''.$langue.'\','.$id_recette.', \'ingredients\')" id="btn_traduireingredients'.($index+1).'">Translate</button>
                                    <div class="box_traduction tr_'.($index+1).'" style="display:none;">
@@ -261,7 +261,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                         $contenu.='<button onclick="traduction(this,'.($index+1).',\''.$langue.'\','.$id_recette.', \'ingredients\')" id="btn_traduireingredients'.($index+1).'">Translate</button>
                                    <div class="box_traduction tr_'.($index+1).'"></div>';
                     }
-                    else if($nom_ingredientsFR[$index]==null){
+                    else if(isset($recette["ingredientsFR"][$index]) && array_key_exists($index,$nom_ingredientsFR)&& $nom_ingredientsFR[$index]==null){
                         $x='testingredients'.($index+1);
                         $contenu.='<button onclick="traduction2(this,'.($index+1).',\''.$langue.'\','.$id_recette.', \'ingredients\')" id="btn_traduireingredients'.($index+1).'">Translate</button>
                                    <div class="box_traduction tr_'.($index+1).'" style="display:none;">
@@ -337,7 +337,13 @@ function afficherRecherche($user,$recette,$likes,$mot){
         $infosBtn .= '<br><a href="controllerFrontal.php?action=admin&id_user=' .$user['id'] . '">Espace Admin</a>';
     }
     $contenu = '';
-    $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">Retour</button>';
+    if(isset($_SESSION['langue'])){
+        $langue=$_SESSION['langue'];
+    }
+    else{
+        $langue='fr';
+    } 
+    $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">' . ($langue == "fr" ? "Retour" : "Go back") . '</button>';
     $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
     if (empty($recette)) {
         $contenu .= '<p>Aucune recette trouvée.</p>';
@@ -407,7 +413,13 @@ function afficherRecherche($user,$recette,$likes,$mot){
         require_once('afficheRecherche.php');
 }
 function afficherInfo($user){
-    $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">Retour</button>';
+    if(isset($_SESSION['langue'])){
+        $langue=$_SESSION['langue'];
+    }
+    else{
+        $langue='fr';
+    } 
+    $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">' . ($langue == "fr" ? "Retour" : "Go back") . '</button>';
     $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$user['id'] . '">Informations personnelles</a>';
     if (in_array('admin', $user['role']))
     {

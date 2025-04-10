@@ -462,6 +462,10 @@ function ajoutTraduction($id_recette, $liste, $index_l, $valeur,$langueDeTrad)
                     }
                     
                 }
+                else if($liste=='nomRecette'){
+                    $data[$index]['name']=$valeur;
+                }
+                
                 
             }
             
@@ -520,6 +524,9 @@ function ajoutTraduction($id_recette, $liste, $index_l, $valeur,$langueDeTrad)
                         }
                     }
                     
+                }
+                else if($liste=='nomRecette'){
+                    $data[$index]['nameFR']=$valeur;
                 }
                 
             }

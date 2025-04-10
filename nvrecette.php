@@ -172,7 +172,7 @@
 <body>
     <?php $langue = $_SESSION['langue'] ?? 'fr'; ?>
     <section class="haut">
-        <button class="btn_retour" onclick="window.location.href='controllerFrontal.php?action=retour_accueil&id_user=<?php echo $_GET['id_user']; ?>'">Retour</button>
+        <button class="btn_retour" onclick="window.location.href='controllerFrontal.php?action=retour_accueil&id_user=<?php echo $_GET['id_user']; ?>'"><?php echo $langue == 'fr' ? 'Retour' : 'Go back'; ?></button>
         <div id="ensemble_recherche">
             <input placeholder="Rechercher...">
             <img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(<?php echo $_GET['id_user']; ?>)">

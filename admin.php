@@ -272,9 +272,10 @@
     </style>
 </head>
 <body>
+    <?php $langue = $_SESSION['langue'] ?? 'fr';?>
     <section class="haut">
         <div>
-            <button class="btn-retour" onclick="window.location.href='controllerFrontal.php?action=retour_accueil&id_user=<?php echo $user['id']; ?>'">Retour</button>
+            <button class="btn-retour" onclick="window.location.href='controllerFrontal.php?action=retour_accueil&id_user=<?php echo $user['id']; ?>'"> <?php echo $langue == 'fr' ? 'Retour' : 'Go back'; ?></button>
         </div>
         <div>
             <button id="mon_compte" onclick="affichage_conteneur_modif()">
