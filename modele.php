@@ -752,22 +752,30 @@ function modifRecette($id_recette,$langue,$nomR,  $ingredients, $steps,$indexSte
                 if($indexStep!=-1 && $step[$indexStep]>0){
                     array_splice($data[$index]['stepsFR'], $indexStep+1, 0, $step[$indexStep+1]);
                     array_splice($data[$index]['steps'], $indexStep+1, 0, "");
-                    array_splice($data[$index]['timers'], $indexStep+1, 0, $temps[$indexStep+1]);
+                    array_splice($data[$index]['timers'], $indexStep+1, 0, (int) $temps[$indexStep+1]);
 
                 }
-                else{
-                    $data[$index]['stepsFR']=[];
-                    for($i=0; $i<sizeof($step);$i++){
-                        if($step[$i]!="..."){
-                            $data[$index]['stepsFR'][]=$step[$i];
-                            $data[$index]['timers'][]=(int)$temps[$i];
-
+                else {
+                    
+                    $data[$index]['stepsFR'] = [];
+                    $data[$index]['timers'] = [];
+                    
+                    
+                    $nbSteps = count($data[$index]['steps']);
+                    
+                    for($i = 0; $i < count($step); $i++) {
+                        if($step[$i] != "...") {
+                            
+                            $data[$index]['stepsFR'][] = $step[$i];
+                            $data[$index]['timers'][] = (int)$temps[$i];
+                            
+                            if( $i == $nbSteps) {
+                                $data[$index]['steps'][] = "";
+                            }
                         }
-                        else{
+                        else {
                             error_log($temps[$i]);
-
                         }
-
                     }
                 }
                 

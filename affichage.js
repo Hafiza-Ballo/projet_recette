@@ -682,9 +682,9 @@ function fctajout(id_recette,langue, type, index){
     type: 'POST',
     data: {id_recette:id_recette, langue: langue,nomR:nomR, ingredients:JSON.stringify(ingredients), steps:JSON.stringify(steps),index:index },
     success: function(e) {
-    console.log(stepBoxes);   
+    console.log(steps);   
     if(langue.trim()=='fr'){
-      alert('Recette mise à jour !');
+      alert('Recette mise à jour () !');
     }  
     else{
       alert('Recipe updated !');

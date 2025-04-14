@@ -752,15 +752,27 @@
         ],
         "steps": [
             "fhbezfebzfe",
-            "fezfzfzfz"
+            "2",
+            "fezfzfzfz",
+            "2",
+            "2",
+            "2"
         ],
         "stepsFR": [
             "mettre l'eau",
-            "mettre viande"
+            "mettre 1",
+            "apres viande",
+            "blalalal",
+            "amaaa",
+            "ama2"
         ],
         "timers": [
             1,
-            2
+            2,
+            10,
+            12,
+            1,
+            21
         ],
         "imageURL": "",
         "originalURL": "",
