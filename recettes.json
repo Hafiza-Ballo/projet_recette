@@ -9,7 +9,7 @@
         ],
         "ingredients": [
             {
-                "quantity": "1",
+                "quantity": "2",
                 "name": "beef roast",
                 "type": "Meat"
             },
@@ -47,12 +47,12 @@
             },
             {
                 "quantity": "1 package",
-                "name": null,
+                "name": "",
                 "type": "Condiments"
             },
             {
                 "quantity": "1 package",
-                "name": null,
+                "name": "",
                 "type": "Condiments"
             },
             {
@@ -74,10 +74,10 @@
             "Cuire \u00e0 feu doux entre 7 et 9 heures."
         ],
         "timers": [
-            1,
-            1,
-            1,
-            420
+            "1",
+            "1",
+            "1",
+            "420"
         ],
         "imageURL": "http:\/\/img.sndimg.com\/food\/image\/upload\/w_266\/v1\/img\/recipes\/27\/20\/8\/picVfzLZo.jpg",
         "originalURL": "http:\/\/www.food.com\/recipe\/to-die-for-crock-pot-roast-27208",
@@ -85,7 +85,7 @@
         "commentaires": [],
         "id": 1,
         "statut": "valide",
-        "id_auteur": 1
+        "id_auteur": 2
     },
     {
         "name": "Roasted Asparagus",
@@ -156,7 +156,7 @@
         "commentaires": [],
         "id": 2,
         "statut": "attente",
-        "id_auteur": 1
+        "id_auteur": 2
     },
     {
         "name": "Curried Lentils and Rice",

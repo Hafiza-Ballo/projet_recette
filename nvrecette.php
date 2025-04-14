@@ -207,24 +207,32 @@
             <input type="hidden" name="action" value="ajouter_recette">
             <div class="mb-3">
                 <label for="langue" class="form-label">Langue de la recette</label>
-                <select class="form-control" id="langue" name="langue" onchange="toggleLangue()">
-                    <option value="fr" selected>Français</option>
-                    <option value="eng">Anglais</option>
+                                <select class="form-control" id="langue" name="langue" onchange="toggleLangue()">
+
+                <?php if($langue=='fr'){
+                        echo '<option value="fr" selected>Français</option>
+                                <option value="eng">Anglais</option>';
+                    }
+                    else{
+                        echo '<option value="eng" selected>English</option>
+                                <option value="fr">French</option>';
+                    }
+                ?>
                 </select>
             </div>
 
             <!-- Champs français -->
             <div class="lang-fr">
                 <div class="mb-3">
-                    <label for="nameFR" class="form-label">Nom (FR)</label>
+                    <label for="nameFR" class="form-label"><?php echo $langue=='fr' ? 'Nom' : 'Name'; ?></label>
                     <input type="text" class="form-control" id="nameFR" name="nameFR">
                 </div>
                 <div class="mb-3">
-                    <label for="ingredientsFR" class="form-label">Ingrédients (FR, format : quantité,nom,type par ligne)</label>
+                    <label for="ingredientsFR" class="form-label"><?php echo $langue=='fr' ?'Ingrédients': 'Ingredients'; ?> (FR, format : quantité,nom,type par ligne)</label>
                     <textarea class="form-control" id="ingredientsFR" name="ingredientsFR" rows="5" placeholder="Exemple :\n1,roti de boeuf,Viande\n2 sachets,sauce,Aide culinaire"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="stepsFR" class="form-label">Étapes (FR, une par ligne)</label>
+                    <label for="stepsFR" class="form-label"> <?php echo $langue=='fr' ?'Étapes': 'Steps'; ?> (FR, une par ligne)</label>
                     <textarea class="form-control" id="stepsFR" name="stepsFR" rows="5"></textarea>
                 </div>
             </div>

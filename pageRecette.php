@@ -556,6 +556,52 @@
     input, label{
         margin-bottom: 1%;
     }
+    .boxIngr{
+        border: solid 2px #ccc;
+        width: 40%;
+        border-radius: 5px;
+        margin-bottom: 2%;
+    }
+    .boxStep{
+        border: solid 2px #ccc;
+        width: 40%;
+        border-radius: 5px;
+        margin-bottom: 2%;
+    }
+    #divModifRecette{
+        display:none;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        border-radius: 10px;
+        padding-bottom: 2%;
+        
+        
+    }
+    #nouvelIngr, #nouvelEtape{
+        display:none;
+    }
+    /* Le contenu de base */
+    #content {
+        display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    #btn_modifRecette{}
+
+    
+
+
         
     </style>
 </head>
@@ -592,104 +638,113 @@
             </div>
         </div>
     </section>
+
     
-    <section class="page_recette">
-        <h1><?php echo $nom; ?></h1>
+    
+        <section class="page_recette">
         <?php 
-        if($langue == 'fr'){
-            if(strlen($recette['name'])<=0){
-                echo'<button onclick="effacerBtn()" id="btn_traduirenomRecette0">Traduire</button>
-                        <div class="box_traduction" id="divTradNom">
-                            <div class="testnomRecette0">
-                                <input type="text" class="trad_input_nom" id="id0" >
-                                <button id="idb0" onclick="appliquerTrad(0,\'nomRecette\','.$id_recette.',\' '.$langue.' \' )"> Appliquer</button> <button  id="idann0"onclick="annulerTrad(0,\'nomRecette\')">Annuler</button> </div>
-                            </div>
-                        </div>';
-            }
-            
+        if($recette['id_auteur']==$id_user){
+            echo $divModifRecette;
         }
-        else{
-            if(strlen($recette['nameFR'])<=0){
-                echo'<button onclick="effacerBtn()" id="btn_traduirenomRecette0">Translate</button>
-                        <div class="box_traduction" id="divTradNom">
-                            <div id="testnomRecette0">
-                                <input type="text" class="trad_input_nom" id="id0" >
-                                <button id="idb0" onclick="appliquerTrad(0,\'nomRecette\','.$id_recette.',\' '.$langue.' \' )"> Apply</button> <button  id="idann0"onclick="annulerTrad(0,\'nomRecette\')">Cancel</button> </div>
-                            </div>
-
-                        </div>';
+    ?>
+            <h1><?php echo $nom; ?></h1>
+            <?php 
+            if($langue == 'fr'){
+                if(strlen($recette['name'])<=0){
+                    echo'<button onclick="effacerBtn()" id="btn_traduirenomRecette0">Traduire</button>
+                            <div class="box_traduction" id="divTradNom">
+                                <div class="testnomRecette0">
+                                    <input type="text" class="trad_input_nom" id="id0" >
+                                    <button id="idb0" onclick="appliquerTrad(0,\'nomRecette\','.$id_recette.',\' '.$langue.' \' )"> Appliquer</button> <button  id="idann0"onclick="annulerTrad(0,\'nomRecette\')">Annuler</button> </div>
+                                </div>
+                            </div>';
+                }
+                
             }
-        }
-        ?>
+            else{
+                if(strlen($recette['nameFR'])<=0){
+                    echo'<button onclick="effacerBtn()" id="btn_traduirenomRecette0">Translate</button>
+                            <div class="box_traduction" id="divTradNom">
+                                <div id="testnomRecette0">
+                                    <input type="text" class="trad_input_nom" id="id0" >
+                                    <button id="idb0" onclick="appliquerTrad(0,\'nomRecette\','.$id_recette.',\' '.$langue.' \' )"> Apply</button> <button  id="idann0"onclick="annulerTrad(0,\'nomRecette\')">Cancel</button> </div>
+                                </div>
 
-        <div class="recette_principale">
+                            </div>';
+                }
+            }
+            ?>
 
-            <div id="carouselRecette" class="carousel slide" data-bs-ride="carousel">
-                
-                <div class="carousel-inner">
-                    <?php foreach ($images as $index => $image): ?>
-                        <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
-                            <img src="<?php echo $image; ?>" class="d-block w-100 img_sec" alt="recette">
+            <div class="recette_principale">
 
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselRecette" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Précédent</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselRecette" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Suivant</span>
-                </button>
-            </div>
-            <div class="content">
-                <div>
-                    <?php echo $liker_; ?>
-                </div>
-                <?php echo $contenu; ?>
-                
-                <div class="photo-upload-section">
-                    <h4>Ajouter une photo</h4>
-                    <div class="upload-options">
-                        <div class="upload-option">
-                            <label for="photoInput"><?php echo $langue == 'fr' ? 'Télécharger depuis votre appareil': 'Upload from your device';?> :</label>
-                            <input type="file" id="photoInput" accept="image/*">
-                        </div>
-                        <div class="upload-option">
-                            <label for="photoUrl"><?php echo $langue == 'fr' ? 'Ou via une URL' : 'Or from a URL';?> :</label>
-                            <input type="text" id="photoUrl" placeholder="https://example.com/image.jpg">
-                        </div>
+                <div id="carouselRecette" class="carousel slide" data-bs-ride="carousel">
+                    
+                    <div class="carousel-inner">
+                        <?php foreach ($images as $index => $image): ?>
+                            <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                                <img src="<?php echo $image; ?>" class="d-block w-100 img_sec" alt="recette">
+
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                    <button id="btn_like" onclick="ajouterPhoto(<?php echo $id_user . ',' . $id_recette ?>)"><?php echo $langue == 'fr' ? 'Ajouter une photo' : 'Add a picture';?></button>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselRecette" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Précédent</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselRecette" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Suivant</span>
+                    </button>
                 </div>
-                
-                <div class="comment-section">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#commentModal"><?php echo $langue == 'fr' ? 'Voir les avis' : 'View reviews'; ?></a>
-                    <textarea class="comment-input" id="commentText" placeholder="<?php echo $langue == 'fr' ? 'Partagez votre expérience avec cette recette' : 'Share your experience with this recipe';?>..."></textarea>
-                    <button class="comment-btn" onclick="posterCommentaire(<?php echo $id_user . ',' . $id_recette; ?>)">"<?php echo $langue == 'fr' ? 'Poster un commentaire' : 'Post a comment';?></button>
+                <div class="content">
+                    <div>
+                        <?php echo $liker_; ?>
+                    </div>
+                    <?php echo $contenu; ?>
+                    
+                    <div class="photo-upload-section">
+                        <h4>Ajouter une photo</h4>
+                        <div class="upload-options">
+                            <div class="upload-option">
+                                <label for="photoInput"><?php echo $langue == 'fr' ? 'Télécharger depuis votre appareil': 'Upload from your device';?> :</label>
+                                <input type="file" id="photoInput" accept="image/*">
+                            </div>
+                            <div class="upload-option">
+                                <label for="photoUrl"><?php echo $langue == 'fr' ? 'Ou via une URL' : 'Or from a URL';?> :</label>
+                                <input type="text" id="photoUrl" placeholder="https://example.com/image.jpg">
+                            </div>
+                        </div>
+                        <button id="btn_like" onclick="ajouterPhoto(<?php echo $id_user . ',' . $id_recette ?>)"><?php echo $langue == 'fr' ? 'Ajouter une photo' : 'Add a picture';?></button>
+                    </div>
+                    
+                    <div class="comment-section">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#commentModal"><?php echo $langue == 'fr' ? 'Voir les avis' : 'View reviews'; ?></a>
+                        <textarea class="comment-input" id="commentText" placeholder="<?php echo $langue == 'fr' ? 'Partagez votre expérience avec cette recette' : 'Share your experience with this recipe';?>..."></textarea>
+                        <button class="comment-btn" onclick="posterCommentaire(<?php echo $id_user . ',' . $id_recette; ?>)">"<?php echo $langue == 'fr' ? 'Poster un commentaire' : 'Post a comment';?></button>
+                    </div>
+                </div>
+            </div>
+            <div id="statut"></div>
+        </section>
+        
+        <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="commentModalLabel">Avis sur <?php echo $nom; ?></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body comment-list" id="commentList">
+                        <!-- Les commentaires seront chargés ici -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="statut"></div>
-    </section>
+          
     
-    <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="commentModalLabel">Avis sur <?php echo $nom; ?></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body comment-list" id="commentList">
-                    <!-- Les commentaires seront chargés ici -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-        </div>
-    </div>
     
     <script>
         $('#commentModal').on('show.bs.modal', function () {

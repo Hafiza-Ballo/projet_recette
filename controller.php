@@ -186,6 +186,12 @@ function CtlModifierRecette($id_user, $id_recette, $langue, $name, $nameFR, $wit
     echo json_encode(['success' => true]);
 }
 
+function CtlModifRecette($id_recette,$langue,$nomR, $ingredients,  $steps,$index){
+    modifRecette($id_recette,$langue, $nomR, $ingredients,$steps,$index);
+    error_log('ct'.$index);
+
+}
+
 
 
 ?>

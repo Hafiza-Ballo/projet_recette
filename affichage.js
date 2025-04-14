@@ -386,11 +386,7 @@ function appliquerTradIngr(index,type_liste,id_recette,langue){
       console.log(idSansesapace);
         let traductionDiv = document.getElementById(idSansesapace);
         traductionDiv.remove();
-        /*let box = document.querySelector(".tr_" + index);
-        if (box) {
-          box.innerHTML = "";
-          box.style.display = "none";
-        }*/
+        
       },
       error:function() {
         console.log("erreur");
@@ -408,15 +404,7 @@ function annulerTrad(index, type_liste){
   if(t)t.style.display="none";
   let box_traduction=document.querySelector(".box_traduction");
   box_traduction.style.display="none";
-  /*let box = document.querySelector(".tr_" + index);
-  let btn = document.getElementById("btn_traduire" + type_liste + index);
   
-  // Réafficher le bouton
-  if (btn) btn.style.display = "block";
-
-  // Cacher la div de traduction
-  if (box) box.style.display = "none";*/
-
 }
 
 
@@ -548,3 +536,173 @@ function sauverRecette(id_recette,id_user) {
         }
     });
 }
+
+function ModifierRecette(){
+  let btn=document.getElementById("btn_modifRecette");
+  let btndiv=document.getElementById("divModifRecette");
+  let section= document.getElementById("content");
+  if(btn){ btn.style.display='none';}
+  else{console.log("pasbtn");}
+  if(btndiv){ btndiv.style.display='block';}
+  else{console.log("pasbtndiv");}
+  if(section){section.style.display='block';}
+  else{console.log('pasec');}
+
+}
+function annulerModif(){
+  let btn=document.getElementById("btn_modifRecette");
+  let btndiv=document.getElementById("divModifRecette");
+  let section= document.getElementById("content");
+  if(btn){ btn.style.display='block';}
+  else{console.log("pasbtn");}
+  if(btndiv){ btndiv.style.display='none';}
+  else{console.log("pasbtndiv");}
+  if(section){section.style.display='none';}
+  else{console.log('pasec');}
+}
+function appliquerModif(id_recette,langue){
+  let btn= document.getElementById("btn_a_modif");
+
+  // Récupère tous les ingrédients
+  const ingrBoxes = document.querySelectorAll(".boxIngr");
+  const stepBoxes = document.querySelectorAll(".boxStep");
+
+  let ingredients = [];
+  let steps = [];
+
+  ingrBoxes.forEach((box) => {
+    if(box.querySelector(".quantite") &&  box.querySelector(".nomI") && box.querySelector(".type") ) {
+      const quantite = box.querySelector(".quantite").value;
+    const nom = box.querySelector(".nomI").value;
+    const type = box.querySelector(".type").value;
+  
+
+    ingredients.push({"quantite": quantite, "nom":nom, "type": type });
+    }
+  });
+  stepBoxes.forEach((box) => {
+    const step = box.querySelector(".step").value;
+    const temps = box.querySelector(".temps").value;
+    steps.push({"step": step, "temps":temps });
+  });
+  let nomR=document.querySelector("#divModifRecette .nomR").value;
+  console.log(ingredients);
+
+  
+  $.ajax({
+    url: 'controllerFrontal.php',
+    type: 'POST',
+    data: {id_recette:id_recette, langue: langue,nomR:nomR, ingredients:JSON.stringify(ingredients), steps:JSON.stringify(steps) },
+    success: function(e) {
+    console.log('appel');   
+    annulerModif();   
+    if(langue.trim()=='fr'){
+      alert('Recette mise à jour !');
+    }  
+    else{
+      alert('Recipe updated !');
+    }
+    location.reload();
+
+    },
+    error: function() {
+        alert('Erreur lors de la mise à jour de la recette.');
+    }
+});
+}
+
+function fctnouvelAjout(type,index){
+  if(type=='Etape'){
+    let div=document.getElementById("new"+index);
+    if(div){div.style.display='block';}
+    let btn=document.getElementById("btn_new"+index);
+    if(btn){btn.style.display='none';}
+    else{console.log("pasbtn");}
+  }
+  else{
+    let div=document.getElementById("nouvel"+type);
+    if(div){div.style.display='block';}
+    let btn=document.getElementById("btn_nouvel"+type);
+    if(btn){btn.style.display='none';}
+    else{console.log("pasbtn");}
+  }
+  
+  
+}
+
+function annulerNouvelAjout(type, index){
+  if(type=='Etape'){
+    let btn=document.getElementById("btn_new"+index);
+    let div=document.getElementById("new"+index);
+  if(btn){ btn.style.display='block';}
+  else{ console.log("pasbtn");}
+    if(div){ div.style.display='none';}
+    else{console.log("pasbtndiv");}
+  }
+  else{
+    let btn=document.getElementById("btn_nouvel"+type);
+    let div=document.getElementById("nouvel"+type);
+    if(btn){ btn.style.display='block';}
+    else{ console.log("pasbtn");}
+    if(div){ div.style.display='none';}
+    else{console.log("pasbtndiv");}
+  }
+  
+}
+
+
+function fctajout(id_recette,langue, type, index){
+  let btn= document.getElementById("btn_a_modif");
+
+  // Récupère tous les ingrédients
+  const ingrBoxes = document.querySelectorAll(".boxIngr");
+  const stepBoxes = document.querySelectorAll(".boxStep");
+
+  let ingredients = [];
+  let steps = [];
+
+  ingrBoxes.forEach((box) => {
+    if(box.querySelector(".quantite") &&  box.querySelector(".nomI") && box.querySelector(".type") ) {
+      const quantite = box.querySelector(".quantite").value;
+    const nom = box.querySelector(".nomI").value;
+    const type = box.querySelector(".type").value;
+  
+
+    ingredients.push({"quantite": quantite, "nom":nom, "type": type });
+    }
+  });
+  stepBoxes.forEach((box) => {
+    const step = box.querySelector(".step").value;
+    const temps = box.querySelector(".temps").value;
+    steps.push({"step": step, "temps":temps });
+  });
+  let nomR=document.querySelector("#divModifRecette .nomR").value;
+  $.ajax({
+    url: 'controllerFrontal.php',
+    type: 'POST',
+    data: {id_recette:id_recette, langue: langue,nomR:nomR, ingredients:JSON.stringify(ingredients), steps:JSON.stringify(steps),index:index },
+    success: function(e) {
+    console.log(stepBoxes);   
+    if(langue.trim()=='fr'){
+      alert('Recette mise à jour !');
+    }  
+    else{
+      alert('Recipe updated !');
+    }
+    let div=document.getElementById("nouvel"+type);
+    if(div){div.style.display='none';}
+    let btn=document.getElementById("btn_nouvel"+type);
+    if(btn){btn.style.display='block';}
+    else{console.log("pasbtn");}
+    location.reload();
+
+    },
+    error: function() {
+        alert('Erreur lors de la mise à jour de la recette.');
+    }
+  });
+  
+}
+
+
+

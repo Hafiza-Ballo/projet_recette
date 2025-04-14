@@ -178,6 +178,19 @@ try {
         echo $valeurInput." ".$liste." ".$id_recette." ".$langue ;
         CtlAjoutTraduction($id_recette, $liste, $index, $valeurInput, $langue);
     }
+    else if(isset($_POST['id_recette']) && isset($_POST['langue']) && isset($_POST['ingredients']) &&  isset($_POST['nomR']) &&isset($_POST['steps']) ){
+        $id_recette=$_POST['id_recette'];
+        $langue=$_POST['langue'];
+        $ingredients=$_POST['ingredients'];
+        $nomR=$_POST['nomR'];
+        $steps=$_POST['steps'];
+        if(isset($_POST['index'])){$index=$_POST['index']; error_log($index);
+        }
+        else{$index=-1;  error_log($index);
+        }
+        //$index= $_POST['index'] ?? -1 ;
+        CtlModifRecette($id_recette,$langue, $nomR, $ingredients,$steps, $index);
+    }
     
     else
     {
