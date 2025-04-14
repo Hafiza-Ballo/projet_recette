@@ -743,11 +743,7 @@ function modifRecette($id_recette,$langue,$nomR,  $ingredients, $steps,$indexSte
                                 'name'=>$nom[$in],
                                 'type'=>$type[$in]
                             ];
-                            /*$data[$index]['ingredients'][]=[
-                                'quantity'=>"",
-                                'name'=>"",
-                                'type'=>""
-                            ];*/
+                            
                         }
                     }
                 }
@@ -761,13 +757,17 @@ function modifRecette($id_recette,$langue,$nomR,  $ingredients, $steps,$indexSte
                 }
                 else{
                     $data[$index]['stepsFR']=[];
-                    $data[$index]['timers']=[];
                     for($i=0; $i<sizeof($step);$i++){
-                        if(strlen($step[$i])>0){
+                        if($step[$i]!="..."){
                             $data[$index]['stepsFR'][]=$step[$i];
-                            $data[$index]['timers'][]=$temps[$i];
-    
+                            $data[$index]['timers'][]=(int)$temps[$i];
+
                         }
+                        else{
+                            error_log($temps[$i]);
+
+                        }
+
                     }
                 }
                 
@@ -803,7 +803,7 @@ function modifRecette($id_recette,$langue,$nomR,  $ingredients, $steps,$indexSte
                 else{
                     for($i=0; $i<sizeof($step);$i++){
                         $data[$index]['steps'][]=$step[$i];
-                        $data[$index]['timers'][$i]=$temps[$i];
+                        $data[$index]['timers'][$i]=(int)$temps[$i];
                     }
                 }
             }
