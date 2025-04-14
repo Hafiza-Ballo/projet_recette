@@ -194,7 +194,7 @@
             </button>
             <div class="conteneur_modif_c">
                 <a href="controllerFrontal.php?action=infos-perso&id_user=<?php echo $_GET['id_user']; ?>">Informations personnelles</a>
-                <a><img src="images/arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Déconnexion</a>
+                <a href="controllerFrontal.php?action=deconnexion"><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Deconnexion</a>
             </div>
         </div>
     </section>

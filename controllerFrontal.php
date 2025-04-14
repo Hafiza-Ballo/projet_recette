@@ -121,6 +121,11 @@ try {
                 $id_user=$_GET['id_user'];
                 CtlAfficherInfo($id_user);
                 break;
+            case 'deconnexion':
+                session_unset();
+                session_destroy();
+                require_once ('connexion.php');
+                break;
             default:
                 require_once ('connexion.php');
                 break;
