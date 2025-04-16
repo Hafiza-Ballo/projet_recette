@@ -652,7 +652,7 @@
                 if(strlen($recette['name'])<=0){
                     echo'<button onclick="effacerBtn()" id="btn_traduirenomRecette0">Traduire</button>
                             <div class="box_traduction" id="divTradNom">
-                                <div class="testnomRecette0">
+                                <div id="testnomRecette0">
                                     <input type="text" class="trad_input_nom" id="id0" >
                                     <button id="idb0" onclick="appliquerTrad(0,\'nomRecette\','.$id_recette.',\' '.$langue.' \' )"> Appliquer</button> <button  id="idann0"onclick="annulerTrad(0,\'nomRecette\')">Annuler</button> </div>
                                 </div>

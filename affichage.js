@@ -321,7 +321,8 @@ function traduction2(button,index, langue,id_recette,type_liste){
 }
 
 function appliquerTrad(index,type_liste,id_recette,langue){
-  let valeurInput= document.getElementById("id"+index).value;
+  let btn= document.getElementById("id"+index);
+  let valeurInput= btn.value;
   if(valeurInput.length >0){
     $.ajax({
       method: "POST",
@@ -342,8 +343,14 @@ function appliquerTrad(index,type_liste,id_recette,langue){
         }
 
       let idSansesapace=("test"+type_liste+index).replace(/\s+/g, '');
+      console.log("icii");
       console.log(idSansesapace);
+      console.log("finn ");
+
       let traductionDiv = document.getElementById(idSansesapace);
+      console.log("icii22");
+      console.log(traductionDiv);
+      console.log("finn 22");
       if(traductionDiv)traductionDiv.remove();
       else{
         console.log('ptv');}
