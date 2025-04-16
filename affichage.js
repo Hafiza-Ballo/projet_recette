@@ -1,4 +1,3 @@
-
 function changeImgURL(button,id,$id_user){
     $.ajax({
       method: "GET",
@@ -654,54 +653,64 @@ function annulerNouvelAjout(type, index){
 function fctajout(id_recette,langue, type, index){
   let btn= document.getElementById("btn_a_modif");
 
-  // Récupère tous les ingrédients
-  const ingrBoxes = document.querySelectorAll(".boxIngr");
-  const stepBoxes = document.querySelectorAll(".boxStep");
+  // Récupère tous les ingrédients et étapes visibles uniquement
+  const ingrBoxes = document.querySelectorAll(".boxIngr:not([style*='display: none'])");
+  const stepBoxes = document.querySelectorAll(".boxStep:not([style*='display: none'])");
 
   let ingredients = [];
   let steps = [];
 
   ingrBoxes.forEach((box) => {
-    if(box.querySelector(".quantite") &&  box.querySelector(".nomI") && box.querySelector(".type") ) {
+    if(box.querySelector(".quantite") && box.querySelector(".nomI") && box.querySelector(".type")) {
       const quantite = box.querySelector(".quantite").value;
-    const nom = box.querySelector(".nomI").value;
-    const type = box.querySelector(".type").value;
+      const nom = box.querySelector(".nomI").value;
+      const type = box.querySelector(".type").value;
   
-
-    ingredients.push({"quantite": quantite, "nom":nom, "type": type });
+      ingredients.push({"quantite": quantite, "nom": nom, "type": type});
     }
   });
+
   stepBoxes.forEach((box) => {
     const step = box.querySelector(".step").value;
     const temps = box.querySelector(".temps").value;
-    steps.push({"step": step, "temps":temps });
+    if(step && temps) { // Vérifie que les valeurs ne sont pas vides
+      steps.push({"step": step, "temps": temps});
+    }
+    console.log(step);
+    console.log(temps);
   });
-  let nomR=document.querySelector("#divModifRecette .nomR").value;
+
+  let nomR = document.querySelector("#divModifRecette .nomR").value;
+  
   $.ajax({
     url: 'controllerFrontal.php',
     type: 'POST',
-    data: {id_recette:id_recette, langue: langue,nomR:nomR, ingredients:JSON.stringify(ingredients), steps:JSON.stringify(steps),index:index },
+    data: {
+      id_recette: id_recette, 
+      langue: langue,
+      nomR: nomR, 
+      ingredients: JSON.stringify(ingredients), 
+      steps: JSON.stringify(steps),
+      index: index
+    },
     success: function(e) {
-    console.log(steps);   
-    if(langue.trim()=='fr'){
-      alert('Recette mise à jour () !');
-    }  
-    else{
-      alert('Recipe updated !');
-    }
-    let div=document.getElementById("nouvel"+type);
-    if(div){div.style.display='none';}
-    let btn=document.getElementById("btn_nouvel"+type);
-    if(btn){btn.style.display='block';}
-    else{console.log("pasbtn");}
-    location.reload();
-
+      console.log(steps);   
+      if(langue.trim() == 'fr'){
+        alert('Recette mise à jour !');
+      } else {
+        alert('Recipe updated !');
+      }
+      let div = document.getElementById("nouvel"+type);
+      if(div) div.style.display = 'none';
+      let btn = document.getElementById("btn_nouvel"+type);
+      if(btn) btn.style.display = 'block';
+      else console.log("pasbtn");
+      location.reload();
     },
     error: function() {
-        alert('Erreur lors de la mise à jour de la recette.');
+      alert('Erreur lors de la mise à jour de la recette.');
     }
   });
-  
 }
 
 

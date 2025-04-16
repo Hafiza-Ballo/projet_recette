@@ -294,11 +294,9 @@ function recupRecetteByMot($mot){
         
     }
     return $recettes;  
-}else {
-    throw new Exception('Erreur lors de la recherche');
+}
 }
 
-}
 function modifInfo($id_user, $nom, $prenom, $mail, $roles){
     $f = fopen('utilisateurs.json', 'r+');
     if (!flock($f, LOCK_EX)){
@@ -716,113 +714,96 @@ function modifRecette($id_recette,$langue,$nomR,  $ingredients, $steps,$indexSte
     }
     $jsonString = fread($f, filesize('recettes.json'));
     $data = json_decode($jsonString, true);
-    $quantite = array_column( json_decode($ingredients), 'quantite');
-    $nom = array_column( json_decode($ingredients), 'nom');
-    $type = array_column( json_decode($ingredients), 'type');
+    $quantite = array_column(json_decode($ingredients), 'quantite');
+    $nom = array_column(json_decode($ingredients), 'nom');
+    $type = array_column(json_decode($ingredients), 'type');
 
-    $temps = array_column( json_decode($steps), 'temps');
-    $step = array_column( json_decode($steps), 'step');
+    $temps = array_column(json_decode($steps), 'temps');
+    $step = array_column(json_decode($steps), 'step');
     
-    foreach($data as $index=> $r){
-        if($r['id']==$id_recette){
-            if(trim($langue)=='fr'){
-                $data[$index]['nameFR']=$nomR;
+    foreach($data as $index => $r) {
+        if($r['id'] == $id_recette) {
+            if(trim($langue) == 'fr') {
+                $data[$index]['nameFR'] = $nomR;
               
-                foreach($quantite as $in=>$q){
-                    if(isset( $data[$index]['ingredientsFR'][$in])){
-                        $data[$index]['ingredientsFR'][$in]=[
-                            'quantity'=>$quantite[$in],
-                            'name'=>$nom[$in],
-                            'type'=>$type[$in]
+                foreach($quantite as $in => $q) {
+                    if(isset($data[$index]['ingredientsFR'][$in])) {
+                        $data[$index]['ingredientsFR'][$in] = [
+                            'quantity' => $quantite[$in],
+                            'name' => $nom[$in],
+                            'type' => $type[$in]
                         ];
-                    }
-                    else{
-                        if(strlen($quantite[$in])>0 || strlen($nom[$in])>0 || strlen($type[$in])>0){
-                            $data[$index]['ingredientsFR'][]=[
-                                'quantity'=>$quantite[$in],
-                                'name'=>$nom[$in],
-                                'type'=>$type[$in]
+                    } else {
+                        if(strlen($quantite[$in]) > 0 || strlen($nom[$in]) > 0 || strlen($type[$in]) > 0) {
+                            $data[$index]['ingredientsFR'][] = [
+                                'quantity' => $quantite[$in],
+                                'name' => $nom[$in],
+                                'type' => $type[$in]
                             ];
-                            
                         }
                     }
                 }
-                error_log(var_dump($data[$index]));
 
-                if($indexStep!=-1 && $step[$indexStep]>0){
-                    array_splice($data[$index]['stepsFR'], $indexStep+1, 0, $step[$indexStep+1]);
-                    array_splice($data[$index]['steps'], $indexStep+1, 0, "");
-                    array_splice($data[$index]['timers'], $indexStep+1, 0, (int) $temps[$indexStep+1]);
-
-                }
-                else {
-                    
+                if($indexStep != -1 && $step[$indexStep] > 0) {
+                    array_splice($data[$index]['stepsFR'], $indexStep + 1, 0, $step[$indexStep + 1]);
+                    array_splice($data[$index]['steps'], $indexStep + 1, 0, "");
+                    array_splice($data[$index]['timers'], $indexStep + 1, 0, (int)$temps[$indexStep + 1]);
+                } else {
                     $data[$index]['stepsFR'] = [];
                     $data[$index]['timers'] = [];
-                    
                     
                     $nbSteps = count($data[$index]['steps']);
                     
                     for($i = 0; $i < count($step); $i++) {
                         if($step[$i] != "...") {
-                            
                             $data[$index]['stepsFR'][] = $step[$i];
                             $data[$index]['timers'][] = (int)$temps[$i];
                             
-                            if( $i == $nbSteps) {
+                            if($i == $nbSteps) {
                                 $data[$index]['steps'][] = "";
                             }
                         }
-                        else {
-                            error_log($temps[$i]);
-                        }
                     }
                 }
-                
-            }
-            else{
-                $data[$index]['name']=$nomR;
-                if(sizeof($r['ingredients'])>0){
-                    foreach($r['ingredients'] as $in=> $i){
-                        $data[$index]['ingredients'][$in]=[
-                            'quantity'=>$quantite[$in],
-                            'name'=>$nom[$in],
-                            'type'=>$type[$in]
+            } else {
+                $data[$index]['name'] = $nomR;
+                if(sizeof($r['ingredients']) > 0) {
+                    foreach($r['ingredients'] as $in => $i) {
+                        $data[$index]['ingredients'][$in] = [
+                            'quantity' => $quantite[$in],
+                            'name' => $nom[$in],
+                            'type' => $type[$in]
                         ];
                     }
-                }
-                else{
-                    foreach($quantite as $in=>$q){
-                        $data[$index]['ingredients'][]=[
-                            'quantity'=>$quantite[$in],
-                            'name'=>$nom[$in],
-                            'type'=>$type[$in]
+                } else {
+                    foreach($quantite as $in => $q) {
+                        $data[$index]['ingredients'][] = [
+                            'quantity' => $quantite[$in],
+                            'name' => $nom[$in],
+                            'type' => $type[$in]
                         ];
                     }
                 }
 
-                if(sizeof($r['steps'])>0){
-                    for( $i=0; $i<sizeof($data[$index]['steps']);$i++){
-                        $data[$index]['steps'][$i]=$step[$i];
-                        $data[$index]['timers'][$i]=$temps[$i];
-
+                if(sizeof($r['steps']) > 0) {
+                    for($i = 0; $i < sizeof($data[$index]['steps']); $i++) {
+                        $data[$index]['steps'][$i] = $step[$i];
+                        $data[$index]['timers'][$i] = $temps[$i];
                     }
-                }
-                else{
-                    for($i=0; $i<sizeof($step);$i++){
-                        $data[$index]['steps'][]=$step[$i];
-                        $data[$index]['timers'][$i]=(int)$temps[$i];
+                } else {
+                    for($i = 0; $i < sizeof($step); $i++) {
+                        $data[$index]['steps'][] = $step[$i];
+                        $data[$index]['timers'][$i] = (int)$temps[$i];
                     }
                 }
             }
-            
         }
     }
 
     $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
     ftruncate($f, 0);
-    fseek($f,0);
+    fseek($f, 0);
     fwrite($f, $newJsonString);
     flock($f, LOCK_UN);
-    fclose($f); 
+    fclose($f);
 }

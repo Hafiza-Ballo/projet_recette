@@ -255,8 +255,8 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                                 <button  onclick="fctnouvelAjout(\'Etape\', '.$index.')" id="btn_new'.$index.'">Nouvelle étape</button>
                                 <div id="new'.$index.'" style="display:none">
                                     <div class="boxStep">
-                                        <label>Etape</label><input class="step"  type="text" value="..."><br>
-                                        <label>Temps(en minute)</label><input class="temps"  type="text" value=""><br>
+                                        <label>Etape</label><input class="step"  type="text" ><br>
+                                        <label>Temps(en minute)</label><input class="temps"  type="text"><br>
                                         <button id="btn_ajoutEtape" onclick="fctajout('.$id_recette.',\'fr\',\'Etape\', '.$index.')">Ajouter l\'étape</button> <button onclick="annulerNouvelAjout(\'Etape\','.$index.')">Annuler</button>
                                     </div>
                                 </div>';
