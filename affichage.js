@@ -416,11 +416,16 @@ function annulerTrad(index, type_liste){
 
 
 function effacerBtn(){
-  let btn=document.getElementById("btn_traduirenomRecette0");
+  let btn = document.getElementById("btn_traduirenomRecette0");
   let divSuivante = document.getElementById("divTradNom");
-  if(btn)btn.style.display="none";
-  if(divSuivante)divSuivante.style.display="block";
-  else{console.log('no');}
+  let divSuivante2=document.getElementById("testnomRecette0");
+  if(btn) btn.style.display = "none";
+  if(divSuivante) {
+    divSuivante.style.display = "block";
+    divSuivante2.style.display="block";
+  } else {
+    console.log('no');
+  }
 }
 
 function modifierRoles(id_user, roles) {
