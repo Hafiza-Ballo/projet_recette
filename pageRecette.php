@@ -541,6 +541,10 @@
     .steps li:last-child::after {
     display: none;
     }
+    .steps button{
+        margin-left: 5%;
+    }
+
     button{
         border:solid 2px #ED4B5B;
         border-radius: 5px;
@@ -578,8 +582,11 @@
         max-width: max-content;
         width: 100%;
     }*/
-    #divTradNom{
-        display:none;
+    .tr_0{
+        margin-left: 10%;
+    }
+    .trad_input_nom{
+        width: 100%;
     }
     #btn_traduirenomRecette0{
         margin-left: 45%;
@@ -639,8 +646,18 @@
         min-height: 0;
         width: 60%;
     }
+    .toutmodifier{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 40%;
+        margin-bottom: 10px;
+    }
 
-
+    .btn_new_step{
+        margin-bottom: 2%;
+        
+    }
         
     </style>
 </head>
@@ -676,8 +693,8 @@
             </button>
             <div class="conteneur_modif_c">
                 <?php echo $infosBtn; ?>
-                <a><img src="images/arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
-            </div>
+                <a href="controllerFrontal.php?action=deconnexion"><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
+                </div>
         </div>
     </section>
 
@@ -694,7 +711,7 @@
             if($langue == 'fr'){
                 if(strlen($recette['name'])<=0){
                     echo'<button onclick="effacerBtn()" id="btn_traduirenomRecette0">Traduire</button>
-                            <div class="box_traduction" id="divTradNom">
+                            <div class="box_traduction tr_0" style="display:none;">
                                 <div id="testnomRecette0">
                                     <input type="text" class="trad_input_nom" id="id0" >
                                     <button id="idb0" onclick="appliquerTrad(0,\'nomRecette\','.$id_recette.',\' '.$langue.' \' )"> Appliquer</button> <button  id="idann0"onclick="annulerTrad(0,\'nomRecette\')">Annuler</button> </div>
@@ -706,7 +723,7 @@
             else{
                 if(strlen($recette['nameFR'])<=0){
                     echo'<button onclick="effacerBtn()" id="btn_traduirenomRecette0">Translate</button>
-                            <div class="box_traduction" id="divTradNom">
+                            <div class="box_traduction tr_0" style="display:none;">
                                 <div id="testnomRecette0">
                                     <input type="text" class="trad_input_nom" id="id0" >
                                     <button id="idb0" onclick="appliquerTrad(0,\'nomRecette\','.$id_recette.',\' '.$langue.' \' )"> Apply</button> <button  id="idann0"onclick="annulerTrad(0,\'nomRecette\')">Cancel</button> </div>

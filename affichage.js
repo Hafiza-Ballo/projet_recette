@@ -305,15 +305,14 @@ function traduction(button,index, langue,id_recette,type_liste){
 function traduction2(button,index, langue,id_recette,type_liste){
   let btn=document.getElementById("btn_traduire"+type_liste+index);
   let divSuivante = button.nextElementSibling;
-  let box_traduction=document.querySelector(".box_traduction");
+  let box_traduction=document.querySelector(".tr_"+index);
+  console.log("btn_traduire"+type_liste+index);
+  if(btn)btn.style.display="none";
   box_traduction.style.display="block";
   $.ajax({
     method: "POST",
     url: "changerLangue.php", 
     success: function(){
-
-      if(btn)btn.style.display="none";
-      else{console.log('no');}
 
     },
     error:function() {
@@ -398,13 +397,11 @@ function appliquerTradIngr(index,type_liste,id_recette,langue){
 //cacher la div de traduction de'un element de la recette
 // et afficher le bouton de traduction
 function annulerTrad(index, type_liste){
-  let t=document.getElementById("test"+type_liste+index);
   let btn=document.getElementById("btn_traduire"+type_liste+index);
-  if(btn){btn.style.display="block";}
+  if(btn){btn.style.display="inline-block";}
   else{console.log('no');}
-  if(t)t.style.display="none";
-  let box_traduction=document.querySelector(".box_traduction");
-  box_traduction.style.display="none";
+  let box_traduction=document.querySelector(".tr_"+index);
+  if(box_traduction)box_traduction.style.display="none";
   
 }
 
@@ -412,12 +409,10 @@ function annulerTrad(index, type_liste){
 // afficher la div de traduction du nom de la recette
 function effacerBtn(){
   let btn = document.getElementById("btn_traduirenomRecette0");
-  let divSuivante = document.getElementById("divTradNom");
-  let divSuivante2=document.getElementById("testnomRecette0");
+  let divSuivante = document.querySelector(".tr_0");
   if(btn) btn.style.display = "none";
   if(divSuivante) {
-    divSuivante.style.display = "block";
-    divSuivante2.style.display="block";
+    divSuivante.style.display = "inline-block";
   } else {
     console.log('no');
   }
@@ -591,7 +586,7 @@ function appliquerModif(id_recette,langue, div){
   stepBoxes.forEach((box) => {
     const step = box.querySelector(".step").value;
     const temps = box.querySelector(".temps").value;
-    if(step && temps) { // Vérifie que les valeurs ne sont pas vides
+    if(step && temps && step!='...'.trim()) { // Vérifie que les valeurs ne sont pas vides
       steps.push({"step": step, "temps": temps});
     }
     
@@ -702,13 +697,13 @@ function fctajout(id_recette,langue, type, index){
   stepBoxes.forEach((box) => {
     const step = box.querySelector(".step").value;
     const temps = box.querySelector(".temps").value;
-    if(step && temps) { // Vérifie que les valeurs ne sont pas vides
+    if(step && temps && step!='...'.trim()) { // Vérifie que les valeurs ne sont pas vides
       steps.push({"step": step, "temps": temps});
     }
   });
 
   let nomR = document.querySelector("#divModifRecette .nomR").value;
-  let without= document.querySelector("#divModifRecette .without");
+  let without= document.querySelector("#divModifRecette .without").value;
   
   $.ajax({
     url: 'controllerFrontal.php',

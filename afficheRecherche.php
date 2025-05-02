@@ -244,11 +244,13 @@
                 
                 <button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc">Mon compte</button>
                 <div class="conteneur_modif_c">
-                <?php
-                    echo $infosBtn;
+                    <?php
+                        echo $infosBtn;
                     ?>
-                    <a><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Deconnexion</a>
-                </div>
+                    <?php echo $mesRecettesBtn; ?>
+
+                    <a href="controllerFrontal.php?action=deconnexion"><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
+                    </div>
                 
     
             </div>

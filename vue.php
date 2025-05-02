@@ -205,7 +205,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                     }
                     else if(isset($recette["ingredients"][$index]) && array_key_exists($index,$nom_ingredientsENG)&& $nom_ingredientsENG[$index]==null){
                         $x='testingredients'.($index+1);
-                        $contenu.='<button onclick="traduction2(this,'.($index+1).',\''.$langue.'\','.$id_recette.', \'ingredients\')" id="btn_traduireingredients'.($index+1).'">Translate</button>
+                        $contenu.='<button onclick="traduction2(this,'.($index+1).',\''.$langue.'\','.$id_recette.', \'ingredients\')" id="btn_traduireingredients'.($index+1).'">Traduire</button>
                                    <div class="box_traduction tr_'.($index+1).'" style="display:none;">
                                        <div id="'.$x.'">
                                            <label>Quantity: </label><input value="'.array_column($recette["ingredients"], "quantity")[$index].'" class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="q'.$index.'"><br>
@@ -222,9 +222,9 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
             $divModifRecette.='<button onclick="fctnouvelAjout(\'Ingr\', -1)" id="btn_nouvelIngr" >Nouvel ingrédient</button> 
                             <div id="nouvelIngr">
                                 <div class="boxIngr">
-                                    <label>Quantité</label><input class="quantite"  type="text" value=""><br>
-                                    <label>Nom</label><input class="nomI"  type="text" value=""><br>
-                                    <label>Type</label><input class="type"  type="text" value=""><br>
+                                    <label>Quantité</label><input class="quantite"  type="text" ><br>
+                                    <label>Nom</label><input class="nomI"  type="text" ><br>
+                                    <label>Type</label><input class="type"  type="text"><br>
                                     <button id="btn_ajoutIngr" onclick="fctajout('.$id_recette.',\'fr\',\'Ingr\',-1)">Ajouter ingrédient</button><button onclick="annulerNouvelAjout(\'Ingr\',-1)">Annuler</button>
                                 </div>
                             </div> 
@@ -237,9 +237,9 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
             $divModifRecette.='<button onclick="fctnouvelAjout(\'Ingr\', -1)" id="btn_nouvelIngr" >Nouvel ingrédient</button> 
                             <div id="nouvelIngr">
                                 <div class="boxIngr">
-                                    <label>Quantité</label><input class="quantite"  type="text" value=""><br>
-                                    <label>Nom</label><input class="nomI"  type="text" value=""><br>
-                                    <label>Type</label><input class="type"  type="text" value=""><br>
+                                    <label>Quantité</label><input class="quantite"  type="text" ><br>
+                                    <label>Nom</label><input class="nomI"  type="text" ><br>
+                                    <label>Type</label><input class="type"  type="text" ><br>
                                     <button id="btn_ajoutIngr" onclick="fctajout('.$id_recette.',\'fr\',\'Ingr\',-1)">Ajouter ingrédient</button><button onclick="annulerNouvelAjout(\'Ingr\',-1)">Annuler</button>
                                 </div>
                             </div> 
@@ -265,13 +265,13 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                 if(strlen($s)<=0){$s="...";}
                 $divModifRecette.='<div class="boxStep">
                                     <span class="st_ligne"><label>Etape</label><textarea class="step"  type="text">'.$s.'</textarea><br></span>
-                                    <label>Temps</label><input class="temps"  type="text" value="'.$timers[$index].'"><br>
+                                    <label>Temps</label><input class="temps"  type="number" value='.$timers[$index].'><br>
                                 </div>
-                                <button  onclick="fctnouvelAjout(\'Etape\', '.$index.')" id="btn_new'.$index.'">Nouvelle étape</button>
+                                <button  onclick="fctnouvelAjout(\'Etape\', '.$index.')" id="btn_new'.$index.'" class="btn_new_step">Nouvelle étape</button>
                                 <div id="new'.$index.'" style="display:none">
                                     <div class="boxStep">
                                         <span class="st_ligne"><label>Etape</label><textarea class="step"  type="text" >...</textarea><br></span>
-                                        <label>Temps(en minute)</label><input class="temps"  type="text"><br>
+                                        <label>Temps(en minute)</label><input class="temps" value=0 type="number"><br>
                                         <button id="btn_ajoutEtape" onclick="fctajout('.$id_recette.',\'fr\',\'Etape\', '.$index.')">Ajouter l\'étape</button> <button onclick="annulerNouvelAjout(\'Etape\','.$index.')">Annuler</button>
                                     </div>
                                 </div>';
@@ -291,7 +291,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                     $contenu .= '</li>';
                 }
             }
-            $divModifRecette.='</div><button id="btn_a_modif"  onclick="appliquerModif('.$id_recette.',\'fr\',\'divModifRecette\')">Appliquer</button>  <button onclick="annulerModif()">Annuler</button></div>
+            $divModifRecette.='</div><div class="toutmodifier"><button id="btn_a_modif"  onclick="appliquerModif('.$id_recette.',\'fr\',\'divModifRecette\')">Appliquer</button>  <button onclick="annulerModif()">Annuler</button></div></div>
              </div>
              </section>';
             $contenu .= '</ul>';
@@ -386,8 +386,8 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
             $divModifRecette.='<label>Ingredients</label>
                                 <div class="boxIngr">
                                         <label>Quantity</label><input type="text" ><br>
-                                        <label>Name</label><input type="text" value=><br>
-                                        <label>Type</label><input type="text" value=><br>
+                                        <label>Name</label><input type="text" ><br>
+                                        <label>Type</label><input type="text" ><br>
                                         <button>Add ingredients</button> <button>Cancel</button>
                                 </div>';
         }
@@ -410,13 +410,13 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                 if(strlen($s)<=0){$s="...";}
                 $divModifRecette.='<div class="boxStep">
                                     <span class="st_ligne"><label>Step</label><textarea class="step"  type="text">'.$s.'</textarea><br></span>
-                                    <label>Time</label><input class="temps"  type="text" value="'.$timers[$index].'"><br>
+                                    <label>Time</label><input class="temps"  type="number" value='.$timers[$index].'><br>
                                 </div>
-                                <button  onclick="fctnouvelAjout(\'Etape\', '.$index.')" id="btn_new'.$index.'">New step</button>
+                                <button  onclick="fctnouvelAjout(\'Etape\', '.$index.')" id="btn_new'.$index.'" class="btn_new_step">New step</button>
                                 <div id="new'.$index.'" style="display:none">
                                     <div class="boxStep">
                                         <span class="st_ligne"><label>Step</label><textarea class="step"  type="text" >...</textarea><br></span>
-                                        <label>Time(minute)</label><input class="temps"  type="text" value=""><br>
+                                        <label>Time(minute)</label><input class="temps"  type="number" value=0><br>
                                         <button id="btn_ajoutEtape" onclick="fctajout('.$id_recette.',\'eng\',\'Etape\', '.$index.')">Add step</button> <button onclick="annulerNouvelAjout(\'Etape\','.$index.')">Cancel</button>
                                     </div>
                                 </div>';
@@ -435,7 +435,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                 }
                 $contenu .= '</li>';
             }
-            $divModifRecette.='</div><button id="btn_a_modif"  onclick="appliquerModif('.$id_recette.',\'eng\', \'divModifRecette\')">Apply</button> <button onclick="annulerModif()">Cancel</button></div>
+            $divModifRecette.='</div><div class="toutmodifier"><button id="btn_a_modif"  onclick="appliquerModif('.$id_recette.',\'eng\', \'divModifRecette\')">Apply</button> <button onclick="annulerModif()">Cancel</button></div></div>
              </div>
              </section>';
             $contenu .= '</ul>';
@@ -464,7 +464,7 @@ function afficherRecherche($user,$recette,$likes,$mot){
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
     $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$user['id'] . '">Informations personnelles</a>';
-    if (!in_array('admin', $user['role']))
+    if (in_array('admin', $user['role']))
     {
         $infosBtn .= '<br><a href="controllerFrontal.php?action=admin&id_user=' .$user['id'] . '">Espace Admin</a>';
     }
@@ -475,6 +475,11 @@ function afficherRecherche($user,$recette,$likes,$mot){
     else{
         $langue='fr';
     } 
+    $mesRecettesBtn = "";
+    if (in_array('Chef', $user['role']))
+    {
+        $mesRecettesBtn = '<a href="controllerFrontal.php?action=mes_recettes&id_user=' . $user['id'] . '" class="btn-action">'.($langue=='fr' ? 'Mes recettes' : 'My recipes').'</a>'; 
+    }
     $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">' . ($langue == "fr" ? "Retour" : "Go back") . '</button>';
     $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
     if (empty($recette)) {

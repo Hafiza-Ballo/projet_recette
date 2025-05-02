@@ -79,7 +79,7 @@ try {
         $commentaires = CtlRecupCommentaires($id_recette);
         echo json_encode($commentaires);
     }
-    else if (isset($_POST['action']) && $_POST['action'] === 'ajouter_recette') {
+    /*else if (isset($_POST['action']) && $_POST['action'] === 'ajouter_recette') {
         $id_user = $_POST['id_user'];
         $langue = $_POST['langue'];
         $name = ($langue === 'eng') ? $_POST['name'] : '';
@@ -93,7 +93,7 @@ try {
         $photo_file = isset($_FILES['photo_file']) && $_FILES['photo_file']['error'] === UPLOAD_ERR_OK ? $_FILES['photo_file'] : null;
         $photo_url = $_POST['photo_url'] ?? '';
         CtlAjouterRecette($id_user, $langue, $name, $nameFR, $ingredients, $ingredientsFR, $steps, $stepsFR, $without, $timers, $photo_file, $photo_url);
-    }
+    }*/
     else if (isset($_GET['action']) && $_GET['action'] === 'proposer_recette') {
         $id_user = $_GET['id_user'];
         $user = recupUserById($id_user); 
@@ -132,7 +132,7 @@ try {
         }
         
     }
-    else if (isset($_POST['action']) && $_POST['action'] === 'modifier_recette') {
+    /*else if (isset($_POST['action']) && $_POST['action'] === 'modifier_recette') {
         $id_user = $_POST['id_user'];
         $id_recette = $_POST['id_recette'];
         $langue = $_SESSION['langue'] ?? 'fr';
@@ -148,7 +148,7 @@ try {
         $photo_url = $_POST['photo_url'] ?? '';
         $author = $_POST['author'];
         CtlModifierRecette($id_user, $id_recette, $langue, $name, $nameFR, $without, $ingredients, $ingredientsFR, $steps, $stepsFR, $timers, $photo_file, $photo_url, $author);
-    }
+    }*/
     
 
     else if(isset($_POST['id_user'])  && isset($_POST['id_recette'] ) && isset($_FILES['photo'] )){
@@ -190,17 +190,13 @@ try {
         $nomR=$_POST['nomR'];
         $steps=$_POST['steps'];
         $without=$_POST['without'];
-        if(isset($_POST['index'])){$index=$_POST['index']; error_log($index);
-        }
-        else{$index=-1;  error_log($index);
-        }
+        if(isset($_POST['index'])){$index=$_POST['index']; error_log($index);}
+        else{$index=-1;}
         if(isset($_POST['div']) && $_POST['div']=='AjoutRecette' && isset($_POST['id_u']) && isset($_POST['photo_url'])  ){
             $div=$_POST['div'];
             $id_user= $_POST['id_u'];
             $photo_url=$_POST['photo_url'];
-            error_log($photo_url);
             CtlAjoutRecette($langue, $nomR,$without, $ingredients,$steps, $div, $id_user, $photo_url);
-
         }
         else{
             CtlModifRecette($id_recette,$langue, $nomR,$without, $ingredients,$steps, $index);
