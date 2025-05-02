@@ -493,7 +493,6 @@
         height: 15px;
         background-color: #faab66;
         box-shadow: 2px 2px 0px #bab5f8;
-        box-shadow: 2px 2px 0px #bab5f8;
         border-radius: 50%;
     }
 
@@ -556,18 +555,16 @@
     input, label{
         margin-bottom: 1%;
     }
-    .boxIngr{
-        border: solid 2px #ccc;
-        width: 40%;
+    .boxIngr, .boxStep{
+        border: solid 0.5px #ccc;
         border-radius: 5px;
         margin-bottom: 2%;
+        box-shadow: 2.5px 2.5px 0px #ccc;
     }
-    .boxStep{
-        border: solid 2px #ccc;
-        width: 40%;
-        border-radius: 5px;
-        margin-bottom: 2%;
-    }
+    .long{
+            width: 60%;
+        }
+    
     #divModifRecette{
         display:none;
         background-color: #fefefe;
@@ -598,7 +595,17 @@
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     }
 
-    
+    .st_ligne{
+        display: flex;
+        align-items: center;     /* aligne verticalement le label et le textarea */
+        gap: 8px;                /* espace entre eux */
+        margin-bottom: 10px;
+    }
+    .step, .without{
+        height: 30px;
+        min-height: 0;
+        width: 60%;
+    }
 
 
         
@@ -630,10 +637,12 @@
                 </select>
             </form>
             
-            <button id="mon_compte" onclick="affichage_conteneur_modif()"><img src="images/user-solid.svg" alt="user" id="user_mc"><?php echo $langue == 'fr' ? 'Mon compte' : 'My account'; ?></button>
+            <button id="mon_compte" onclick="affichage_conteneur_modif()">
+                <img src="images/user-solid.svg" alt="user" id="user_mc"><?php echo $langue == 'fr' ? 'Mon compte' : 'My account'; ?>
+            </button>
             <div class="conteneur_modif_c">
                 <?php echo $infosBtn; ?>
-                <a href="controllerFrontal.php?action=deconnexion"><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Deconnexion</a>
+                <a><img src="images/arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
             </div>
         </div>
     </section>
@@ -719,7 +728,7 @@
                     <div class="comment-section">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#commentModal"><?php echo $langue == 'fr' ? 'Voir les avis' : 'View reviews'; ?></a>
                         <textarea class="comment-input" id="commentText" placeholder="<?php echo $langue == 'fr' ? 'Partagez votre expérience avec cette recette' : 'Share your experience with this recipe';?>..."></textarea>
-                        <button class="comment-btn" onclick="posterCommentaire(<?php echo $id_user . ',' . $id_recette; ?>)">"<?php echo $langue == 'fr' ? 'Poster un commentaire' : 'Post a comment';?></button>
+                        <button class="comment-btn" onclick="posterCommentaire(<?php echo $id_user . ',' . $id_recette; ?>)"><?php echo $langue == 'fr' ? 'Poster un commentaire' : 'Post a comment';?></button>
                     </div>
                 </div>
             </div>

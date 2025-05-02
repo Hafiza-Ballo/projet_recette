@@ -100,7 +100,7 @@ try {
         if (!in_array('Chef', $user['role'])) {
             throw new Exception('Accès refusé : vous n\'êtes pas chef.');
         }
-        require_once('nvrecette.php'); 
+        require_once('newrecette.php'); 
     }
     else if (isset($_GET['action']) && $_GET['action'] === 'mes_recettes') {
         $id_user = $_GET['id_user'];
@@ -183,18 +183,28 @@ try {
         echo $valeurInput." ".$liste." ".$id_recette." ".$langue ;
         CtlAjoutTraduction($id_recette, $liste, $index, $valeurInput, $langue);
     }
-    else if(isset($_POST['id_recette']) && isset($_POST['langue']) && isset($_POST['ingredients']) &&  isset($_POST['nomR']) &&isset($_POST['steps']) ){
+    else if(isset($_POST['id_recette']) && isset($_POST['langue']) && isset($_POST['ingredients']) &&  isset($_POST['nomR']) &&isset($_POST['steps']) &&isset($_POST['without'])){
         $id_recette=$_POST['id_recette'];
         $langue=$_POST['langue'];
         $ingredients=$_POST['ingredients'];
         $nomR=$_POST['nomR'];
         $steps=$_POST['steps'];
+        $without=$_POST['without'];
         if(isset($_POST['index'])){$index=$_POST['index']; error_log($index);
         }
         else{$index=-1;  error_log($index);
         }
-        //$index= $_POST['index'] ?? -1 ;
-        CtlModifRecette($id_recette,$langue, $nomR, $ingredients,$steps, $index);
+        if(isset($_POST['div']) && $_POST['div']=='AjoutRecette' && isset($_POST['id_u']) && isset($_POST['photo_url'])  ){
+            $div=$_POST['div'];
+            $id_user= $_POST['id_u'];
+            $photo_url=$_POST['photo_url'];
+            error_log($photo_url);
+            CtlAjoutRecette($langue, $nomR,$without, $ingredients,$steps, $div, $id_user, $photo_url);
+
+        }
+        else{
+            CtlModifRecette($id_recette,$langue, $nomR,$without, $ingredients,$steps, $index);
+        }
     }
     
     else

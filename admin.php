@@ -279,11 +279,11 @@
         </div>
         <div>
             <button id="mon_compte" onclick="affichage_conteneur_modif()">
-                <img src="images/user-solid.svg" alt="user" id="user_mc">Mon compte
+                <img src="images/user-solid.svg" alt="user" id="user_mc"><?php echo $langue=='fr' ? 'Mon compte':' My account'; ?>
             </button>
             <div class="conteneur_modif_c">
-                <a href="controllerFrontal.php?action=infos-perso&id_user=<?php echo $user['id']; ?>">Informations personnelles</a>
-                <a><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img">Déconnexion</a>
+                <a href="controllerFrontal.php?action=infos-perso&id_user=<?php echo $_GET['id_user']; ?>"><?php echo $langue=='fr' ? 'Informations personnelles': 'Personal information'; ?></a>
+                <a><img src="images/arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
             </div>
         </div>
     </section>
@@ -415,7 +415,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modifier les rôles</h5>
+                < class="modal-title">Modifier les rôles</>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">

@@ -706,7 +706,7 @@ function recupRecettesByAuteur($id_auteur) {
     return [];
 }
 
-function modifRecette($id_recette,$langue,$nomR,  $ingredients, $steps,$indexStep){
+function modifRecette($id_recette,$langue,$nomR,$without,  $ingredients, $steps,$indexStep){
     $f = fopen('recettes.json', 'r+');
     if (!flock($f, LOCK_EX)) {
         http_response_code(409);
@@ -723,9 +723,11 @@ function modifRecette($id_recette,$langue,$nomR,  $ingredients, $steps,$indexSte
     
     foreach($data as $index => $r) {
         if($r['id'] == $id_recette) {
+            $data[$index]['Without']=explode(", ", $without);
+
             if(trim($langue) == 'fr') {
                 $data[$index]['nameFR'] = $nomR;
-              
+            
                 foreach($quantite as $in => $q) {
                     if(isset($data[$index]['ingredientsFR'][$in])) {
                         $data[$index]['ingredientsFR'][$in] = [
@@ -800,6 +802,104 @@ function modifRecette($id_recette,$langue,$nomR,  $ingredients, $steps,$indexSte
         }
     }
 
+    $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+    ftruncate($f, 0);
+    fseek($f, 0);
+    fwrite($f, $newJsonString);
+    flock($f, LOCK_UN);
+    fclose($f);
+}
+
+
+function ajoutRecette($langue, $nomR,$without, $ingredients,$steps, $div, $id_user,$photo){
+    error_log("recette");
+    $f = fopen('recettes.json', 'r+');
+    if (!flock($f, LOCK_EX)) {
+        http_response_code(409);
+        return;
+    }
+    $jsonString = fread($f, filesize('recettes.json'));
+    $data = json_decode($jsonString, true);
+
+    $fU = fopen('utilisateurs.json', 'r+');
+    if (!flock($fU, LOCK_EX)) {
+        http_response_code(409);
+        return;
+    }
+    $jsonStringU = fread($fU, filesize('utilisateurs.json'));
+    $dataU = json_decode($jsonStringU, true);
+    foreach($dataU as $i=>$u){
+        if($u['id']==$id_user){
+            $nomU=$u['prenom'];
+            break;
+        }
+    }
+
+    $quantite = array_column(json_decode($ingredients), 'quantite');
+    $nom = array_column(json_decode($ingredients), 'nom');
+    $type = array_column(json_decode($ingredients), 'type');
+    $in=[];
+    error_log(sizeof($nom));
+    for($i=0; $i<sizeof($nom); $i++){
+        $l=[
+            'quantity'=>$quantite[$i],
+            'name'=>$nom[$i],
+            'type'=>$type[$i]
+        ];
+        $in[]=$l;
+    }
+
+    $temps = array_column(json_decode($steps), 'temps');
+    $step = array_column(json_decode($steps), 'step');
+    $s=[];
+    $t=[];
+    for($i=0; $i<sizeof($step); $i++){
+        array_push($s,$step[$i]);
+        array_push($t,(int)$temps[$i]);
+    }
+    $newId = max(array_column($data, 'id')) + 1;
+    if($langue=='fr'){
+        $new=[
+            'name' =>"",
+            'nameFR' =>$nomR,
+            'Author'=> $nomU,
+            'Without'=>explode(", ", $without),
+            'ingredients'=>[],
+            'ingredientsFR' =>$in,
+            'steps'=>[],
+            'stepsFR'=>$s,
+            'timers' =>$t,
+            'imageURL'=> $photo ?: '',
+            'originalURL'=> "",
+            'like' =>0,
+            'commentaires'=> [],
+            'id'=> $newId,
+            'statut'=> "attente",
+            'id_auteur'=> (int)$id_user
+        ];
+    }
+    else{
+        $new=[
+            'name' =>$nomR,
+            'nameFR' =>"",
+            'Author'=> $nomU,
+            'Without'=>explode(", ", $without),
+            'ingredients'=>$in,
+            'ingredientsFR' =>[],
+            'steps'=>$s,
+            'stepsFR'=>[],
+            'timers' =>$t,
+            'imageURL'=> $photo ?: '',
+            'originalURL'=> "",
+            'like' =>0,
+            'commentaires'=> [],
+            'id'=> $newId,
+            'statut'=> "attente",
+            'id_auteur'=> (int)$id_user
+        ];
+    }
+    $data[]=$new;
+   // error_log("ici ".$new);
     $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
     ftruncate($f, 0);
     fseek($f, 0);

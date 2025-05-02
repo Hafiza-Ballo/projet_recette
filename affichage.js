@@ -515,7 +515,7 @@ function editMode() {
     saveButton.style.display = saveButton.style.display === 'none' ? 'inline-block' : 'none';
 }
 
-function sauverRecette(id_recette,id_user) {
+/*function sauverRecette(id_recette,id_user) {
     var formData = new FormData();
     formData.append('action', 'modifier_recette');
     formData.append('id_user',  id_user);
@@ -546,7 +546,7 @@ function sauverRecette(id_recette,id_user) {
             alert('Erreur lors de la mise à jour de la recette.');
         }
     });
-}
+}*/
 
 function ModifierRecette(){
   let btn=document.getElementById("btn_modifRecette");
@@ -571,53 +571,71 @@ function annulerModif(){
   if(section){section.style.display='none';}
   else{console.log('pasec');}
 }
-function appliquerModif(id_recette,langue){
-  let btn= document.getElementById("btn_a_modif");
-
-  // Récupère tous les ingrédients
-  const ingrBoxes = document.querySelectorAll(".boxIngr");
-  const stepBoxes = document.querySelectorAll(".boxStep");
+function appliquerModif(id_recette,langue, div){
+  console.log("3");
+  // Récupère tous les ingrédients et étapes visibles uniquement
+  const ingrBoxes = document.querySelectorAll(".boxIngr:not([style*='display: none'])");
+  const stepBoxes = document.querySelectorAll(".boxStep:not([style*='display: none'])");
 
   let ingredients = [];
   let steps = [];
 
   ingrBoxes.forEach((box) => {
-    if(box.querySelector(".quantite") &&  box.querySelector(".nomI") && box.querySelector(".type") ) {
+    if(box.querySelector(".quantite") && box.querySelector(".nomI") && box.querySelector(".type")) {
       const quantite = box.querySelector(".quantite").value;
-    const nom = box.querySelector(".nomI").value;
-    const type = box.querySelector(".type").value;
+      const nom = box.querySelector(".nomI").value;
+      const type = box.querySelector(".type").value;
   
-
-    ingredients.push({"quantite": quantite, "nom":nom, "type": type });
+      ingredients.push({"quantite": quantite, "nom": nom, "type": type});
     }
   });
+
   stepBoxes.forEach((box) => {
     const step = box.querySelector(".step").value;
     const temps = box.querySelector(".temps").value;
-    steps.push({"step": step, "temps":temps });
+    if(step && temps) { // Vérifie que les valeurs ne sont pas vides
+      steps.push({"step": step, "temps": temps});
+    }
+    console.log(step);
+    console.log(temps);
   });
-  let nomR=document.querySelector("#divModifRecette .nomR").value;
-  console.log(ingredients);
+
+  let nomR=document.querySelector("#"+div+" .nomR").value;
+  let without= document.querySelector("#"+div+" .without").value;
+  let photo_url = "";
+  
+
+
+  if(div=="AjoutRecette"){
+    const urlInput = document.querySelector(".form-container #photo_url");
+    if (urlInput && urlInput.value.trim().length > 0) {
+      photo_url = urlInput.value.trim(); // Stocke l'URL
+    }
+  }
+  else{
+   id_u=-1;
+
+  }
 
   
   $.ajax({
     url: 'controllerFrontal.php',
     type: 'POST',
-    data: {id_recette:id_recette, langue: langue,nomR:nomR, ingredients:JSON.stringify(ingredients), steps:JSON.stringify(steps) },
+    data: {id_recette:id_recette, langue: langue,nomR:nomR,without:without, ingredients:JSON.stringify(ingredients), steps:JSON.stringify(steps), div:div, id_u:id_u,photo_url:photo_url },
     success: function(e) {
     console.log('appel');   
-    annulerModif();   
-    if(langue.trim()=='fr'){
-      alert('Recette mise à jour !');
-    }  
+    if(div=='divModifRecette'){
+      annulerModif();   
+      alert(langue.trim() === 'fr' ? 'Recette mise à jour !' : 'Recipe updated!');
+    }
     else{
-      alert('Recipe updated !');
+      alert(langue.trim()==='fr' ? 'Recette ajoutée ! Elle est en attente de validation pour être publiée!' : 'Recipe added! It is pending approval before being published!');
     }
     location.reload();
 
     },
     error: function() {
-        alert('Erreur lors de la mise à jour de la recette.');
+        alert(langue.trim()=== 'fr' ? 'Erreur lors de la mise à jour de la recette.': 'Error while updating the recipe.');
     }
 });
 }
@@ -645,8 +663,8 @@ function annulerNouvelAjout(type, index){
   if(type=='Etape'){
     let btn=document.getElementById("btn_new"+index);
     let div=document.getElementById("new"+index);
-  if(btn){ btn.style.display='block';}
-  else{ console.log("pasbtn");}
+    if(btn){ btn.style.display='block';}
+    else{ console.log("pasbtn");}
     if(div){ div.style.display='none';}
     else{console.log("pasbtndiv");}
   }
@@ -663,7 +681,6 @@ function annulerNouvelAjout(type, index){
 
 
 function fctajout(id_recette,langue, type, index){
-  let btn= document.getElementById("btn_a_modif");
 
   // Récupère tous les ingrédients et étapes visibles uniquement
   const ingrBoxes = document.querySelectorAll(".boxIngr:not([style*='display: none'])");
@@ -693,6 +710,9 @@ function fctajout(id_recette,langue, type, index){
   });
 
   let nomR = document.querySelector("#divModifRecette .nomR").value;
+  let without= document.querySelector("#divModifRecette .without");
+  
+  console.log(nomR);
   
   $.ajax({
     url: 'controllerFrontal.php',
@@ -701,17 +721,15 @@ function fctajout(id_recette,langue, type, index){
       id_recette: id_recette, 
       langue: langue,
       nomR: nomR, 
+      without:without,
       ingredients: JSON.stringify(ingredients), 
       steps: JSON.stringify(steps),
       index: index
     },
     success: function(e) {
       console.log(steps);   
-      if(langue.trim() == 'fr'){
-        alert('Recette mise à jour !');
-      } else {
-        alert('Recipe updated !');
-      }
+      alert(langue.trim() === 'fr' ? 'Recette mise à jour !' : 'Recipe updated!');
+
       let div = document.getElementById("nouvel"+type);
       if(div) div.style.display = 'none';
       let btn = document.getElementById("btn_nouvel"+type);
@@ -720,10 +738,41 @@ function fctajout(id_recette,langue, type, index){
       location.reload();
     },
     error: function() {
-      alert('Erreur lors de la mise à jour de la recette.');
+      alert(langue.trim()=== 'fr' ? 'Erreur lors de la mise à jour de la recette.': 'Error while updating the recipe.');
     }
   });
 }
 
+function autreIngr(langue ,type){
+  const container = document.getElementById("container"+type);
+  const nouvelleDiv = document.createElement("div");
+  const modele = document.querySelector(".proposer"+type);
+  nouvelleDiv.className = "proposer"+type;
+  nouvelleDiv.innerHTML = modele.innerHTML;
+  nouvelleDiv.querySelectorAll('input').forEach(input => input.value = '');
 
 
+  const btnAnnuler = document.createElement("button");
+  btnAnnuler.textContent = (langue.trim()=== 'fr' ? 'Annuler': 'Cancel');
+
+  btnAnnuler.onclick = () => nouvelleDiv.remove(); // supprime le bloc
+  // Cherche l'élément .boxX (comme .boxIngr ou .boxStep) dans la nouvelle div
+  const boxElement = nouvelleDiv.querySelector(".box" + type);
+  if (boxElement) {
+    boxElement.appendChild(btnAnnuler);
+  } else {
+    nouvelleDiv.appendChild(btnAnnuler);
+  }
+  container.appendChild(nouvelleDiv);
+}
+
+function AjouterRecette(langue){
+  if(document.querySelector("#AjoutRecette .nomR")){console.log(document.querySelector("#AjoutRecette .nomR"));}
+  else{console.log("non");}
+  if((document.querySelector("#AjoutRecette .nomR").value).length>0){
+    appliquerModif(-1,langue, 'AjoutRecette')
+  }
+  else{
+    console.log("pas nom");
+  }
+}
