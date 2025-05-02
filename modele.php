@@ -906,4 +906,32 @@ function ajoutRecette($langue, $nomR,$without, $ingredients,$steps, $div, $id_us
     fwrite($f, $newJsonString);
     flock($f, LOCK_UN);
     fclose($f);
+    fclose($fU);
+}
+
+function validerOuSupRecette($id_recette,$valider){
+    $f = fopen('recettes.json', 'r+');
+    if (!flock($f, LOCK_EX)) {
+        http_response_code(409);
+        return;
+    }
+    $jsonString = fread($f, filesize('recettes.json'));
+    $data = json_decode($jsonString, true);
+
+    foreach($data as $index => $r) {
+        if($r['id'] == $id_recette) {
+            if($valider=="oui"){
+                $data[$index]['statut']='valide';
+            }
+            else{
+                unset($data[$index]);
+            }
+        }
+    }
+    $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+    ftruncate($f, 0);
+    fseek($f, 0);
+    fwrite($f, $newJsonString);
+    flock($f, LOCK_UN);
+    fclose($f);
 }

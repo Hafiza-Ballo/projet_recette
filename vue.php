@@ -114,9 +114,19 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
     $disliker = "images/heart-plein.svg";
     $user = recupUserById($id_user);
     $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$id_user . '">Informations personnelles</a>';
+    if(isset($_SESSION['langue'])){
+        $langue=$_SESSION['langue'];
+    }
+    else{
+        $langue='fr';
+    } 
+    $validerRecette='';
     if (in_array('admin', $user['role']))
     {
         $infosBtn .= '<a href="controllerFrontal.php?action=admin&id_user=' .$user['id'] . '">Espace Admin</a>';
+        $validerRecette=($recette['statut']=="attente" ? ('<button class="btn_valider_recette"  onclick="validerRecette('.$id_recette.', \''.$langue.'\')">' . ($langue == "fr" ? "Valider" : "Confirm") . '</button>') : '');
+        $validerRecette.=($recette['statut']=="attente" ? ('<button class="btn_sup_recette" onclick="suprimerRecette('.$id_recette.', \''.$langue.'\')" >' . ($langue == "fr" ? "Supprimer" : "Delete") . '</button>') : '');
+
     }
     $nblike=$recette['like'];
     $a_licke = false;
@@ -125,12 +135,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
     $steps=[];
     $nom_ingredients=[];
 
-    if(isset($_SESSION['langue'])){
-        $langue=$_SESSION['langue'];
-    }
-    else{
-        $langue='fr';
-    }    
+       
     $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $id_user . '\'">' . ($langue == "fr" ? "Retour" : "Go back") . '</button>';
 
     foreach ($like as $l) {

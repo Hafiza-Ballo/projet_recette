@@ -207,6 +207,12 @@ try {
         }
     }
     
+    elseif(isset($_POST['id_recette']) && isset($_POST['valider'])){
+        $id_recette=$_POST['id_recette'];
+        $valider=$_POST['valider'];
+        CtlValiderOuSupRecette($id_recette,$valider);
+    }
+    
     else
     {
         require_once ('connexion.php');

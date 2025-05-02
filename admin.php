@@ -415,7 +415,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                < class="modal-title">Modifier les rôles</>
+                <h4 class="modal-title">Modifier les rôles</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -450,7 +450,7 @@
     <script>
     
 
-    function validerRecette(id_recette) {
+    /*function validerRecette(id_recette) {
         alert('Fonctionnalité de validation de la recette ' + id_recette + ' à venir');
     }
 
@@ -460,7 +460,7 @@
 
     function supprimerRecette(id_recette) {
         alert('Fonctionnalité de suppression de la recette ' + id_recette + ' à venir');
-    }
+    }*/
     </script>
 </body>
 </html>

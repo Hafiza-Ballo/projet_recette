@@ -141,7 +141,7 @@
         text-align: center;
         color: #faab66;
         font-weight: 700;
-        margin-bottom: 30px;
+        
         font-size: 2.2rem;
     }
     
@@ -155,7 +155,7 @@
         width: 100%;
         max-width: 500px;
         height: 400px;
-        margin: 0 auto 30px;
+        margin: 30px auto 30px;
         overflow: hidden;
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -256,9 +256,41 @@
                 box-shadow: 0 3px 10px rgba(237, 75, 91, 0.3);
             }
     
-    .btn_retour:hover {
+    .btn_retour:hover, .btn_valider_recette:hover, .btn_sup_recette:hover {
         background-color: #d43f4e;
         transform: translateY(-2px);
+    }
+    .btn_valider_recette{
+        position: fixed;
+                bottom: 80px;
+                right: 5px;
+                background-color: #ED4B5B;
+                color: white;
+                border: none;
+                border-radius: 30px;
+                padding: 10px 20px;
+                cursor: pointer;
+                font-family: 'Poppins', sans-serif;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                z-index: 1000;
+                box-shadow: 0 3px 10px rgba(237, 75, 91, 0.3);
+    }
+    .btn_sup_recette{
+        position: fixed;
+                bottom: 20px;
+                right: 5px;
+                background-color: #ED4B5B;
+                color: white;
+                border: none;
+                border-radius: 30px;
+                padding: 10px 20px;
+                cursor: pointer;
+                font-family: 'Poppins', sans-serif;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                z-index: 1000;
+                box-shadow: 0 3px 10px rgba(237, 75, 91, 0.3);
     }
     
     i {
@@ -550,7 +582,8 @@
         display:none;
     }
     #btn_traduirenomRecette0{
-        margin-left: 90%;
+        margin-left: 45%;
+        margin-top: -20%;
     }
     input, label{
         margin-bottom: 1%;
@@ -615,7 +648,8 @@
     <?php $langue = $_SESSION['langue'] ?? 'fr';?>
 
     <section class="haut">
-        <?php echo $retourBtn; ?>
+        <?php echo $retourBtn;
+            echo $validerRecette; ?>
         <div id="ensemble_recherche">
             <input placeholder="<?php echo $langue == 'fr' ? 'Rechercher' : 'Search'; ?>..." >
             <img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche"> 

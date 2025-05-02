@@ -224,6 +224,7 @@
         }
         .autre_proposition{
             display: inline-block;
+            margin-top: 2%;
         }
         
         .boxIngr, .boxStep{
