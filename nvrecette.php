@@ -270,7 +270,7 @@
                         <input type="file" class="form-control" id="photo_file" name="photo_file" accept="image/*">
                     </div>
                     <div class="upload-option">
-                        <label for="photo_url">Ou entrer une URL :</label>
+                        <label for="photo_url">Entrer une URL :</label>
                         <input type="text" class="form-control" id="photo_url" name="photo_url" placeholder="Exemple : https://example.com/image.jpg">
                     </div>
                 </div>

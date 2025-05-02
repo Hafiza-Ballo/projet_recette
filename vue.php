@@ -1,14 +1,20 @@
 <?php
 
 function afficherAccueil($user, $recette, $likes) {
+    if(isset($_SESSION['langue']) ){
+        $langue=$_SESSION['langue'];
+    }
+    else{
+        $langue='fr';
+    }
     if ($user)
     $id_user = '<div><input type="hidden" name="id_user" value="' . $user['id'] . '"></div>';
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
-    $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$user['id'] . '">Informations personnelles</a>';
+    $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$user['id'] . '">'.($langue=='fr' ? 'Informations personnelles': 'Personal information').'</a>';
     if (in_array('admin', $user['role']))
     {
-        $infosBtn .= '<a href="controllerFrontal.php?action=admin&id_user=' .$user['id'] . '">Espace Admin</a>';
+        $infosBtn .= '<a href="controllerFrontal.php?action=admin&id_user=' .$user['id'] . '">'.($langue=='fr' ? 'Espace Admin': 'Admin Area' ).' </a>';
     }
     $contenu = '';
     $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
@@ -16,8 +22,8 @@ function afficherAccueil($user, $recette, $likes) {
     $mesRecettesBtn = "";
     if (in_array('Chef', $user['role']))
     {
-        $proposerRecetteBtn = '<a href="controllerFrontal.php?action=proposer_recette&id_user=' . $user['id'] . '" class="btn-action">Proposer une recette</a>' ;
-        $mesRecettesBtn = '<a href="controllerFrontal.php?action=mes_recettes&id_user=' . $user['id'] . '" class="btn-action">Mes recettes</a>'; 
+        $proposerRecetteBtn = '<a href="controllerFrontal.php?action=proposer_recette&id_user=' . $user['id'] . '" class="btn-action">'.($langue=='fr' ? 'Proposer une recette': 'Suggest a new recipe').'</a>' ;
+        $mesRecettesBtn = '<a href="controllerFrontal.php?action=mes_recettes&id_user=' . $user['id'] . '" class="btn-action">'.($langue=='fr' ? 'Mes recettes' : 'My recipes').'</a>'; 
     }
       
     if(isset($_SESSION['langue']) ){
@@ -53,7 +59,7 @@ function afficherAccueil($user, $recette, $likes) {
         foreach ($images as $index => $image) {
             $active = ($index === 0) ? 'active' : '';
             $contenu .= '<div class="carousel-item ' . $active . '">
-                            <img src="' . $image . '" class="d-block w-100 img_sec" alt="recette">
+                            <img src="' . $image . '" class="d-block w-100 img_sec" alt="'.($langue=='fr' ? 'recette' : 'recipe').'">
                          </div>';
         }
 
@@ -155,11 +161,15 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
         $divModifRecette.='<button onclick="ModifierRecette()" id="btn_modifRecette">  Modifier recette</button>
         <section id="content">
             <div id="divModifRecette">
-                <h5>Nom</h5><input type="text" class="nomR" value="'.$nom.'"><br>';
+                <h4>Nom</h4><input type="text" class="nomR" value="'.$nom.'"><br>';
 
-        $without = implode(", ", $recette["Without"]);
-        if (strlen($without) > 0) {
-            $contenu .= '<h4>Spécificités</h4><p>' . $without . '</p>';
+        if (!empty($recette["Without"])) {
+            $without = implode(", ", $recette["Without"]);
+            $contenu .= '<h4>Spécificité</h4><p>' . $without . '</p>';
+            $divModifRecette.= '<h4>Spécificité</h4><textarea type="text" class="without" >'.$without.'</textarea><br>';
+        }
+        else{
+            $divModifRecette.= '<h4>Spécificité</h4><input type="text" class="without" ><br>';
         }
         $contenu .= '<h4> <img src="images\grocery-cart.png" alt="ustensile" class="prep">Ingrédients</h4>';
         if (count($recette["ingredientsFR"]) > 0) {
@@ -169,7 +179,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
             $strIngr=htmlspecialchars(json_encode($nom_ingredients), ENT_QUOTES, "UTF-8");
             $nom_ingredientsENG = array_column($recette["ingredients"], "name");
             
-            $divModifRecette.='<h5>Ingrédients</h5><div >';
+            $divModifRecette.='<h4>Ingrédients</h4><div >';
         
             $contenu.='<ul class="ingredients">';
             foreach ($nom_ingredients as $index=>$n) {
@@ -249,13 +259,13 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                 $contenu .= '<li><h5>ÉTAPE ' . ($index + 1) . ' : </h5> ' . $s;
                 if(strlen($s)<=0){$s="...";}
                 $divModifRecette.='<div class="boxStep">
-                                    <label>Etape</label><input class="step"  type="text" value="'.$s.'"><br>
+                                    <span class="st_ligne"><label>Etape</label><textarea class="step"  type="text">'.$s.'</textarea><br></span>
                                     <label>Temps</label><input class="temps"  type="text" value="'.$timers[$index].'"><br>
                                 </div>
                                 <button  onclick="fctnouvelAjout(\'Etape\', '.$index.')" id="btn_new'.$index.'">Nouvelle étape</button>
                                 <div id="new'.$index.'" style="display:none">
                                     <div class="boxStep">
-                                        <label>Etape</label><input class="step"  type="text" ><br>
+                                        <span class="st_ligne"><label>Etape</label><textarea class="step"  type="text" >...</textarea><br></span>
                                         <label>Temps(en minute)</label><input class="temps"  type="text"><br>
                                         <button id="btn_ajoutEtape" onclick="fctajout('.$id_recette.',\'fr\',\'Etape\', '.$index.')">Ajouter l\'étape</button> <button onclick="annulerNouvelAjout(\'Etape\','.$index.')">Annuler</button>
                                     </div>
@@ -276,7 +286,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                     $contenu .= '</li>';
                 }
             }
-            $divModifRecette.='</div><button id="btn_a_modif"  onclick="appliquerModif('.$id_recette.',\'fr\')">Appliquer</button>  <button onclick="annulerModif()">Annuler</button></div>
+            $divModifRecette.='</div><button id="btn_a_modif"  onclick="appliquerModif('.$id_recette.',\'fr\',\'divModifRecette\')">Appliquer</button>  <button onclick="annulerModif()">Annuler</button></div>
              </div>
              </section>';
             $contenu .= '</ul>';
@@ -299,12 +309,17 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
         $divModifRecette.='<button onclick="ModifierRecette()" id="btn_modifRecette">  Edit recipe</button>
         <section id="content">
             <div id="divModifRecette">
-                <h5>Name</h5><input type="text" class="nomR" value="'.$nom.'"><br>';
-
-        $without = implode(", ", $recette["Without"]);
-        if (strlen($without) > 0) {
+                <h4>Name</h4><input type="text" class="nomR" value="'.$nom.'"><br>';
+        if (!empty($recette["Without"])) {
+            $without = implode(", ", $recette["Without"]);
             $contenu .= '<h4>Specificity</h4><p>' . $without . '</p>';
+            $divModifRecette.= '<h4>Specificity</h4><textarea type="text" class="without" >'.$without.'</textarea><br>';
         }
+        else{
+            $divModifRecette.= '<h4>Specificity</h4><input type="text" class="without" ><br>';
+        }
+                    
+        
         $contenu .= '<h4> <img src="images\grocery-cart.png" alt="ustensile" class="prep">Ingredients</h4>';
         if (count($recette["ingredients"]) > 0) {
             $nom_ingredients = array_column($recette["ingredients"], "name");
@@ -314,7 +329,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
             $nom_ingredientsFR = array_column($recette["ingredientsFR"], "name");
 
             $strIngr=htmlspecialchars(json_encode($nom_ingredients), ENT_QUOTES, "UTF-8");
-            $divModifRecette.='<h5>Ingredients</h5><div >';
+            $divModifRecette.='<h4>Ingredients</h4><div >';
 
             $contenu.='<ul class="ingredients">';
             foreach ($nom_ingredients as $index=>$n) {
@@ -389,13 +404,13 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                 $contenu .= '<li><h5>STEP ' . ($index + 1) . ' : </h5> ' . $s;
                 if(strlen($s)<=0){$s="...";}
                 $divModifRecette.='<div class="boxStep">
-                                    <label>Step</label><input class="step"  type="text" value="'.$s.'"><br>
+                                    <span class="st_ligne"><label>Step</label><textarea class="step"  type="text">'.$s.'</textarea><br></span>
                                     <label>Time</label><input class="temps"  type="text" value="'.$timers[$index].'"><br>
                                 </div>
                                 <button  onclick="fctnouvelAjout(\'Etape\', '.$index.')" id="btn_new'.$index.'">New step</button>
                                 <div id="new'.$index.'" style="display:none">
                                     <div class="boxStep">
-                                        <label>Step</label><input class="step"  type="text" value="..."><br>
+                                        <span class="st_ligne"><label>Step</label><textarea class="step"  type="text" >...</textarea><br></span>
                                         <label>Time(minute)</label><input class="temps"  type="text" value=""><br>
                                         <button id="btn_ajoutEtape" onclick="fctajout('.$id_recette.',\'eng\',\'Etape\', '.$index.')">Add step</button> <button onclick="annulerNouvelAjout(\'Etape\','.$index.')">Cancel</button>
                                     </div>
@@ -415,7 +430,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                 }
                 $contenu .= '</li>';
             }
-            $divModifRecette.='</div><button id="btn_a_modif"  onclick="appliquerModif('.$id_recette.',\'eng\')">Apply</button> <button onclick="annulerModif()">Cancel</button></div>
+            $divModifRecette.='</div><button id="btn_a_modif"  onclick="appliquerModif('.$id_recette.',\'eng\', \'divModifRecette\')">Apply</button> <button onclick="annulerModif()">Cancel</button></div>
              </div>
              </section>';
             $contenu .= '</ul>';
