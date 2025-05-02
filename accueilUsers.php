@@ -207,7 +207,7 @@
 
         <section class="haut">
             <div id="ensemble_recherche">
-            <input placeholder="<?php echo $langue == 'fr' ? 'Rechercher' : 'Search'; ?>..." >
+            <input id="recherche_input" placeholder="<?php echo $langue == 'fr' ? 'Rechercher' : 'Search'; ?>..." >
                 <?php
                 echo $rechercheBtn;
             ?>
