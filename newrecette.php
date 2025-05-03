@@ -225,6 +225,8 @@
         .autre_proposition{
             display: inline-block;
             margin-top: 2%;
+            margin-bottom: 1%;
+            margin-left: 2%;
         }
         
         .boxIngr, .boxStep{
@@ -245,6 +247,10 @@
             height: 30px;
             min-height: 0;
             width: 60%;
+        }
+        .btn_submit{
+            margin-top: 4%;
+            margin-left: 40%;
         }
     </style>
 </head>
@@ -290,7 +296,7 @@
                             <label><?php echo $langue=='fr' ? 'Quantité': 'Quantity'; ?>: </label><input class="quantite"  type="text"><br>
                             <label><?php echo $langue=='fr' ? 'Nom': 'Name'?>: </label><input class="nomI"  type="text"><br>
                             <label>Type: </label><input class="type"  type="text" ><br>
-                            <button onclick="autreIngr(langue,'Ingr')" class="autre_proposition" type="submit"><?php echo $langue=='fr' ? 'Autre ingrédient': 'Other ingredient'; ?></button>
+                            <button onclick="autreIngr(langue,'Ingr', this)" class="autre_proposition btn_Ingr"  type="submit"><?php echo $langue=='fr' ? 'Autre ingrédient': 'Other ingredient'; ?></button>
                         </div>
                     </div> 
                 </div> 
@@ -300,7 +306,7 @@
                         <div class="boxStep">
                             <span class="st_ligne"><label id="st"><?php echo $langue=='fr' ? 'Etape' : 'Step' ;?>: </label><textarea class="step long"  type="text" ></textarea><br></span>
                             <label><?php echo $langue=='fr' ? 'Temps' : 'Time' ; ?>(minute): </label><input class="temps"  type="number" value="0" ><br>
-                            <button onclick="autreIngr(langue,'Step')" class="" type="submit"><?php echo $langue=='fr' ? 'Autre étape': 'Other step'; ?></button>
+                            <button onclick="autreIngr(langue,'Step')" class="autre_proposition" id="btn_Step" type="submit"><?php echo $langue=='fr' ? 'Autre étape': 'Other step'; ?></button>
 
                         </div>
                     </div>  

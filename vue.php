@@ -557,33 +557,45 @@ function afficherInfo($user){
         $langue='fr';
     } 
     $retourBtn = '<button class="btn_retour" onclick="window.location.href=\'controllerFrontal.php?action=retour_accueil&id_user=' . $user['id'] . '\'">' . ($langue == "fr" ? "Retour" : "Go back") . '</button>';
-    $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$user['id'] . '">Informations personnelles</a>';
+    $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$user['id'] . '">'.($langue=='fr' ? 'Informations personnelles': 'Personal information').'</a>';
     if (in_array('admin', $user['role']))
     {
-        $infosBtn .= '<a href="controllerFrontal.php?action=admin&id_user=' .$user['id'] . '">Espace Admin</a>';
+        $infosBtn .= '<a href="controllerFrontal.php?action=admin&id_user=' .$user['id'] . '">'.($langue=='fr' ? 'Espace Admin': 'Admin Area' ).'</a>';
     }
     $rechercheBtn = '<img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(' . $user['id'] . ')">';
     $id_user= '<input type="hidden" name="id" value="' .$user['id'] .'">';
     $nom = '<input type="text" class="form-control" name="nom" value="'. $user['nom'] . '" required>';
     $prenom = '<input type="text" class="form-control" name="prenom" value=" ' .  $user['prenom'] . '" required>';
     $mail = '<input type="email" class="form-control" name="mail" value="'.  $user['mail'] . '" required>';
+    $mesRecettesBtn = "";
+    if (in_array('Chef', $user['role']))
+    {
+        $proposerRecetteBtn = '<a href="controllerFrontal.php?action=proposer_recette&id_user=' . $user['id'] . '" class="btn-action">'.($langue=='fr' ? 'Proposer une recette': 'Suggest a new recipe').'</a>' ;
+        $mesRecettesBtn = '<a href="controllerFrontal.php?action=mes_recettes&id_user=' . $user['id'] . '" class="btn-action">'.($langue=='fr' ? 'Mes recettes' : 'My recipes').'</a>'; 
+    }
     $roles = '';
     foreach ($user['role'] as $role): 
-        $roles .= '<li>'. $role .'</li>';
+        if($role=='DemandeChef' && trim($langue)=='eng'){
+            $roles .= '<li>ChefRequest</li>';
+        }
+        elseif($role=='DemandeTraducteur' && trim($langue)=='eng'){
+            $roles .= '<li>TranslatorRequest</li>';
+        }
+        else{$roles .= '<li>'. $role .'</li>';}
     endforeach;
     $demandeRoles = '';
     if (!in_array('DemandeChef', $user['role']) && !in_array('Chef', $user['role'])) {
         $demandeRoles .= '
         <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" name="demande_roles[]" id="demande-chef" value="DemandeChef">
-            <label class="form-check-label" for="demande-chef">Demander le rôle Chef</label>
+            <input class="checkbox_input" type="checkbox" name="demande_roles[]" id="demande-chef" value="DemandeChef">
+            <label class="form-check-label" for="demande-chef">'.(trim($langue)=='fr' ? 'Demander le rôle Chef' : 'Request the role of chef').'</label>
         </div>';
     }
     if (!in_array('DemandeTraducteur', $user['role']) && !in_array('Traducteur', $user['role'])) {
         $demandeRoles .= '
         <div class="form-check mb-2">
             <input class="form-check-input" type="checkbox" name="demande_roles[]" id="demande-traducteur" value="DemandeTraducteur">
-            <label class="form-check-label" for="demande-traducteur">Demander le rôle Traducteur</label>
+            <label class="form-check-label" for="demande-traducteur">'.(trim($langue)=='fr' ? 'Demander le rôle Traducteur' : 'Request the role of translator').'</label>
         </div>';
     }
     $btn = '<button type="button" onclick="modifInfo()">Modifier</button>';

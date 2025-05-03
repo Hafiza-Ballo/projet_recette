@@ -4,6 +4,8 @@
     border: solid 2px rgb(164, 163, 163);
     padding: 0;
     box-sizing: content-box;
+    width: 70%;
+    background-color: tomato;
 }
 body{
     background-color: rgb(244, 245, 236);
