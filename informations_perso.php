@@ -343,7 +343,7 @@
                     <?php echo $roles; ?>
                 </ul>
             </div>
-        </div>
+        
         
         <?php echo $demandeRoles?>
 
