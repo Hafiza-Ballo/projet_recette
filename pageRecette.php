@@ -30,6 +30,22 @@
         align-items: center;
         z-index: 1000;
     }
+    .haut2{
+        position: absolute;
+        top: 75px;
+        width: 30%;
+        background-color: #fff;
+        padding: 10px 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 35%;
+        color: #ED4B5B;
+        border-radius: 5px;
+        padding-left: 30px;
+        
+    }
     
     #ensemble_recherche {
         display: flex;
@@ -696,6 +712,15 @@
                 <a href="controllerFrontal.php?action=deconnexion"><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
                 </div>
         </div>
+    </section>
+    <section class="haut2">
+        <?php
+        if($recette['statut']=='attente'){
+            echo '<div>
+                        <h5>Recette en cours de validation</h5>
+                    </div>';
+        }
+        ?>
     </section>
 
     

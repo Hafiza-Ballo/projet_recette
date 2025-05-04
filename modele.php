@@ -853,7 +853,8 @@ function ajoutRecette($langue, $nomR,$without, $ingredients,$steps, $div, $id_us
     $dataU = json_decode($jsonStringU, true);
     foreach($dataU as $i=>$u){
         if($u['id']==$id_user){
-            $nomU=$u['prenom'];
+            $nomU=$u['nom']." ".$u['prenom'];
+
             break;
         }
     }
