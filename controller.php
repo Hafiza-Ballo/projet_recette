@@ -194,4 +194,8 @@ function CtlAjoutRecette($langue, $nomR,$without, $ingredients,$steps, $div, $id
     ajoutRecette($langue, $nomR,$without, $ingredients,$steps, $div,$id_user,$photo_url);
 }
 
+function CtlValiderOuSupRecette($id_recette,$valider){
+    validerOuSupRecette($id_recette,$valider);
+}
+
 ?>

@@ -224,6 +224,9 @@
         }
         .autre_proposition{
             display: inline-block;
+            margin-top: 2%;
+            margin-bottom: 1%;
+            margin-left: 2%;
         }
         
         .boxIngr, .boxStep{
@@ -244,6 +247,10 @@
             height: 30px;
             min-height: 0;
             width: 60%;
+        }
+        .btn_submit{
+            margin-top: 4%;
+            margin-left: 40%;
         }
     </style>
 </head>
@@ -272,8 +279,8 @@
             </button>
             <div class="conteneur_modif_c">
                 <a href="controllerFrontal.php?action=infos-perso&id_user=<?php echo $_GET['id_user']; ?>"><?php echo $langue=='fr' ? 'Informations personnelles': 'Personal information'; ?></a>
-                <a><img src="images/arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
-            </div>
+                <a href="controllerFrontal.php?action=deconnexion"><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
+                </div>
         </div>
     </section>
     <div class="form-container">
@@ -289,7 +296,7 @@
                             <label><?php echo $langue=='fr' ? 'Quantité': 'Quantity'; ?>: </label><input class="quantite"  type="text"><br>
                             <label><?php echo $langue=='fr' ? 'Nom': 'Name'?>: </label><input class="nomI"  type="text"><br>
                             <label>Type: </label><input class="type"  type="text" ><br>
-                            <button onclick="autreIngr(langue,'Ingr')" class="autre_proposition" type="submit"><?php echo $langue=='fr' ? 'Autre ingrédient': 'Other ingredient'; ?></button>
+                            <button onclick="autreIngr(langue,'Ingr', this)" class="autre_proposition btn_Ingr"  type="submit"><?php echo $langue=='fr' ? 'Autre ingrédient': 'Other ingredient'; ?></button>
                         </div>
                     </div> 
                 </div> 
@@ -298,8 +305,8 @@
                     <div  id="nouvelStep" class="proposerStep">
                         <div class="boxStep">
                             <span class="st_ligne"><label id="st"><?php echo $langue=='fr' ? 'Etape' : 'Step' ;?>: </label><textarea class="step long"  type="text" ></textarea><br></span>
-                            <label><?php echo $langue=='fr' ? 'Temps' : 'Time' ; ?>(minute): </label><input class="temps"  type="text" value="0" ><br>
-                            <button onclick="autreIngr(langue,'Step')" class="" type="submit"><?php echo $langue=='fr' ? 'Autre étape': 'Other step'; ?></button>
+                            <label><?php echo $langue=='fr' ? 'Temps' : 'Time' ; ?>(minute): </label><input class="temps"  type="number" value="0" ><br>
+                            <button onclick="autreIngr(langue,'Step')" class="autre_proposition" id="btn_Step" type="submit"><?php echo $langue=='fr' ? 'Autre étape': 'Other step'; ?></button>
 
                         </div>
                     </div>  

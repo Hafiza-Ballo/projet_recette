@@ -21,5 +21,16 @@
         ],
         "mdp": "$2y$10$0TVO6FeZrJOeZihCRpT7H.ROCUjr8LDuImUwGVXhY644nwLcEwuiW",
         "isCuisinier": 1
+    },
+    {
+        "id": 3,
+        "nom": "Diakite",
+        "prenom": "laila",
+        "mail": "l@gmail.com",
+        "role": [
+            "DemandeTraducteur"
+        ],
+        "mdp": "$2y$10$EN68ZwA3YHkZ7PGNY1yDauEeWtBguY4JUGJpO8xha5cFn.EUOnLsa",
+        "isCuisinier": 1
     }
 ]

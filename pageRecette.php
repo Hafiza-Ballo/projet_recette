@@ -30,6 +30,22 @@
         align-items: center;
         z-index: 1000;
     }
+    .haut2{
+        position: absolute;
+        top: 75px;
+        width: 30%;
+        background-color: #fff;
+        padding: 10px 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 35%;
+        color: #ED4B5B;
+        border-radius: 5px;
+        padding-left: 30px;
+        
+    }
     
     #ensemble_recherche {
         display: flex;
@@ -141,7 +157,7 @@
         text-align: center;
         color: #faab66;
         font-weight: 700;
-        margin-bottom: 30px;
+        
         font-size: 2.2rem;
     }
     
@@ -155,7 +171,7 @@
         width: 100%;
         max-width: 500px;
         height: 400px;
-        margin: 0 auto 30px;
+        margin: 30px auto 30px;
         overflow: hidden;
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -256,9 +272,41 @@
                 box-shadow: 0 3px 10px rgba(237, 75, 91, 0.3);
             }
     
-    .btn_retour:hover {
+    .btn_retour:hover, .btn_valider_recette:hover, .btn_sup_recette:hover {
         background-color: #d43f4e;
         transform: translateY(-2px);
+    }
+    .btn_valider_recette{
+        position: fixed;
+                bottom: 80px;
+                right: 5px;
+                background-color: #ED4B5B;
+                color: white;
+                border: none;
+                border-radius: 30px;
+                padding: 10px 20px;
+                cursor: pointer;
+                font-family: 'Poppins', sans-serif;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                z-index: 1000;
+                box-shadow: 0 3px 10px rgba(237, 75, 91, 0.3);
+    }
+    .btn_sup_recette{
+        position: fixed;
+                bottom: 20px;
+                right: 5px;
+                background-color: #ED4B5B;
+                color: white;
+                border: none;
+                border-radius: 30px;
+                padding: 10px 20px;
+                cursor: pointer;
+                font-family: 'Poppins', sans-serif;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                z-index: 1000;
+                box-shadow: 0 3px 10px rgba(237, 75, 91, 0.3);
     }
     
     i {
@@ -509,6 +557,10 @@
     .steps li:last-child::after {
     display: none;
     }
+    .steps button{
+        margin-left: 5%;
+    }
+
     button{
         border:solid 2px #ED4B5B;
         border-radius: 5px;
@@ -546,11 +598,15 @@
         max-width: max-content;
         width: 100%;
     }*/
-    #divTradNom{
-        display:none;
+    .tr_0{
+        margin-left: 10%;
+    }
+    .trad_input_nom{
+        width: 100%;
     }
     #btn_traduirenomRecette0{
-        margin-left: 90%;
+        margin-left: 45%;
+        margin-top: -20%;
     }
     input, label{
         margin-bottom: 1%;
@@ -606,8 +662,18 @@
         min-height: 0;
         width: 60%;
     }
+    .toutmodifier{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 40%;
+        margin-bottom: 10px;
+    }
 
-
+    .btn_new_step{
+        margin-bottom: 2%;
+        
+    }
         
     </style>
 </head>
@@ -615,7 +681,8 @@
     <?php $langue = $_SESSION['langue'] ?? 'fr';?>
 
     <section class="haut">
-        <?php echo $retourBtn; ?>
+        <?php echo $retourBtn;
+            echo $validerRecette; ?>
         <div id="ensemble_recherche">
             <input placeholder="<?php echo $langue == 'fr' ? 'Rechercher' : 'Search'; ?>..." >
             <img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche"> 
@@ -642,9 +709,18 @@
             </button>
             <div class="conteneur_modif_c">
                 <?php echo $infosBtn; ?>
-                <a><img src="images/arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
-            </div>
+                <a href="controllerFrontal.php?action=deconnexion"><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
+                </div>
         </div>
+    </section>
+    <section class="haut2">
+        <?php
+        if($recette['statut']=='attente'){
+            echo '<div>
+                        <h5>Recette en cours de validation</h5>
+                    </div>';
+        }
+        ?>
     </section>
 
     
@@ -660,7 +736,7 @@
             if($langue == 'fr'){
                 if(strlen($recette['name'])<=0){
                     echo'<button onclick="effacerBtn()" id="btn_traduirenomRecette0">Traduire</button>
-                            <div class="box_traduction" id="divTradNom">
+                            <div class="box_traduction tr_0" style="display:none;">
                                 <div id="testnomRecette0">
                                     <input type="text" class="trad_input_nom" id="id0" >
                                     <button id="idb0" onclick="appliquerTrad(0,\'nomRecette\','.$id_recette.',\' '.$langue.' \' )"> Appliquer</button> <button  id="idann0"onclick="annulerTrad(0,\'nomRecette\')">Annuler</button> </div>
@@ -672,7 +748,7 @@
             else{
                 if(strlen($recette['nameFR'])<=0){
                     echo'<button onclick="effacerBtn()" id="btn_traduirenomRecette0">Translate</button>
-                            <div class="box_traduction" id="divTradNom">
+                            <div class="box_traduction tr_0" style="display:none;">
                                 <div id="testnomRecette0">
                                     <input type="text" class="trad_input_nom" id="id0" >
                                     <button id="idb0" onclick="appliquerTrad(0,\'nomRecette\','.$id_recette.',\' '.$langue.' \' )"> Apply</button> <button  id="idann0"onclick="annulerTrad(0,\'nomRecette\')">Cancel</button> </div>

@@ -1,3 +1,4 @@
+// Gère le like/dislike d’une recette via AJAX, en basculant l’icône et en mettant à jour le compteur.
 function changeImgURL(button,id,$id_user){
     $.ajax({
       method: "GET",
@@ -27,6 +28,7 @@ function changeImgURL(button,id,$id_user){
      
     });
 }
+//ajouter un like a la recette dans le JSON
 function ajoutlike(id,$id_user){
     $type="ajout";
     console.log($type);
@@ -41,6 +43,7 @@ function ajoutlike(id,$id_user){
      
     });
 }
+//supprimer un like a la recette dans le JSON
 function supprimelike(id,$id_user){
     $type="supprime";
     console.log($type);
@@ -238,7 +241,9 @@ function chargerCommentaires(id_recette) {
       }
   });
 }
+//changer la langue du site
 function changerLangue(langue){
+  console.log(langue);
   $.ajax({
     method: "POST",
     url: "changerLangue.php",
@@ -252,10 +257,10 @@ function changerLangue(langue){
 
   })
 }
+//afficher les div pour traduire un element de la recette dans la langue opposée
 function traduction(button,index, langue,id_recette,type_liste){
   let btn=document.getElementById("btn_traduire"+type_liste+index);
   let divSuivante = button.nextElementSibling;
-  let box_traduction=document.querySelector(".box_traduction");
   $.ajax({
     method: "POST",
     url: "changerLangue.php", 
@@ -268,8 +273,6 @@ function traduction(button,index, langue,id_recette,type_liste){
           console.log('i');
           divSuivante.innerHTML='<div id="test'+type_liste+index+'"><label>Quantity: </label><input class=" trad_input_ingredients" name="q'+index+'" id="q'+index+'" ><br><label>Name: </label><input class=" trad_input_ingredients" name="n'+index+'" id= "n'+index+'"><br><label>Type: </label><input class="trad_input_ingredients" name="t'+index+'" id="t'+index+'" ><br> <button id="idb'+index+'" onclick="appliquerTradIngr('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Apply</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Cancel</button> </div>';
         }
-
-
       }
       else if(type_liste=='steps'){
         if(langue.trim()=='fr'){
@@ -298,18 +301,19 @@ function traduction(button,index, langue,id_recette,type_liste){
   })
 }
 
+//afficher les div pour traduire les ingredients qui ont certaines caractéristiques traduites
+// et d'autres non
 function traduction2(button,index, langue,id_recette,type_liste){
   let btn=document.getElementById("btn_traduire"+type_liste+index);
   let divSuivante = button.nextElementSibling;
-  let box_traduction=document.querySelector(".box_traduction");
+  let box_traduction=document.querySelector(".tr_"+index);
+  console.log("btn_traduire"+type_liste+index);
+  if(btn)btn.style.display="none";
   box_traduction.style.display="block";
   $.ajax({
     method: "POST",
     url: "changerLangue.php", 
     success: function(){
-
-      if(btn)btn.style.display="none";
-      else{console.log('no');}
 
     },
     error:function() {
@@ -320,6 +324,7 @@ function traduction2(button,index, langue,id_recette,type_liste){
   })
 }
 
+//appliquer la traduction du nom de la recette dans la langue opposée
 function appliquerTrad(index,type_liste,id_recette,langue){
   let btn= document.getElementById("id"+index);
   let valeurInput= btn.value;
@@ -343,17 +348,10 @@ function appliquerTrad(index,type_liste,id_recette,langue){
         }
 
       let idSansesapace=("test"+type_liste+index).replace(/\s+/g, '');
-      console.log("icii");
-      console.log(idSansesapace);
-      console.log("finn ");
-
+      
       let traductionDiv = document.getElementById(idSansesapace);
-      console.log("icii22");
-      console.log(traductionDiv);
-      console.log("finn 22");
       if(traductionDiv)traductionDiv.remove();
-      else{
-        console.log('ptv');}
+      else{console.log('ptv');}
         
       },
       error:function() {
@@ -363,6 +361,8 @@ function appliquerTrad(index,type_liste,id_recette,langue){
   }
   
 }
+
+//appliquer la traduction d'un ingredient ou d'une etape dans la langue opposée
 function appliquerTradIngr(index,type_liste,id_recette,langue){
   let valeurq= document.getElementById("q"+index).value;
   let valeurn= document.getElementById("n"+index).value;
@@ -376,20 +376,13 @@ function appliquerTradIngr(index,type_liste,id_recette,langue){
       data: {"index":index, "valeurInput": valeurInput, "type_liste":type_liste,"id_recette":id_recette, "langue":langue},
       success: function(e){
         console.log(e);
-        if(langue.trim()=='fr'){
-          alert("Traduction ajoutée avec succès !");
-        }
-        else{
-          alert("Translation added successfully !");
-        }        
+        alert(langue.trim()=== 'fr' ?   'Traduction ajoutée avec succès !': 'Translation added successfully !');
+               
         let btn = document.getElementById("btn_traduire"+type_liste+index);
         if(btn){btn.style.display = "none";}
-        else{
-          console.log('no');
-        }
+        else{console.log('no');}
 
-      let idSansesapace=("test"+type_liste+index).replace(/\s+/g, '');
-      console.log(idSansesapace);
+        let idSansesapace=("test"+type_liste+index).replace(/\s+/g, '');
         let traductionDiv = document.getElementById(idSansesapace);
         traductionDiv.remove();
         
@@ -402,27 +395,25 @@ function appliquerTradIngr(index,type_liste,id_recette,langue){
   
 }
 
+//cacher la div de traduction de'un element de la recette
+// et afficher le bouton de traduction
 function annulerTrad(index, type_liste){
-  let t=document.getElementById("test"+type_liste+index);
   let btn=document.getElementById("btn_traduire"+type_liste+index);
-  if(btn){btn.style.display="block";}
+  if(btn){btn.style.display="inline-block";}
   else{console.log('no');}
-  if(t)t.style.display="none";
-  let box_traduction=document.querySelector(".box_traduction");
-  box_traduction.style.display="none";
+  let box_traduction=document.querySelector(".tr_"+index);
+  if(box_traduction)box_traduction.style.display="none";
   
 }
 
 
-
+// afficher la div de traduction du nom de la recette
 function effacerBtn(){
   let btn = document.getElementById("btn_traduirenomRecette0");
-  let divSuivante = document.getElementById("divTradNom");
-  let divSuivante2=document.getElementById("testnomRecette0");
+  let divSuivante = document.querySelector(".tr_0");
   if(btn) btn.style.display = "none";
   if(divSuivante) {
-    divSuivante.style.display = "block";
-    divSuivante2.style.display="block";
+    divSuivante.style.display = "inline-block";
   } else {
     console.log('no');
   }
@@ -548,6 +539,7 @@ function editMode() {
     });
 }*/
 
+//afficher un conteneur pour modifier la recette
 function ModifierRecette(){
   let btn=document.getElementById("btn_modifRecette");
   let btndiv=document.getElementById("divModifRecette");
@@ -560,6 +552,7 @@ function ModifierRecette(){
   else{console.log('pasec');}
 
 }
+//cacher le conteneur de modification de la recette
 function annulerModif(){
   let btn=document.getElementById("btn_modifRecette");
   let btndiv=document.getElementById("divModifRecette");
@@ -571,15 +564,16 @@ function annulerModif(){
   if(section){section.style.display='none';}
   else{console.log('pasec');}
 }
+//appliquer les modifications de la recette
+// ou ajouter une nouvelle recette en fonction de la valeur de div
 function appliquerModif(id_recette,langue, div){
-  console.log("3");
   // Récupère tous les ingrédients et étapes visibles uniquement
   const ingrBoxes = document.querySelectorAll(".boxIngr:not([style*='display: none'])");
   const stepBoxes = document.querySelectorAll(".boxStep:not([style*='display: none'])");
 
   let ingredients = [];
   let steps = [];
-
+  //recuperer tous les ingredients et les étapes
   ingrBoxes.forEach((box) => {
     if(box.querySelector(".quantite") && box.querySelector(".nomI") && box.querySelector(".type")) {
       const quantite = box.querySelector(".quantite").value;
@@ -593,11 +587,10 @@ function appliquerModif(id_recette,langue, div){
   stepBoxes.forEach((box) => {
     const step = box.querySelector(".step").value;
     const temps = box.querySelector(".temps").value;
-    if(step && temps) { // Vérifie que les valeurs ne sont pas vides
+    if(step && temps && step!='...'.trim()) { // Vérifie que les valeurs ne sont pas vides
       steps.push({"step": step, "temps": temps});
     }
-    console.log(step);
-    console.log(temps);
+    
   });
 
   let nomR=document.querySelector("#"+div+" .nomR").value;
@@ -605,7 +598,7 @@ function appliquerModif(id_recette,langue, div){
   let photo_url = "";
   
 
-
+  // Récupérer l'URL de la photo si on ajoute une nouvelle recette
   if(div=="AjoutRecette"){
     const urlInput = document.querySelector(".form-container #photo_url");
     if (urlInput && urlInput.value.trim().length > 0) {
@@ -640,6 +633,8 @@ function appliquerModif(id_recette,langue, div){
 });
 }
 
+//afficher la div pour ajouter un nouvel ingrédient ou une nouvelle étape 
+//a la recette existante
 function fctnouvelAjout(type,index){
   if(type=='Etape'){
     let div=document.getElementById("new"+index);
@@ -658,7 +653,7 @@ function fctnouvelAjout(type,index){
   
   
 }
-
+// cacher la div pour ajouter un nouvel ingrédient ou une nouvelle étape
 function annulerNouvelAjout(type, index){
   if(type=='Etape'){
     let btn=document.getElementById("btn_new"+index);
@@ -679,7 +674,8 @@ function annulerNouvelAjout(type, index){
   
 }
 
-
+// ajouter un nouvel ingrédient ou une nouvelle étape à la recette existante
+// et mettre à jour la recette dans le JSON
 function fctajout(id_recette,langue, type, index){
 
   // Récupère tous les ingrédients et étapes visibles uniquement
@@ -702,17 +698,13 @@ function fctajout(id_recette,langue, type, index){
   stepBoxes.forEach((box) => {
     const step = box.querySelector(".step").value;
     const temps = box.querySelector(".temps").value;
-    if(step && temps) { // Vérifie que les valeurs ne sont pas vides
+    if(step && temps && step!='...'.trim()) { // Vérifie que les valeurs ne sont pas vides
       steps.push({"step": step, "temps": temps});
     }
-    console.log(step);
-    console.log(temps);
   });
 
   let nomR = document.querySelector("#divModifRecette .nomR").value;
-  let without= document.querySelector("#divModifRecette .without");
-  
-  console.log(nomR);
+  let without= document.querySelector("#divModifRecette .without").value;
   
   $.ajax({
     url: 'controllerFrontal.php',
@@ -727,7 +719,6 @@ function fctajout(id_recette,langue, type, index){
       index: index
     },
     success: function(e) {
-      console.log(steps);   
       alert(langue.trim() === 'fr' ? 'Recette mise à jour !' : 'Recipe updated!');
 
       let div = document.getElementById("nouvel"+type);
@@ -743,20 +734,45 @@ function fctajout(id_recette,langue, type, index){
   });
 }
 
-function autreIngr(langue ,type){
+//ajouter un nouvel ingrédient ou une nouvelle étape à la recette qu'on crèe
+//dans "proposerRecette"
+function autreIngr(langue ,type,bouton){
   const container = document.getElementById("container"+type);
-  const nouvelleDiv = document.createElement("div");
+  const nouvelleDiv = document.createElement("div");// creer une nouvelle div
   const modele = document.querySelector(".proposer"+type);
   nouvelleDiv.className = "proposer"+type;
-  nouvelleDiv.innerHTML = modele.innerHTML;
-  nouvelleDiv.querySelectorAll('input').forEach(input => input.value = '');
+  nouvelleDiv.innerHTML = modele.innerHTML;//copier l'ancienne div dans la nouvelle
+  nouvelleDiv.querySelectorAll('textarea').forEach(textarea => textarea.value = ''); //vider
 
-
-  const btnAnnuler = document.createElement("button");
+  const btnAnnuler = document.createElement("button");//creer le bouton annuler
   btnAnnuler.textContent = (langue.trim()=== 'fr' ? 'Annuler': 'Cancel');
+  btnAnnuler.className="annuler_"+type;
+  /*let av_dernier_btn_autre="";
+  const tout_btn_autre=document.querySelectorAll('.btn_'+type);
+  if(tout_btn_autre.length==1){
+    av_dernier_btn_autre= tout_btn_autre[tout_btn_autre.length -1]; 
 
-  btnAnnuler.onclick = () => nouvelleDiv.remove(); // supprime le bloc
-  // Cherche l'élément .boxX (comme .boxIngr ou .boxStep) dans la nouvelle div
+  }
+  else{
+    av_dernier_btn_autre= tout_btn_autre[tout_btn_autre.length -2]; 
+    const dernier_btn_autre= tout_btn_autre[tout_btn_autre.length -1];
+    if(dernier_btn_autre)dernier_btn_autre.style.display="inline_block";
+  }
+  if(tout_btn_autre){ console.log(tout_btn_autre); 
+    if(av_dernier_btn_autre)av_dernier_btn_autre.style.display="none";
+  }*/
+  
+  btnAnnuler.onclick = function() {
+    nouvelleDiv.remove(); // Supprime la nouvelle div
+
+    /*const dernier_btn_autre= tout_btn_autre[tout_btn_autre.length -1];
+    if(tout_btn_autre){ console.log(tout_btn_autre); 
+      if(dernier_btn_autre)dernier_btn_autre.style.display="inline_block";}
+    else{console.log('no');}
+    //dernier.style.display = "inline-block"; // Affiche le bouton*/
+    
+  };
+  //ajouter le bouton a nos divs
   const boxElement = nouvelleDiv.querySelector(".box" + type);
   if (boxElement) {
     boxElement.appendChild(btnAnnuler);
@@ -764,15 +780,58 @@ function autreIngr(langue ,type){
     nouvelleDiv.appendChild(btnAnnuler);
   }
   container.appendChild(nouvelleDiv);
+ 
 }
 
+
+
+//verifier si le nom de la recette est valide pour ajouter la nouvelle recette
 function AjouterRecette(langue){
-  if(document.querySelector("#AjoutRecette .nomR")){console.log(document.querySelector("#AjoutRecette .nomR"));}
-  else{console.log("non");}
   if((document.querySelector("#AjoutRecette .nomR").value).length>0){
     appliquerModif(-1,langue, 'AjoutRecette')
   }
   else{
     console.log("pas nom");
   }
+}
+
+//valider une recette par l'administrateur afin de l'afficher sur le site
+function validerRecette(id_recette, langue){
+  let valider="oui";
+  $.ajax({
+    url: 'controllerFrontal.php',
+    type: 'POST',
+    data: {
+      id_recette: id_recette, 
+      valider:valider
+    },
+    success: function(e) {  
+      alert(langue.trim() === 'fr' ? 'Recette validée !' : 'Recipe confirmed!');
+
+      location.reload();
+    },
+    error: function() {
+      alert(langue.trim()=== 'fr' ? 'Erreur lors de la validation de la recette.': 'Error while confirming the recipe.');
+    }
+  });
+}
+
+//supprimer une recette par l'administrateur afin de la supprimer du JSON
+function suprimerRecette(id_recette, langue){
+  let valider="non";
+  $.ajax({
+    url: 'controllerFrontal.php',
+    type: 'POST',
+    data: {
+      id_recette: id_recette, 
+      valider:valider
+    },
+    success: function(e) {  
+      alert(langue.trim() === 'fr' ? 'Recette supprimée !' : 'Recipe deleted!');
+
+    },
+    error: function() {
+      alert(langue.trim()=== 'fr' ? 'Erreur lors de la supression de la recette.': 'Error while deleting the recipe.');
+    }
+  });
 }

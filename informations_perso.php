@@ -276,6 +276,40 @@
         font-family: 'Poppins', sans-serif;
         transition: all 0.3s ease;
     }
+
+    .mb-2{
+
+    }
+    /* Style de base pour la checkbox */
+    input[type="checkbox"] {
+        appearance: none; /* Retire les styles par défaut du navigateur */
+        -webkit-appearance: none; /* Pour Safari/Chrome */
+        -moz-appearance: none; /* Pour Firefox */
+        
+        width: 13px; /* Taille de la checkbox */
+        height: 13px;
+        border: 0.5px solid #ED4B5B; /* Bordure rouge */
+        border-radius: 2px;
+        background-color: white; /* Fond blanc par défaut */
+        cursor: pointer; /* Curseur en forme de main lorsqu'on survole */
+        transition: background-color 0.3s, border-color 0.3s; /* Animation lors du changement de couleur */
+    }
+
+    /* Lorsque la checkbox est sélectionnée */
+    input[type="checkbox"]:checked {
+        background-color: #ED4B5B; /* Fond rouge lorsqu'elle est cochée */
+        border-color: #ED4B5B; /* Bordure rouge */
+    }
+
+
+    .checkbox_input{
+        margin-left: -58%;
+    }
+
+    ul{
+        margin-top: 2%;
+    }
+    
 </style>
     </head>
 
@@ -286,19 +320,27 @@
                 echo $retourBtn;
             ?>
             <div id="ensemble_recherche">
-                <input id="recherche_input" placeholder="recherche">
+                <input id="recherche_input" placeholder="<?php echo $langue=='fr' ? 'Rechercher' : 'Search'; ?>...">
                 <?php
                 echo $rechercheBtn;
             ?>
             </div>
             <div>
-                <form class="choix_langue">
-                    <select name="">
-                        <option value="fr" id="t">Fr </option>
-                        <option value="eng" > Eng</option>
-
-                    </select>
-                </form>
+            <form class="choix_langue">
+                <select name="langue" onchange="changerLangue(this.value)">
+                <?php
+                    if ($langue=='fr'){
+                        echo '<option value="fr" id="t" >Fr </option>
+                        <option value="eng" > Eng</option>';
+                    }
+                    else{
+                        echo '<option value="eng" > Eng</option>
+                        <option value="fr" id="t" >Fr </option>
+                        ';
+                    }
+                ?>
+                </select>
+            </form>
                 
                 
                 <button id="mon_compte" onclick="affichage_conteneur_modif()">
@@ -308,38 +350,39 @@
                     <?php
                     echo $infosBtn;
                     ?>
-                <a><img src="images/arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
-                </div>
+                    <?php echo $mesRecettesBtn; ?>
+                    <a href="controllerFrontal.php?action=deconnexion"><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
+                    </div>
                 
     
             </div>
         </section>
         <section class="principale_ensemble">
         <div class="container mt-5">
-    <h2>Mes Informations</h2>
+    <h2><?php echo $langue =='fr' ? 'Mes Informations' : 'My informations' ;?></h2>
     <form id="infoForm">
         <div id="statut" class="fixed-top"></div>
         <?php echo $id_user; ?>
 
         <!-- Champs éditables -->
         <div class="mb-3">
-            <label class="form-label">Nom</label>
+            <label class="form-label"><?php echo $langue =='fr' ? 'Nom': 'Last name' ; ?>: </label>
             <?php echo $nom; ?>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Prénom</label>
+            <label class="form-label"><?php echo $langue =='fr' ? 'Prénom' : 'First name'; ?>: </label>
             <?php echo $prenom; ?>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Email</label>
+            <label class="form-label"><?php echo $langue =='fr' ? 'Adresse mail': 'Mail Adress'; ?>: </label>
             <?php echo $mail; ?>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Statut</label>
-                <ul>
+            <label class="form-label"><?php echo $langue =='fr' ? 'Statut' : 'Status' ; ?>: </label>
+                <ul >
                     <?php echo $roles; ?>
                 </ul>
             </div>
@@ -349,7 +392,7 @@
 
         <div class="mb-3" style="justify-content: flex-end; margin-top: 30px;">
             <button type="button" onclick="modifInfo()" class="btn btn-primary">
-                Enregistrer
+                <?php echo $langue =='fr' ? 'Enregistrer' : 'Save' ; ?>
             </button>
         </div>
     </form>

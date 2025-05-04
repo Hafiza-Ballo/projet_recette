@@ -47,12 +47,12 @@
             },
             {
                 "quantity": "1 package",
-                "name": "",
+                "name": null,
                 "type": "Condiments"
             },
             {
                 "quantity": "1 package",
-                "name": "",
+                "name": null,
                 "type": "Condiments"
             },
             {
@@ -74,10 +74,10 @@
             "Cuire \u00e0 feu doux entre 7 et 9 heures."
         ],
         "timers": [
-            "1",
-            "1",
-            "1",
-            "420"
+            1,
+            1,
+            1,
+            420
         ],
         "imageURL": "http:\/\/img.sndimg.com\/food\/image\/upload\/w_266\/v1\/img\/recipes\/27\/20\/8\/picVfzLZo.jpg",
         "originalURL": "http:\/\/www.food.com\/recipe\/to-die-for-crock-pot-roast-27208",
@@ -782,7 +782,7 @@
         "like": 0,
         "commentaires": [],
         "id": 10,
-        "statut": "attente",
+        "statut": "valide",
         "id_auteur": 2
     },
     {
