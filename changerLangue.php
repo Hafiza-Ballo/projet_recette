@@ -1,5 +1,4 @@
 <?php
-session_start();
 echo 'lll';
 if(isset($_POST['langue'])){
     echo 'i';

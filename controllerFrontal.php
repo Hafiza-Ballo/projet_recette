@@ -1,6 +1,6 @@
 <?php
 require_once ('controller.php');
-//session_start();
+session_start();
 
 try {
     $jsonString = file_get_contents('utilisateurs.json');
@@ -13,8 +13,7 @@ try {
         $mail = $_POST['mail'];
         $role = $_POST['role'];
         $mdp = $_POST['mdp'];
-        $isCuisinier = isset($_POST['isCuisinier']) ? 1 : 0;
-
+        $isCuisinier = 1; 
         CtlInscription($nom, $prenom, $mail, $role, $mdp, $isCuisinier);
         
         
@@ -216,6 +215,23 @@ try {
         CtlSuprimerIngrStepModif($type,$index, $id_recette);
     }
     
+    else if(isset($_GET['page'])){
+        switch ($_GET['page']) {
+            case 'connexion':
+                require_once('connexion.php');
+                break;
+            case 'inscription':
+                require_once('inscription.php');
+                break;
+            default:
+                require_once('connexion.php');
+                break;
+        }
+    }
+    else if(isset($_POST['action']) && $_POST['action'] === 'changer_langue' && isset($_POST['langue'])) {
+        $_SESSION['langue'] = $_POST['langue'];
+        echo json_encode(['success' => true]);
+    }
     else
     {
         require_once ('connexion.php');

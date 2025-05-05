@@ -89,7 +89,7 @@
 
     </head>
     <body>
-    <?php session_start(); $langue = $_SESSION['langue'] ?? 'fr';?>
+    <?php $langue = $_SESSION['langue'] ?? 'fr';?>
         <section class="haut">
         <div>
             <form class="choix_langue">
@@ -142,13 +142,10 @@
                     <input id="mdp" name="mdp" type="password" >
                 </div>
                 
-                <div id="div_checkbox">
-                    <input id="isCuisinier" type="checkbox" name="isCuisinier" value="accepter"> 
-                    <label for="isCuisinier"><?php echo $langue =='fr' ? 'Etes vous cuisinier' : 'Are you a cook'; ?> ?</label>
-                </div>
+               
 
                 <input id="btn_connexion" type="submit" value="Inscription" name="inscription">
-                <p><?php echo $langue =='fr' ? 'Vous avez déja un compte': 'Do you already have an account' ; ?>? <a href="connexion.php">Connexion</a></p>
+                <p><?php echo $langue =='fr' ? 'Vous avez déja un compte': 'Do you already have an account' ; ?>? <a href="controllerfrontal.php?page=connexion">Connexion</a></p>
                 
             </fieldset>
         </form>
