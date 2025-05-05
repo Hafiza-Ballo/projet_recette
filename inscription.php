@@ -7,6 +7,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="jquery-3.7.1.js"></script>
+    <script src="affichage.js"> </script>
     <style>
         .inscription{
                 border-radius: 2px;
@@ -87,7 +89,7 @@
 
     </head>
     <body>
-    <?php $langue = $_SESSION['langue'] ?? 'fr';?>
+    <?php session_start(); $langue = $_SESSION['langue'] ?? 'fr';?>
         <section class="haut">
         <div>
             <form class="choix_langue">
