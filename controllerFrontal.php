@@ -1,6 +1,6 @@
 <?php
 require_once ('controller.php');
-session_start();
+//session_start();
 
 try {
     $jsonString = file_get_contents('utilisateurs.json');
@@ -207,6 +207,13 @@ try {
         $id_recette=$_POST['id_recette'];
         $valider=$_POST['valider'];
         CtlValiderOuSupRecette($id_recette,$valider);
+    }
+    elseif(isset($_POST['type']) && isset($_POST['index']) && isset($_POST['sup']) && isset($_POST['id_recette'])){
+        $type=$_POST['type'];
+        $index=$_POST['index'];
+        error_log($index);
+        $id_recette=$_POST['id_recette'];
+        CtlSuprimerIngrStepModif($type,$index, $id_recette);
     }
     
     else

@@ -198,4 +198,8 @@ function CtlValiderOuSupRecette($id_recette,$valider){
     validerOuSupRecette($id_recette,$valider);
 }
 
+function  CtlSuprimerIngrStepModif($type,$index, $id_recette){
+    suprimerIngrStepModif($type,$index, $id_recette);
+}
+
 ?>

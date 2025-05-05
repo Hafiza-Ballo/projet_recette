@@ -646,8 +646,7 @@ function fctnouvelAjout(type,index){
   else{
     let div=document.getElementById("nouvel"+type);
     if(div){div.style.display='block';}
-    let btn=document.getElementById("btn_nouvel"+type);
-    if(btn){btn.style.display='none';}
+    
     else{console.log("pasbtn");}
   }
   
@@ -734,43 +733,49 @@ function fctajout(id_recette,langue, type, index){
   });
 }
 
+function supModif(type, index, id_recette, langue){
+  let sup="supression";
+  console.log('sup');
+  $.ajax({
+    url: 'controllerFrontal.php',
+    type: 'POST',
+    data: {type:type, index:index,sup:sup, id_recette:id_recette},
+    success: function(e){
+      console.log("app");
+      if(type=='ingredients'){alert(langue.trim() === 'fr' ? 'Ingrédient supprimé !' : 'Ingredient deleted!');}
+      else{alert(langue.trim() === 'fr' ? 'Etape supprimé !' : 'Step deleted!');}
+      location.reload();
+    },
+    error: function(){
+      alert(langue.trim()=== 'fr' ? 'Erreur lors de la supression.': 'Error while deleting .');
+
+    }
+  });
+}
+
 //ajouter un nouvel ingrédient ou une nouvelle étape à la recette qu'on crèe
 //dans "proposerRecette"
-function autreIngr(langue ,type,bouton){
+function autreIngr(langue ,type){
   const container = document.getElementById("container"+type);
   const nouvelleDiv = document.createElement("div");// creer une nouvelle div
   const modele = document.querySelector(".proposer"+type);
   nouvelleDiv.className = "proposer"+type;
   nouvelleDiv.innerHTML = modele.innerHTML;//copier l'ancienne div dans la nouvelle
   nouvelleDiv.querySelectorAll('textarea').forEach(textarea => textarea.value = ''); //vider
-
+  nouvelleDiv.querySelectorAll('input').forEach(input => input.value = ''); //vider
+  
+  const boutonSupprimer = nouvelleDiv.querySelector('button[id^="supIngr"]');
+  if (boutonSupprimer) {
+    boutonSupprimer.remove();
+}
+  
   const btnAnnuler = document.createElement("button");//creer le bouton annuler
   btnAnnuler.textContent = (langue.trim()=== 'fr' ? 'Annuler': 'Cancel');
   btnAnnuler.className="annuler_"+type;
-  /*let av_dernier_btn_autre="";
-  const tout_btn_autre=document.querySelectorAll('.btn_'+type);
-  if(tout_btn_autre.length==1){
-    av_dernier_btn_autre= tout_btn_autre[tout_btn_autre.length -1]; 
-
-  }
-  else{
-    av_dernier_btn_autre= tout_btn_autre[tout_btn_autre.length -2]; 
-    const dernier_btn_autre= tout_btn_autre[tout_btn_autre.length -1];
-    if(dernier_btn_autre)dernier_btn_autre.style.display="inline_block";
-  }
-  if(tout_btn_autre){ console.log(tout_btn_autre); 
-    if(av_dernier_btn_autre)av_dernier_btn_autre.style.display="none";
-  }*/
+ 
   
   btnAnnuler.onclick = function() {
     nouvelleDiv.remove(); // Supprime la nouvelle div
-
-    /*const dernier_btn_autre= tout_btn_autre[tout_btn_autre.length -1];
-    if(tout_btn_autre){ console.log(tout_btn_autre); 
-      if(dernier_btn_autre)dernier_btn_autre.style.display="inline_block";}
-    else{console.log('no');}
-    //dernier.style.display = "inline-block"; // Affiche le bouton*/
-    
   };
   //ajouter le bouton a nos divs
   const boxElement = nouvelleDiv.querySelector(".box" + type);

@@ -113,13 +113,14 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
     $liker = "images/heart-regular.svg";
     $disliker = "images/heart-plein.svg";
     $user = recupUserById($id_user);
-    $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$id_user . '">Informations personnelles</a>';
     if(isset($_SESSION['langue'])){
         $langue=$_SESSION['langue'];
     }
     else{
         $langue='fr';
-    } 
+    }
+    $infosBtn = '<a href="controllerFrontal.php?action=infos-perso&id_user=' .$id_user . '">'.($langue=='fr'? 'Informations personnelles' : 'Personal informations').'</a>';
+
     $validerRecette='';
     if (in_array('admin', $user['role']))
     {
@@ -184,18 +185,19 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
             $strIngr=htmlspecialchars(json_encode($nom_ingredients), ENT_QUOTES, "UTF-8");
             $nom_ingredientsENG = array_column($recette["ingredients"], "name");
             
-            $divModifRecette.='<h4>Ingrédients</h4><div >';
+            $divModifRecette.='<h4>Ingrédients</h4><div id="containerIngr" > ';
         
             $contenu.='<ul class="ingredients">';
             foreach ($nom_ingredients as $index=>$n) {
                 if(isset($quantite_ingredients[$index])){
                     $q=$quantite_ingredients[$index];
                     $contenu .= '<li>'.$q.' de '. $n . '</li>';
-                    $divModifRecette.='<div class="boxIngr">
+                    $divModifRecette.='<div class="proposerIngr"><div class="boxIngr">
                                         <label>Quantité</label><input class="quantite"  type="text" value="'.$q.'"><br>
                                         <label>Nom</label><input class="nomI"  type="text" value="'.$n.'"><br>
                                         <label>Type</label><input class="type"  type="text" value="'.$type_ingredients[$index].'"><br>
-                                    </div>';
+                                        <button id="supIngr'.$index.'" class="btnsupModif" onclick="supModif(\'ingredients\', '.$index.', '.$id_recette.', \''.$langue.'\')">Supprimer</button>
+                                    </div></div>';
                 }
                 if(traducteur($id_user)){
                     if((isset($nom_ingredientsENG[$index])&&strlen($nom_ingredientsENG[$index])<=0)|| $recette["ingredients"]==[] || !isset($recette["ingredients"][$index]) ){
@@ -208,8 +210,8 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                         $contenu.='<button onclick="traduction2(this,'.($index+1).',\''.$langue.'\','.$id_recette.', \'ingredients\')" id="btn_traduireingredients'.($index+1).'">Traduire</button>
                                    <div class="box_traduction tr_'.($index+1).'" style="display:none;">
                                        <div id="'.$x.'">
-                                           <label>Quantity: </label><input value="'.array_column($recette["ingredients"], "quantity")[$index].'" class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="q'.$index.'"><br>
-                                           <label>Name: </label><input class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="n'.($index+1).'"><br>
+                                           <label>Quantité: </label><input value="'.array_column($recette["ingredients"], "quantity")[$index].'" class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="q'.$index.'"><br>
+                                           <label>Nom: </label><input class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="n'.($index+1).'"><br>
                                            <label>Type: </label><input value="'.array_column($recette["ingredients"], "type")[$index].'" class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="t'.($index+1).'"><br>
                                            <button id="idb'.($index+1).'" onclick="appliquerTradIngr('.($index+1).',\'ingredients\','.$id_recette.',\''.$langue.'\')">Appliquer</button>
                                            <button id="idann'.($index+1).'" onclick="annulerTrad('.($index+1).',\'ingredients\')">Annuler</button>
@@ -219,21 +221,25 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                 }
                 
             }
-            $divModifRecette.='<button onclick="fctnouvelAjout(\'Ingr\', -1)" id="btn_nouvelIngr" >Nouvel ingrédient</button> 
+            $divModifRecette.=' 
                             <div id="nouvelIngr">
                                 <div class="boxIngr">
                                     <label>Quantité</label><input class="quantite"  type="text" ><br>
                                     <label>Nom</label><input class="nomI"  type="text" ><br>
                                     <label>Type</label><input class="type"  type="text"><br>
-                                    <button id="btn_ajoutIngr" onclick="fctajout('.$id_recette.',\'fr\',\'Ingr\',-1)">Ajouter ingrédient</button><button onclick="annulerNouvelAjout(\'Ingr\',-1)">Annuler</button>
+                                    <button onclick="annulerNouvelAjout(\'Ingr\',-1)" class="btnsupModif">Annuler</button>
                                 </div>
                             </div> 
                             </div>
+                            <button onclick="autreIngr(\''.$langue.'\',\'Ingr\')" id="btn_nouvelIngr" >Nouvel ingrédient</button>
                             <hr>';
             $contenu .= '</ul>';
         }
+        
         else{
             $contenu.='<i>Ingrédients indisponible en francais</i><br><br>';
+        
+
             $divModifRecette.='<button onclick="fctnouvelAjout(\'Ingr\', -1)" id="btn_nouvelIngr" >Nouvel ingrédient</button> 
                             <div id="nouvelIngr">
                                 <div class="boxIngr">
@@ -260,12 +266,23 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
             $divModifRecette.='<h5>Etapes</h5><div >';
 
             $contenu .= '<ul class="steps">';
+            $divModifRecette.='<button  onclick="fctnouvelAjout(\'Etape\', -2)" id="btn_new-2" class="btn_new_step">Nouvelle étape</button>
+                                <div id="new-2" style="display:none">
+                                    <div class="boxStep">
+                                        <span class="st_ligne"><label>Etape</label><textarea class="step"  type="text" >...</textarea><br></span>
+                                        <label>Temps(en minute)</label><input class="temps" value=0 type="number"><br>
+                                        <button id="btn_ajoutEtape" onclick="fctajout('.$id_recette.',\'fr\',\'Etape\', -2)">Ajouter l\'étape</button> <button onclick="annulerNouvelAjout(\'Etape\',-2)">Annuler</button>
+                                    </div>
+                                </div>';
             foreach ($steps as $index => $s) {
                 $contenu .= '<li><h5>ÉTAPE ' . ($index + 1) . ' : </h5> ' . $s;
                 if(strlen($s)<=0){$s="...";}
-                $divModifRecette.='<div class="boxStep">
+                $divModifRecette.='
+                                <div class="boxStep">
                                     <span class="st_ligne"><label>Etape</label><textarea class="step"  type="text">'.$s.'</textarea><br></span>
                                     <label>Temps</label><input class="temps"  type="number" value='.$timers[$index].'><br>
+                                    <button id="supIngr'.$index.'" class="btnsupModif" onclick="supModif(\'steps\', '.$index.', '.$id_recette.', \''.$langue.'\')">Supprimer</button>
+
                                 </div>
                                 <button  onclick="fctnouvelAjout(\'Etape\', '.$index.')" id="btn_new'.$index.'" class="btn_new_step">Nouvelle étape</button>
                                 <div id="new'.$index.'" style="display:none">
@@ -334,18 +351,19 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
             $nom_ingredientsFR = array_column($recette["ingredientsFR"], "name");
 
             $strIngr=htmlspecialchars(json_encode($nom_ingredients), ENT_QUOTES, "UTF-8");
-            $divModifRecette.='<h4>Ingredients</h4><div >';
+            $divModifRecette.='<h4>Ingredients</h4><div id="containerIngr">';
 
             $contenu.='<ul class="ingredients">';
             foreach ($nom_ingredients as $index=>$n) {
                 if(isset($quantite_ingredients[$index])){
                     $q=$quantite_ingredients[$index];
                     $contenu .= '<li>'.$q.' of '. $n . '</li>';
-                    $divModifRecette.='<div class="boxIngr">
+                    $divModifRecette.='<div class="proposerIngr"><div class="boxIngr">
                                         <label>Quantity</label><input class="quantite"  type="text" value="'.$q.'"><br>
                                         <label>Name</label><input class="nomI"  type="text" value="'.$n.'"><br>
                                         <label>Type</label><input class="type"  type="text" value="'.$type_ingredients[$index].'"><br>
-                                    </div>';
+                                        <button id="supIngr'.$index.'" class="btnsupModif" onclick="supModif(\'ingredients\', '.$index.', '.$id_recette.', \''.$langue.'\')">Delete</button>
+                                    </div></div>';
                 }
                 if(traducteur($id_user)){
                     if((isset($nom_ingredientsFR[$index]) && strlen($nom_ingredientsFR[$index])<=0) ||$recette["ingredientsFR"]==[]|| !isset($recette["ingredientsFR"][$index])){
@@ -367,16 +385,17 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                     }
                 }
             }
-            $divModifRecette.='<button onclick="fctnouvelAjout(\'Ingr\', -1)" id="btn_nouvelIngr" >New ingredient</button> 
+            $divModifRecette.=' 
                             <div id="nouvelIngr">
                                 <div class="boxIngr">
                                     <label>Quantity</label><input class="quantite"  type="text" value=""><br>
                                     <label>Name</label><input class="nomI"  type="text" value=""><br>
                                     <label>Type</label><input class="type"  type="text" value=""><br>
-                                    <button id="btn_ajoutIngr" onclick="fctajout('.$id_recette.',\'eng\',\'Ingr\',-1)">Add ingredient</button><button onclick="annulerNouvelAjout(\'Ingr\',-1)">Cancel</button>
+                                    <button onclick="annulerNouvelAjout(\'Ingr\',-1)" class="btnsupModif">Cancel</button>
                                 </div>
                             </div> 
                             </div>
+                            <button onclick="autreIngr(\''.$langue.'\',\'Ingr\')" id="btn_nouvelIngr" >New ingredient</button>
                             <hr>';
 
             $contenu .= '</ul>';
@@ -405,12 +424,22 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
             $divModifRecette.='<h5>Steps</h5><div >';
 
             $contenu .= '<ul class="steps">';
+            $divModifRecette.='<button  onclick="fctnouvelAjout(\'Etape\', -2)" id="btn_new-2" class="btn_new_step">New step</button>
+                                <div id="new-2" style="display:none">
+                                    <div class="boxStep">
+                                        <span class="st_ligne"><label>Etape</label><textarea class="step"  type="text" >...</textarea><br></span>
+                                        <label>Temps(en minute)</label><input class="temps" value=0 type="number"><br>
+                                        <button id="btn_ajoutEtape" onclick="fctajout('.$id_recette.',\'fr\',\'Etape\', -2)">Add step</button> <button onclick="annulerNouvelAjout(\'Etape\',-2)">Cancel</button>
+                                    </div>
+                                </div>';
             foreach ($steps as $index => $s) {
                 $contenu .= '<li><h5>STEP ' . ($index + 1) . ' : </h5> ' . $s;
                 if(strlen($s)<=0){$s="...";}
                 $divModifRecette.='<div class="boxStep">
                                     <span class="st_ligne"><label>Step</label><textarea class="step"  type="text">'.$s.'</textarea><br></span>
                                     <label>Time</label><input class="temps"  type="number" value='.$timers[$index].'><br>
+                                    <button id="supIngr'.$index.'" class="btnsupModif" onclick="supModif(\'steps\', '.$index.', '.$id_recette.', \''.$langue.'\')">Delete</button>
+
                                 </div>
                                 <button  onclick="fctnouvelAjout(\'Etape\', '.$index.')" id="btn_new'.$index.'" class="btn_new_step">New step</button>
                                 <div id="new'.$index.'" style="display:none">

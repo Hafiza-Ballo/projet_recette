@@ -730,41 +730,57 @@ function modifRecette($id_recette,$langue,$nomR,$without,  $ingredients, $steps,
 
             
                 foreach($quantite as $in => $q) {
-                    if(isset($data[$index]['ingredientsFR'][$in])) {
-                        $data[$index]['ingredientsFR'][$in] = [
-                            /*'quantity' => $quantite[$in],
-                            'name' => $nom[$in],
-                            'type' => $type[$in]*/
-                            'quantity' => strlen($quantite[$in]) > 0 ? $quantite[$in] : null,
-                            'name' => strlen($nom[$in]) > 0 ? $nom[$in] : null,
-                            'type' => strlen($type[$in]) > 0 ? $type[$in] : null
-                        ];
-                        error_log("ici ".$quantite[$in]." ".$nom[$in]." ".$type[$in]);
-                    } else {
-                            $data[$index]['ingredientsFR'][] = [
+                    if ($quantite[$in]!=null || $nom[$in]!=null || $type[$in]!=null){
+                
+                        if(isset($data[$index]['ingredientsFR'][$in])  ) {
+                            
+                            $data[$index]['ingredientsFR'][$in] = [
+                                /*'quantity' => $quantite[$in],
+                                'name' => $nom[$in],
+                                'type' => $type[$in]*/
                                 'quantity' => strlen($quantite[$in]) > 0 ? $quantite[$in] : null,
                                 'name' => strlen($nom[$in]) > 0 ? $nom[$in] : null,
                                 'type' => strlen($type[$in]) > 0 ? $type[$in] : null
                             ];
-                       // }
+                        
+                            error_log("ici ".$quantite[$in]." ".$nom[$in]." ".$type[$in]);
+
+                        } 
+                        else {
+                                $data[$index]['ingredientsFR'][] = [
+                                    'quantity' => strlen($quantite[$in]) > 0 ? $quantite[$in] : null,
+                                    'name' => strlen($nom[$in]) > 0 ? $nom[$in] : null,
+                                    'type' => strlen($type[$in]) > 0 ? $type[$in] : null
+                                ];
+                                $data[$index]['ingredients'][] = [
+                                    'quantity' =>  null,
+                                    'name' =>  null,
+                                    'type' => null
+                                ];
+                                
+                        // }
+                        }
                     }
                 }
                 for($i = 0; $i < count($step); $i++) {
                     error_log($step[$i]."  ".$i);
                 }
                 error_log($indexStep);
-                if($indexStep != -1 ) {
-                    array_splice($data[$index]['stepsFR'], $indexStep + 1, 0, $step[$indexStep + 1]);
-                    array_splice($data[$index]['steps'], $indexStep + 1, 0, "");
-                    $t=(int)$temps[$indexStep + 1] ?? 0;
-                    array_splice($data[$index]['timers'], $indexStep + 1, 0, $t);
+                if($indexStep >=0 ) {
                     if($indexStep==sizeof($step)){
                         $data[$index]['stepsFR'][] = $step[$indexStep + 1];
                         $data[$index]['steps'][] = "";
                         $t=(int)$temps[$indexStep + 1] ?? 0;
                         $data[$index]['timers'][] = $t;
                     }
-                } else {
+                    else{
+                        array_splice($data[$index]['stepsFR'], $indexStep + 1, 0, $step[$indexStep + 1]);
+                        array_splice($data[$index]['steps'], $indexStep + 1, 0, "");
+                        $t=(int)$temps[$indexStep + 1] ?? 0;
+                        array_splice($data[$index]['timers'], $indexStep + 1, 0, $t);
+                    }
+                } 
+                else {
                     $data[$index]['stepsFR'] = [];
                     $data[$index]['timers'] = [];
                                         
@@ -773,37 +789,55 @@ function modifRecette($id_recette,$langue,$nomR,$without,  $ingredients, $steps,
                             $t=(int)$temps[$i] ?? 0;
                             $data[$index]['timers'][] = $t;
                     }
+                    if($indexStep==-2){
+                        array_unshift($data[$index]['steps'], "");
+
+                    }
                 }
-            } else {
+            } 
+            else {
                 $data[$index]['name'] = $nomR;
-                if(sizeof($r['ingredients']) > 0) {
-                    foreach($r['ingredients'] as $in => $i) {
-                        $data[$index]['ingredients'][$in] = [
-                            'quantity' => strlen($quantite[$in]) > 0 ? $quantite[$in] : null,
-                            'name' => strlen($nom[$in]) > 0 ? $nom[$in] : null,
-                            'type' => strlen($type[$in]) > 0 ? $type[$in] : null
-                        ];
-                    }
-                } else {
-                    foreach($quantite as $in => $q) {
-                        $data[$index]['ingredients'][] = [
-                            'quantity' => strlen($quantite[$in]) > 0 ? $quantite[$in] : null,
-                            'name' => strlen($nom[$in]) > 0 ? $nom[$in] : null,
-                            'type' => strlen($type[$in]) > 0 ? $type[$in] : null
-                        ];
+                foreach($r['ingredients'] as $in => $i) {
+                    if ($quantite[$in]!=null || $nom[$in]!=null || $type[$in]!=null){
+
+                        if(isset($data[$index]['ingredients'][$in])  ) {
+                            $data[$index]['ingredients'][$in] = [
+                                'quantity' => strlen($quantite[$in]) > 0 ? $quantite[$in] : null,
+                                'name' => strlen($nom[$in]) > 0 ? $nom[$in] : null,
+                                'type' => strlen($type[$in]) > 0 ? $type[$in] : null
+                            ];
+                            
+                        }
+                        else{
+                            $data[$index]['ingredients'][] = [
+                                'quantity' => strlen($quantite[$in]) > 0 ? $quantite[$in] : null,
+                                'name' => strlen($nom[$in]) > 0 ? $nom[$in] : null,
+                                'type' => strlen($type[$in]) > 0 ? $type[$in] : null
+                            ];
+                            $data[$index]['ingredientsFR'][] = [
+                                'quantity' =>  null,
+                                'name' => null,
+                                'type' =>  null
+                            ];
+                        }
                     }
                 }
+                    
+                
                 
                 if($indexStep != -1) {
-                    array_splice($data[$index]['steps'], $indexStep + 1, 0, $step[$indexStep + 1]);
-                    array_splice($data[$index]['stepsFR'], $indexStep + 1, 0, "");
-                    $t=(int)$temps[$indexStep + 1] ?? 0;
-                    array_splice($data[$index]['timers'], $indexStep + 1, 0, $t);
+                    
                     if($indexStep==sizeof($step)){
                         $data[$index]['steps'][] = $step[$indexStep + 1];
                         $data[$index]['stepsFR'][$indexStep + 1] = "";
                         $t=(int)$temps[$indexStep + 1] ?? 0;
                         $data[$index]['timers'][] = $t;
+                    }
+                    else{
+                        array_splice($data[$index]['steps'], $indexStep + 1, 0, $step[$indexStep + 1]);
+                        array_splice($data[$index]['stepsFR'], $indexStep + 1, 0, "");
+                        $t=(int)$temps[$indexStep + 1] ?? 0;
+                        array_splice($data[$index]['timers'], $indexStep + 1, 0, $t);
                     }
 
                 }else {
@@ -952,7 +986,39 @@ function validerOuSupRecette($id_recette,$valider){
             }
             else{
                 unset($data[$index]);
+                
             }
+        }
+    }
+    $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+    ftruncate($f, 0);
+    fseek($f, 0);
+    fwrite($f, $newJsonString);
+    flock($f, LOCK_UN);
+    fclose($f);
+}
+
+function suprimerIngrStepModif($type,$index,$id_recette){
+
+    $f = fopen('recettes.json', 'r+');
+    if (!flock($f, LOCK_EX)) {
+        http_response_code(409);
+        return;
+    }
+    $jsonString = fread($f, filesize('recettes.json'));
+    $data = json_decode($jsonString, true);
+
+    foreach($data as $i => $r) {
+
+        if($r['id'] == $id_recette) {
+
+            $tFR=$type.'FR';
+            unset($data[$i][$type][$index]);
+            unset($data[$i][$tFR][$index]); 
+
+            $data[$i][$type] = array_values($data[$i][$type]);
+            $data[$i][$tFR] = array_values($data[$i][$tFR]);
+ 
         }
     }
     $newJsonString = json_encode($data, JSON_PRETTY_PRINT);

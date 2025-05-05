@@ -66,7 +66,7 @@
         .choix_langue {
             position: absolute;
             right: 15%;
-            top: 20px;
+            top: 13px;
         }
         .choix_langue select {
             padding: 5px 10px;
@@ -224,9 +224,9 @@
         }
         .autre_proposition{
             display: inline-block;
-            margin-top: 2%;
             margin-bottom: 1%;
             margin-left: 2%;
+            margin-top: 2%;
         }
         
         .boxIngr, .boxStep{
@@ -234,7 +234,18 @@
             border-radius: 5px;
             margin-bottom: 2%;
             box-shadow: 2.5px 2.5px 0px #ccc;
+            height: 100%;
             
+        }
+        #containerIngr, #containerStep {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+            gap: 1rem; /* espacement entre les blocs */
+
+        }
+        .annuler_Ingr, .annuler_Step{
+            margin-top: 2%;
+            margin-left: 40%;
         }
         
         .st_ligne{
@@ -243,7 +254,12 @@
             gap: 8px;                /* espace entre eux */
             margin-bottom: 10px;
         }
-        .step, .without{
+        .step{
+            height: 30px;
+            min-height: 0;
+            width: 90%;
+        }
+        .without{
             height: 30px;
             min-height: 0;
             width: 60%;
@@ -252,15 +268,17 @@
             margin-top: 4%;
             margin-left: 40%;
         }
+        
     </style>
 </head>
 <body>
-<?php $langue = $_SESSION['langue'] ?? 'fr'; ?>
+<?php $langue = $_SESSION['langue'] ?? 'fr'; $_SESSION['etape']=0; ?>
     <section class="haut">
         <button class="btn_retour" onclick="window.location.href='controllerFrontal.php?action=retour_accueil&id_user=<?php echo $_GET['id_user']; ?>'"><?php echo $langue == 'fr' ? 'Retour' : 'Go back'; ?></button>
         <div id="ensemble_recherche">
-            <input placeholder="<?php echo $langue=='fr' ? 'Rechercher' : 'Search'; ?>...">
+            <!--<input placeholder="<?php //echo $langue=='fr' ? 'Rechercher' : 'Search'; ?>...">
             <img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche" onclick="redirigerRecherche(<?php echo $_GET['id_user']; ?>)">
+            -->
         </div>
         <div>
             <form class="choix_langue">
@@ -296,21 +314,22 @@
                             <label><?php echo $langue=='fr' ? 'Quantité': 'Quantity'; ?>: </label><input class="quantite"  type="text"><br>
                             <label><?php echo $langue=='fr' ? 'Nom': 'Name'?>: </label><input class="nomI"  type="text"><br>
                             <label>Type: </label><input class="type"  type="text" ><br>
-                            <button onclick="autreIngr(langue,'Ingr', this)" class="autre_proposition btn_Ingr"  type="submit"><?php echo $langue=='fr' ? 'Autre ingrédient': 'Other ingredient'; ?></button>
                         </div>
                     </div> 
                 </div> 
+                <button onclick="autreIngr(langue,'Ingr')" class="autre_proposition btn_Ingr"  type="submit"><?php echo $langue=='fr' ? 'Autre ingrédient': 'Other ingredient'; ?></button>
+
                 <h5>Etapes</h5>
                 <div id="containerStep">
                     <div  id="nouvelStep" class="proposerStep">
                         <div class="boxStep">
                             <span class="st_ligne"><label id="st"><?php echo $langue=='fr' ? 'Etape' : 'Step' ;?>: </label><textarea class="step long"  type="text" ></textarea><br></span>
                             <label><?php echo $langue=='fr' ? 'Temps' : 'Time' ; ?>(minute): </label><input class="temps"  type="number" value="0" ><br>
-                            <button onclick="autreIngr(langue,'Step')" class="autre_proposition" id="btn_Step" type="submit"><?php echo $langue=='fr' ? 'Autre étape': 'Other step'; ?></button>
-
                         </div>
                     </div>  
                 </div>
+                <button onclick="autreIngr(langue,'Step')" class="autre_proposition" id="btn_Step" type="submit"><?php echo $langue=='fr' ? 'Autre étape': 'Other step'; ?></button>
+
         </div>
         <div class="photo-upload-section">
                 <h5>Photo</h5>

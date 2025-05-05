@@ -62,7 +62,7 @@
     .choix_langue {
         position: absolute;
         right: 15%;
-        top: 20px;
+        top: 13px;
     }
     
     .choix_langue select {
@@ -320,9 +320,9 @@
                 echo $retourBtn;
             ?>
             <div id="ensemble_recherche">
-                <input id="recherche_input" placeholder="<?php echo $langue=='fr' ? 'Rechercher' : 'Search'; ?>...">
+                <!--<input id="recherche_input" placeholder="<?php echo $langue=='fr' ? 'Rechercher' : 'Search'; ?>...">-->
                 <?php
-                echo $rechercheBtn;
+                //echo $rechercheBtn;
             ?>
             </div>
             <div>

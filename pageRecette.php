@@ -78,7 +78,7 @@
     .choix_langue {
         position: absolute;
         right: 15%;
-        top: 20px;
+        top: 13px;
     }
     
     .choix_langue select {
@@ -674,6 +674,16 @@
         margin-bottom: 2%;
         
     }
+    #containerIngr, #containerStep {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+            gap: 1rem; /* espacement entre les blocs */
+
+        }
+    .btnsupModif{
+        margin-top: 2%;
+        margin-left: 40%;
+    }
         
     </style>
 </head>
@@ -684,8 +694,8 @@
         <?php echo $retourBtn;
             echo $validerRecette; ?>
         <div id="ensemble_recherche">
-            <input placeholder="<?php echo $langue == 'fr' ? 'Rechercher' : 'Search'; ?>..." >
-            <img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche"> 
+            <!--<input placeholder="<?php //echo $langue == 'fr' ? 'Rechercher' : 'Search'; ?>..." >
+            <img alt="icone_recherche" src="images/magnifying-glass-solid.svg" class="icone_recherche"> -->
         </div> 
         <div>
             <form class="choix_langue">
@@ -713,15 +723,17 @@
                 </div>
         </div>
     </section>
-    <section class="haut2">
-        <?php
+    
+    <?php
         if($recette['statut']=='attente'){
-            echo '<div>
-                        <h5>Recette en cours de validation</h5>
-                    </div>';
+            echo '<section class="haut2">
+            <div>
+                    <h5>Recette en cours de validation</h5>
+            </div>
+                 </section>   ';
         }
-        ?>
-    </section>
+    ?>
+    
 
     
     

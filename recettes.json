@@ -494,22 +494,66 @@
             }
         ],
         "ingredientsFR": [
-            [],
-            [],
-            [],
-            [],
+            {
+                "quantity": null,
+                "name": null,
+                "type": null
+            },
+            {
+                "quantity": null,
+                "name": null,
+                "type": null
+            },
+            {
+                "quantity": null,
+                "name": null,
+                "type": null
+            },
+            {
+                "quantity": null,
+                "name": null,
+                "type": null
+            },
             {
                 "quantity": "2 et 1\/2",
                 "name": "farine",
                 "type": "cake"
             },
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            []
+            {
+                "quantity": null,
+                "name": null,
+                "type": null
+            },
+            {
+                "quantity": null,
+                "name": null,
+                "type": null
+            },
+            {
+                "quantity": null,
+                "name": null,
+                "type": null
+            },
+            {
+                "quantity": null,
+                "name": null,
+                "type": null
+            },
+            {
+                "quantity": null,
+                "name": null,
+                "type": null
+            },
+            {
+                "quantity": null,
+                "name": null,
+                "type": null
+            },
+            {
+                "quantity": null,
+                "name": null,
+                "type": null
+            }
         ],
         "steps": [
             "Simmer raisins and water over medium heat until raisins are plump, about 15 minutes.",

@@ -41,6 +41,8 @@
         border: 1px solid #ccc;
         border-radius: 30px;
         width: 200px;
+        font-family: 'Poppins', sans-serif;
+
     }
     .icone_recherche {
         height: 20px;
@@ -55,6 +57,8 @@
         padding: 5px;
         border-radius: 5px;
         border: 1px solid #ccc;
+        font-family: 'Poppins', sans-serif;
+
     }
     #mon_compte {
         right: 20px;
@@ -81,12 +85,16 @@
         right: 20px;
         top: 50px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        font-family: 'Poppins', sans-serif;
+
     }
     .conteneur_modif_c a {
         display: block;
         margin: 10px 0;
         color: #ED4B5B;
         text-decoration: none;
+        font-family: 'Poppins', sans-serif;
+
     }
     #deconnexion_img {
         height: 20px;
@@ -107,6 +115,8 @@
     grid-template-columns: repeat(2, 1fr); 
     gap: 30px;
     box-sizing: border-box; 
+    font-family: 'Poppins', sans-serif;
+
 }
 .jaime {
     display: flex;
@@ -167,6 +177,8 @@
         width: 30px;
         height: 30px;
         display: inline-block;
+        font-family: 'Poppins', sans-serif;
+
     }
     .btn_like:hover {
         transform: scale(1.1);
@@ -198,6 +210,8 @@
     a {
         text-decoration: none;
         color: #ED4B5B;
+        font-family: 'Poppins', sans-serif;
+
     }
 </style> 
     </head>
