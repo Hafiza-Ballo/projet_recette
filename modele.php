@@ -69,9 +69,17 @@ function recupRecette(){
     
         $jsonString = fread($f, filesize('recettes.json'));
         $data = json_decode($jsonString, true); 
-        return $data;
-    }
         
+        $recettesValides = [];
+        foreach($data as $recette) {
+            if($recette['statut'] === 'valide') {
+                $recettesValides[] = $recette;
+            }
+        }
+        
+        return $recettesValides;
+    }
+    return [];
 }
 
 

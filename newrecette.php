@@ -230,10 +230,8 @@
         }
         
         .boxIngr, .boxStep{
-            border: solid 0.5px #ccc;
             border-radius: 5px;
             margin-bottom: 2%;
-            box-shadow: 2.5px 2.5px 0px #ccc;
             height: 100%;
             
         }
@@ -267,6 +265,58 @@
         .btn_submit{
             margin-top: 4%;
             margin-left: 40%;
+        }
+        
+        /* Styles pour les inputs et textareas */
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background-color: #fff;
+            color: #333;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #faab66;
+            box-shadow: 0 0 0 3px rgba(250, 171, 102, 0.2);
+        }
+
+        input[type="text"]::placeholder,
+        input[type="number"]::placeholder,
+        textarea::placeholder {
+            color: #999;
+        }
+
+        /* Style spécifique pour les inputs dans les boîtes d'ingrédients et d'étapes */
+        .boxIngr input,
+        .boxStep input,
+        .boxStep textarea {
+            margin-bottom: 10px;
+            background-color: #f8f8f8;
+        }
+
+        .boxIngr input:hover,
+        .boxStep input:hover,
+        .boxStep textarea:hover {
+            background-color: #fff;
+        }
+
+        /* Style pour les labels */
+        .boxIngr label,
+        .boxStep label {
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 5px;
+            display: inline-block;
         }
         
     </style>
@@ -340,7 +390,7 @@
                     </div>
                 </div>
         </div>
-        <button onclick="AjouterRecette(langue)" class="btn_submit" type="submit"><?php echo $langue=='fr' ? 'Créer recette' : 'Create recipe'; ?></button>
+        <button onclick="appliquerModif(-1,langue, 'AjoutRecette')" class="btn_submit" type="submit"><?php echo $langue=='fr' ? 'Créer recette' : 'Create recipe'; ?></button>
         
     </div>
     <script>

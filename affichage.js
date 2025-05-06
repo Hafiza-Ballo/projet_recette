@@ -120,6 +120,7 @@ function ajouterPhoto($idUser, $idRecette) {
           success: function(response) {
             statut.html('<div class="alert alert-success alert-dismissible fade show" role="alert">Photo ajoutée !!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
               photoInput.value = '';
+              window.location.reload();
           },
           error: function() {
             statut.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Erreur lors de l\'upload<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
@@ -135,6 +136,7 @@ function ajouterPhoto($idUser, $idRecette) {
           success: function(response) {
             statut.html('<div class="alert alert-success alert-dismissible fade show" role="alert">Photo ajoutée !!! <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
               $('#photoUrl').val('');
+              window.location.reload();
           },
           error: function() {
             statut.html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Erreur avec l\'url<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
