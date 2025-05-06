@@ -340,7 +340,7 @@
                     </div>
                 </div>
         </div>
-        <button onclick="AjouterRecette(langue)" class="btn_submit" type="submit"><?php echo $langue=='fr' ? 'Créer recette' : 'Create recipe'; ?></button>
+        <button onclick="appliquerModif(-1,langue, 'AjoutRecette')" class="btn_submit" type="submit"><?php echo $langue=='fr' ? 'Créer recette' : 'Create recipe'; ?></button>
         
     </div>
     <script>

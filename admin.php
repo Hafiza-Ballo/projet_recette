@@ -283,35 +283,35 @@
             </button>
             <div class="conteneur_modif_c">
                 <a href="controllerFrontal.php?action=infos-perso&id_user=<?php echo $_GET['id_user']; ?>"><?php echo $langue=='fr' ? 'Informations personnelles': 'Personal information'; ?></a>
-                <a><img src="images/arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
+                <a href="controllerFrontal.php?action=deconnexion"><img src="arrow-right-from-bracket-solid.svg" alt="deconnexion" id="deconnexion_img"><?php echo $langue=='fr' ? 'Déconnexion' : 'Deconnexion' ; ?></a>
             </div>
         </div>
     </section>
 
     <section class="admin-container">
-        <h1>Panel Administrateur</h1>
+        <h1><?php echo $langue=='fr' ? 'Panel Administrateur' : ' Administrator panel' ; ?></h1>
 
         <ul class="nav nav-tabs" >
             <li class="nav-item">
-                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#users" type="button">Utilisateurs</button>
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#users" type="button"><?php echo $langue=='fr' ? 'Utilisateurs': 'Users' ;?></button>
             </li>
             <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#recette" type="button">Recettes</button>
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#recette" type="button"><?php echo $langue=='fr' ? 'Recettes' : 'Recipes'; ?></button>
             </li>
         </ul>
 
         <div class="tab-content" >
             <div class="tab-pane fade show active" id="users">
-                <h2>Gestion des utilisateurs</h2>
+                <h2><?php echo $langue=='fr' ? 'Gestion des utilisateurs' : 'user management' ;?></h2>
                 <div class="table-container">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nom</th>
-                                <th>Prénom</th>
+                                <th><?php echo $langue=='fr' ? 'Nom' : 'Last name' ; ?></th>
+                                <th><?php echo $langue=='fr' ? 'Prénom' : 'First name' ; ?></th>
                                 <th>Email</th>
-                                <th>Rôles</th>
+                                <th><?php echo $langue=='fr' ? 'Rôles' : 'Roles'; ?></th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -330,7 +330,7 @@
                                     <td><?php echo $u['mail']; ?></td>
                                     <td><?php echo implode(', ', $u['role']); ?></td>
                                     <td>
-                                    <button class="btn-action" onclick="modifierRoles(<?php echo $u['id']; ?>, '<?php echo implode(',', $u['role']); ?>')">Modifier rôles</button>                                    </td>
+                                    <button class="btn-action" onclick="modifierRoles(<?php echo $u['id']; ?>, '<?php echo implode(',', $u['role']); ?>')"><?php echo $langue=='fr' ? 'Modifier rôles' : 'Edit role' ;?></button>                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -341,29 +341,29 @@
                     $total_utilisateurs = count($utilisateurs);
                     $nombre_pages = ceil($total_utilisateurs / $nombre_par_page);
                     if ($page_actuelle > 1): ?>
-                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_users=<?php echo $page_actuelle - 1; ?>'">Précédent</button>
+                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_users=<?php echo $page_actuelle - 1; ?>'"><?php echo $langue=='fr' ? 'Précédent' : 'Previous' ;?></button>
                     <?php else: ?>
-                        <button disabled>Précédent</button>
+                        <button disabled><?php echo $langue=='fr' ? 'Précédent' : 'Previous'; ?></button>
                     <?php endif; ?>
-                    <span>Page <?php echo $page_actuelle; ?> sur <?php echo $nombre_pages; ?></span>
+                    <span>Page <?php echo $page_actuelle; ?> / <?php echo $nombre_pages; ?></span>
                     <?php if ($page_actuelle < $nombre_pages): ?>
-                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_users=<?php echo $page_actuelle + 1; ?>'">Suivant</button>
+                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_users=<?php echo $page_actuelle + 1; ?>'"><?php echo $langue=='fr' ? 'Suivant' : 'Next' ;?></button>
                     <?php else: ?>
-                        <button disabled>Suivant</button>
+                        <button disabled><?php echo $langue=='fr' ? 'Suivant' : 'Next' ;?></button>
                     <?php endif; ?>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="recette">
-                <h2>Gestion des recettes</h2>
+                <h2><?php echo $langue=='fr' ? 'Gestion des recettes' :'Recipe management' ; ?></h2>
                 <div class="table-container">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nom (FR)</th>
-                                <th>Auteur</th>
-                                <th>Statut</th>
+                                <th><?php echo $langue=='fr' ? 'Nom' : 'Name'; ?></th>
+                                <th><?php echo $langue=='fr' ? 'Auteur' : 'Author' ; ?></th>
+                                <th><?php echo $langue=='fr' ? 'Statut' : 'Status' ; ?></th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -383,7 +383,7 @@
                                     <form method="post" action="controllerFrontal.php" style="display:inline;">
                                         <input type="hidden" name="id_user" value="<?php echo $user['id']; ?>">
                                         <input type="hidden" name="id_recette" value="<?php echo $r['id']; ?>">
-                                        <button class="btn-action" name="voir_recette">Voir recette</button>
+                                        <button class="btn-action" name="voir_recette"><?php echo $langue=='fr' ? 'Voir recette' : 'See recipe' ; ?></button>
                                     </form>
                                     </td>
                                 </tr>
@@ -396,15 +396,15 @@
                     $total_recettes = count($recettes);
                     $nombre_pages_recettes = ceil($total_recettes / $nombre_par_page_recettes);
                     if ($page_actuelle_recettes > 1): ?>
-                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_recettes=<?php echo $page_actuelle_recettes - 1; ?>'">Précédent</button>
+                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_recettes=<?php echo $page_actuelle_recettes - 1; ?>'"><?php echo $langue=='fr' ? 'Précédent' : 'Previous' ; ?></button>
                     <?php else: ?>
-                        <button disabled>Précédent</button>
+                        <button disabled><?php echo $langue=='fr' ? 'Précédent' : 'Previous' ; ?></button>
                     <?php endif; ?>
-                    <span>Page <?php echo $page_actuelle_recettes; ?> sur <?php echo $nombre_pages_recettes; ?></span>
+                    <span>Page <?php echo $page_actuelle_recettes; ?> / <?php echo $nombre_pages_recettes; ?></span>
                     <?php if ($page_actuelle_recettes < $nombre_pages_recettes): ?>
-                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_recettes=<?php echo $page_actuelle_recettes + 1; ?>'">Suivant</button>
+                        <button onclick="window.location.href='controllerFrontal.php?action=admin&id_user=<?php echo $user['id']; ?>&page_recettes=<?php echo $page_actuelle_recettes + 1; ?>'"><?php echo $langue=='fr' ? 'Suivant' : 'Next' ;?></button>
                     <?php else: ?>
-                        <button disabled>Suivant</button>
+                        <button disabled><?php echo $langue=='fr' ? 'Suivant' : 'Next' ; ?></button>
                     <?php endif; ?>
                 </div>
             </div>
@@ -415,7 +415,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Modifier les rôles</h4>
+                <h4 class="modal-title"><?php echo $langue=='fr' ? 'Modifier les rôles' : 'Edit role' ; ?></h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -427,21 +427,21 @@
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="roles[]" value="Traducteur" id="roleTraducteur">
-                        <label class="form-check-label" for="roleTraducteur">Traducteur</label>
+                        <label class="form-check-label" for="roleTraducteur"><?php echo $langue=='fr' ? 'Traducteur' : 'Translator' ; ?></label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="roles[]" value="DemandeChef" id="roleDemandeChef">
-                        <label class="form-check-label" for="roleDemandeChef">DemandeChef</label>
+                        <label class="form-check-label" for="roleDemandeChef"><?php echo $langue=='fr' ? 'DemandeChef' : 'ChefRequest'; ?></label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="roles[]" value="DemandeTraducteur" id="roleDemandeTraducteur">
-                        <label class="form-check-label" for="roleDemandeTraducteur">DemandeTraducteur</label>
+                        <label class="form-check-label" for="roleDemandeTraducteur"><?php echo $langue=='fr' ? 'DemandeTraducteur' : 'TranslatorRequest' ;?></label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary" onclick="sauverRoles()">Enregistrer</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo $langue=='fr' ? 'Fermer' : 'Close' ?></button>
+                <button type="button" class="btn btn-primary" onclick="sauverRoles()"><?php echo $langue=='fr' ? 'Enregistrer' : 'Save' ;?></button>
             </div>
         </div>
     </div>

@@ -16,8 +16,7 @@
         "prenom": "Hafiza",
         "mail": "h@gmail.com",
         "role": [
-            "Chef",
-            "Traducteur"
+            "admin"
         ],
         "mdp": "$2y$10$0TVO6FeZrJOeZihCRpT7H.ROCUjr8LDuImUwGVXhY644nwLcEwuiW",
         "isCuisinier": 1
@@ -28,7 +27,7 @@
         "prenom": "laila",
         "mail": "l@gmail.com",
         "role": [
-            "DemandeTraducteur"
+            "Traducteur"
         ],
         "mdp": "$2y$10$EN68ZwA3YHkZ7PGNY1yDauEeWtBguY4JUGJpO8xha5cFn.EUOnLsa",
         "isCuisinier": 1
@@ -39,9 +38,20 @@
         "prenom": "Lisa",
         "mail": "lisa@yahoo.fr",
         "role": [
-            "DemandeChef"
+            "Chef"
         ],
         "mdp": "$2y$10$NcR5a4ybzV2iXKSNEMF99uL8UwOyJVp2FpZCKh62muRehIFIVrQ82",
         "isCuisinier": 0
+    },
+    {
+        "id": 5,
+        "nom": "Mamie",
+        "prenom": "Jeanne",
+        "mail": "j@gmail.com",
+        "role": [
+            "Chef"
+        ],
+        "mdp": "$2y$10$ySAkUb27jsPg3TnYzU6Ip.RuwZIEaMUHCWTPe5PJs\/sSALEdvFbMa",
+        "isCuisinier": 1
     }
 ]
