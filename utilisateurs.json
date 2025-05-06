@@ -53,5 +53,17 @@
         ],
         "mdp": "$2y$10$ySAkUb27jsPg3TnYzU6Ip.RuwZIEaMUHCWTPe5PJs\/sSALEdvFbMa",
         "isCuisinier": 1
+    },
+    {
+        "id": 6,
+        "nom": "Ndiaye",
+        "prenom": "Amadou",
+        "mail": "a@gmail.com",
+        "role": [
+            "Chef",
+            "Traducteur"
+        ],
+        "mdp": "$2y$10$9JPe9rqXfEJPLQV25hpY2O5XrEeoqN0wL.VCdPPIMGHpwfJMJUjLi",
+        "isCuisinier": 1
     }
 ]

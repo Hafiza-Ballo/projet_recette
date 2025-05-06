@@ -274,6 +274,21 @@
 <body>
     <?php $langue = $_SESSION['langue'] ?? 'fr';?>
     <section class="haut">
+    <form class="choix_langue">
+                <select name="langue" onchange="changerLangue(this.value)">
+                <?php
+                    if ($langue=='fr'){
+                        echo '<option value="fr" id="t" >Fr </option>
+                        <option value="eng" > Eng</option>';
+                    }
+                    else{
+                        echo '<option value="eng" > Eng</option>
+                        <option value="fr" id="t" >Fr </option>
+                        ';
+                    }
+                ?>
+                </select>
+            </form>
         <div>
             <button class="btn-retour" onclick="window.location.href='controllerFrontal.php?action=retour_accueil&id_user=<?php echo $user['id']; ?>'"> <?php echo $langue == 'fr' ? 'Retour' : 'Go back'; ?></button>
         </div>

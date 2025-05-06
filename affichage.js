@@ -826,7 +826,7 @@ function validerRecette(id_recette, langue){
 }
 
 //supprimer une recette par l'administrateur afin de la supprimer du JSON
-function suprimerRecette(id_recette, langue){
+function suprimerRecette(id_user,id_recette, langue){
   let valider="non";
   $.ajax({
     url: 'controllerFrontal.php',
@@ -837,6 +837,7 @@ function suprimerRecette(id_recette, langue){
     },
     success: function(e) {  
       alert(langue.trim() === 'fr' ? 'Recette supprimée !' : 'Recipe deleted!');
+      window.location.href = 'controllerFrontal.php?action=admin&id_user=' + id_user;
 
     },
     error: function() {

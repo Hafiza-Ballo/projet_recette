@@ -82,6 +82,23 @@ function recupRecette(){
     return [];
 }
 
+function recupRecetteAll(){
+    if (file_exists('recettes.json')) {
+        $f = fopen('recettes.json', 'r+');
+    
+        if (!flock($f, LOCK_EX)){
+            http_response_code(409);
+        } 
+    
+        $jsonString = fread($f, filesize('recettes.json'));
+        $data = json_decode($jsonString, true); 
+        
+        
+        
+        return $data;
+    }
+    return [];
+}
 
 function recupLike(){
     if (file_exists('likes.json')) {
@@ -98,7 +115,7 @@ function recupLike(){
         
 }
 
-function ById($id_recette){
+function recupRecetteById($id_recette){
     if (file_exists('recettes.json')) {
         $f = fopen('recettes.json', 'r+');
     

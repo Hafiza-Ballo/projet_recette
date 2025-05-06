@@ -728,7 +728,7 @@
         if($recette['statut']=='attente'){
             echo '<section class="haut2">
             <div>
-                    <h5>Recette en cours de validation</h5>
+                    <h5>'.($langue=='fr' ? 'Recette en cours de validation' : 'Recipe under validation').'</h5>
             </div>
                  </section>   ';
         }
