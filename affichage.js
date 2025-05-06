@@ -1,4 +1,4 @@
-// Gère le like/dislike d’une recette via AJAX, en basculant l’icône et en mettant à jour le compteur.
+// Gère le like/dislike d'une recette via AJAX, en basculant l'icône et en mettant à jour le compteur.
 function changeImgURL(button,id,$id_user){
     $.ajax({
       method: "GET",
@@ -246,16 +246,18 @@ function changerLangue(langue){
   console.log(langue);
   $.ajax({
     method: "POST",
-    url: "changerLangue.php",
-    data: { langue: langue },
-    success: function() {
-        location.reload(); // Recharge la page après le changement
+    url: "controllerfrontal.php",
+    data: { 
+      action: 'changer_langue',
+      langue: langue 
     },
-    error:function(){
-      console.log("erreur");
+    success: function(response) {
+      window.location.reload();
+    },
+    error: function(error) {
+      console.error('Erreur lors du changement de langue:', error);
     }
-
-  })
+  });
 }
 //afficher les div pour traduire un element de la recette dans la langue opposée
 function traduction(button,index, langue,id_recette,type_liste){

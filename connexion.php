@@ -73,7 +73,7 @@
     </head>
 
     <body>
-        <?php session_start(); $langue = $_SESSION['langue'] ?? 'fr';?>
+        <?php $langue = $_SESSION['langue'] ?? 'fr';?>
         <section class="haut">
         <div>
             <form class="choix_langue">
@@ -107,7 +107,7 @@
                     <input id="mdp" name="mdp" type="password" required>
                 </div>
                 <input id="btn_connexion" type="submit" value="Connexion" name="connexion">
-                <p><?php echo $langue =='fr' ? 'Vous n\'avez pas de compte': 'Don\'t have an account' ; ?>? <a href="inscription.php">Inscription</a></p>
+                <p><?php echo $langue =='fr' ? 'Vous n\'avez pas de compte': 'Don\'t have an account' ; ?>? <a href="controllerfrontal.php?page=inscription">Inscription</a></p>
             </form>
         </div>
     </body>

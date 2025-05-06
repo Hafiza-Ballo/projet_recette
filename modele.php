@@ -4,6 +4,11 @@ function inscription($nom, $prenom, $mail, $role, $mdp, $isCuisinier)
     $fichier = 'utilisateurs.json';
     if (file_exists($fichier)) {
         $utilisateurs = json_decode(file_get_contents($fichier), true);
+        foreach ($utilisateurs as $utilisateur) {
+            if ($utilisateur['mail'] === $mail) {
+                throw new Exception('Cette adresse mail est déjà utilisée.');
+            }
+        }
         $newId = max(array_column($utilisateurs, 'id')) + 1;
     } else {
         $utilisateurs = [];
