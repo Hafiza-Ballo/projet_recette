@@ -1,6 +1,6 @@
 <?php
 require_once ('controller.php');
-//session_start();
+session_start();
 
 try {
     $jsonString = file_get_contents('utilisateurs.json');

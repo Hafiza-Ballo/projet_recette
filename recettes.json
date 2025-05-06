@@ -865,5 +865,464 @@
         "id": 11,
         "statut": "attente",
         "id_auteur": 2
+    },
+    {
+        "name": "",
+        "nameFR": "Salade Méditerranéenne",
+        "Author": "Inconnu",
+        "Without": [
+            "NoMilk"
+        ],
+        "ingredients": [],
+        "ingredientsFR": [
+            {
+                "quantity": "2",
+                "name": "tomates",
+                "type": "Légumes"
+            },
+            {
+                "quantity": "1",
+                "name": "concombre",
+                "type": "Légumes"
+            },
+            {
+                "quantity": "100g",
+                "name": "feta",
+                "type": "Fromage"
+            }
+        ],
+        "steps": [],
+        "stepsFR": [
+            "Couper les légumes en dés.",
+            "Ajouter la feta émiettée.",
+            "Assaisonner avec de l'huile d'olive et du sel.",
+            "Mélanger et servir frais."
+        ],
+        "timers": [
+            1,
+            1,
+            1,
+            1
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 3,
+        "commentaires": [],
+        "id": 12,
+        "statut": "valide",
+        "id_auteur": null
+    },
+    {
+        "name": "Spaghetti Bolognese",
+        "nameFR": "",
+        "Author": "Lisa Lisa",
+        "Without": [],
+        "ingredients": [
+            {
+                "quantity": "200g",
+                "name": "spaghetti",
+                "type": "Pasta"
+            },
+            {
+                "quantity": "100g",
+                "name": "ground beef",
+                "type": "Meat"
+            },
+            {
+                "quantity": "1 cup",
+                "name": "tomato sauce",
+                "type": "Sauce"
+            }
+        ],
+        "ingredientsFR": [],
+        "steps": [
+            "Cook spaghetti according to package instructions.",
+            "Brown the ground beef in a pan.",
+            "Add tomato sauce and simmer.",
+            "Serve sauce over spaghetti."
+        ],
+        "stepsFR": [],
+        "timers": [
+            10,
+            5,
+            15,
+            1
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 12,
+        "commentaires": [],
+        "id": 13,
+        "statut": "valide",
+        "id_auteur": 4
+    },
+    {
+        "name": "",
+        "nameFR": "Tarte aux pommes",
+        "Author": "Mamie Jeanne",
+        "Without": [
+            "NoGluten"
+        ],
+        "ingredients": [],
+        "ingredientsFR": [
+            {
+                "quantity": "2",
+                "name": "pommes",
+                "type": "Fruits"
+            },
+            {
+                "quantity": "1",
+                "name": "pâte feuilletée",
+                "type": "Pâtisserie"
+            },
+            {
+                "quantity": "50g",
+                "name": "sucre",
+                "type": "Épicerie"
+            }
+        ],
+        "steps": [],
+        "stepsFR": [
+            "Étaler la pâte dans un moule.",
+            "Couper les pommes et les disposer.",
+            "Saupoudrer de sucre.",
+            "Cuire au four 30 minutes à 180°C."
+        ],
+        "timers": [
+            2,
+            5,
+            1,
+            30
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 7,
+        "commentaires": [],
+        "id": 14,
+        "statut": "valide",
+        "id_auteur": 5
+    },
+    {
+        "name": "Grilled Salmon",
+        "nameFR": "Saumon grillé",
+        "Author": "Unknown",
+        "Without": [],
+        "ingredients": [
+            {
+                "quantity": "2 fillets",
+                "name": "salmon",
+                "type": "Fish"
+            },
+            {
+                "quantity": "1 tbsp",
+                "name": "lemon juice",
+                "type": "Condiments"
+            }
+        ],
+        "ingredientsFR": [
+            {
+                "quantity": "2",
+                "name": "filets de saumon",
+                "type": "Poisson"
+            },
+            {
+                "quantity": "1 c. à soupe",
+                "name": "jus de citron",
+                "type": "Condiments"
+            }
+        ],
+        "steps": [
+            "Preheat the grill.",
+            "Place salmon on grill and cook for 6–8 minutes.",
+            "Drizzle lemon juice before serving."
+        ],
+        "stepsFR": [],
+        "timers": [
+            2,
+            8,
+            1
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 18,
+        "commentaires": [],
+        "id": 15,
+        "statut": "valide",
+        "id_auteur": null
+    },
+    {
+        "name": "",
+        "nameFR": "Mousse au chocolat",
+        "Author": "Lisa",
+        "Without": [],
+        "ingredients": [],
+        "ingredientsFR": [
+            {
+                "quantity": "200g",
+                "name": "chocolat noir",
+                "type": "Pâtisserie"
+            },
+            {
+                "quantity": "3",
+                "name": "œufs",
+                "type": "Produits frais"
+            }
+        ],
+        "steps": [],
+        "stepsFR": [
+            "Faire fondre le chocolat.",
+            "Séparer les blancs des jaunes.",
+            "Incorporer les jaunes au chocolat.",
+            "Monter les blancs en neige et les ajouter."
+        ],
+        "timers": [
+            5,
+            2,
+            2,
+            5
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 10,
+        "commentaires": [],
+        "id": 16,
+        "statut": "valide",
+        "id_auteur": 4
+    },
+    {
+        "name": "Veggie Tacos",
+        "nameFR": "",
+        "Author": "Lisa",
+        "Without": [
+            "NoMilk"
+        ],
+        "ingredients": [],
+        "ingredientsFR": [
+            {
+                "quantity": "4",
+                "name": "tortillas de maïs",
+                "type": "Céréales"
+            },
+            {
+                "quantity": "100g",
+                "name": "haricots noirs",
+                "type": "Légumineuses"
+            },
+            {
+                "quantity": "50g",
+                "name": "maïs",
+                "type": "Légumes"
+            }
+        ],
+        "steps": [
+            "Warm tortillas.",
+            "Add beans and corn.",
+            "Serve with salsa."
+        ],
+        "stepsFR": [],
+        "timers": [
+            2,
+            1,
+            1
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 5,
+        "commentaires": [],
+        "id": 17,
+        "statut": "valide",
+        "id_auteur": 4
+    },
+    {
+        "name": "Green Detox Smoothie",
+        "nameFR": "Smoothie vert detox",
+        "Author": "Lisa",
+        "Without": [
+            "NoMilk"
+        ],
+        "ingredients": [],
+        "ingredientsFR": [
+            {
+                "quantity": "1 poignée",
+                "name": "épinards",
+                "type": "Légumes"
+            },
+            {
+                "quantity": "1",
+                "name": "banane",
+                "type": "Fruits"
+            },
+            {
+                "quantity": "200ml",
+                "name": "eau de coco",
+                "type": "Boisson"
+            }
+        ],
+        "steps": [],
+        "stepsFR": [
+            "Mettre tous les ingrédients dans un mixeur.",
+            "Mixer jusqu'à obtenir une consistance lisse.",
+            "Servir immédiatement."
+        ],
+        "timers": [
+            2,
+            1,
+            1
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 11,
+        "commentaires": [],
+        "id": 18,
+        "statut": "valide",
+        "id_auteur": 4
+    },
+    {
+        "name": "Garlic Shrimp",
+        "nameFR": "",
+        "Author": "Unknown",
+        "Without": [],
+        "ingredients": [
+            {
+                "quantity": "200g",
+                "name": "shrimp",
+                "type": "Seafood"
+            },
+            {
+                "quantity": "2 cloves",
+                "name": "garlic",
+                "type": "Spices"
+            }
+        ],
+        "ingredientsFR": [],
+        "steps": [],
+        "stepsFR": [
+            "Chauffer de l'huile dans une poêle.",
+            "Ajouter l'ail et les crevettes.",
+            "Cuire jusqu'à ce qu'elles soient roses et dégagent un bon parfum."
+        ],
+        "timers": [
+            2,
+            1,
+            5
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 8,
+        "commentaires": [],
+        "id": 19,
+        "statut": "attente",
+        "id_auteur": null
+    },
+    {
+        "name": "Creamy Mushroom Soup",
+        "nameFR": "",
+        "Author": "Mamie Jeanne",
+        "Without": [],
+        "ingredients": [
+            {
+                "quantity": "200g",
+                "name": "mushrooms",
+                "type": "Vegetables"
+            },
+            {
+                "quantity": "1 cup",
+                "name": "cream",
+                "type": "Dairy"
+            },
+            {
+                "quantity": "1",
+                "name": "onion",
+                "type": "Vegetables"
+            }
+        ],
+        "ingredientsFR": [
+            {
+                "quantity": "200g",
+                "name": "champignons",
+                "type": "Légumes"
+            },
+            {
+                "quantity": "1 tasse",
+                "name": "crème",
+                "type": "Produits laitiers"
+            },
+            {
+                "quantity": "1",
+                "name": "oignon",
+                "type": "Légumes"
+            }
+        ]
+        ,
+        "steps": [
+            "Chop mushrooms and onion.",
+            "Cook in a pot until soft.",
+            "Add cream and blend until smooth.",
+            "Simmer for 10 minutes."
+        ],
+        "stepsFR": [],
+        "timers": [
+            5,
+            10,
+            2,
+            10
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 9,
+        "commentaires": [],
+        "id": 20,
+        "statut": "attente",
+        "id_auteur": 5
+    },
+    {
+        "name": "",
+        "nameFR": "Gratin dauphinois",
+        "Author": "Mamie Jeanne",
+        "Without": [],
+        "ingredients": [],
+        "ingredientsFR": [
+            {
+                "quantity": "1kg",
+                "name": "pommes de terre",
+                "type": "Légumes"
+            },
+            {
+                "quantity": "200ml",
+                "name": "crème",
+                "type": "Produits laitiers"
+            },
+            {
+                "quantity": "1",
+                "name": "gousse d'ail",
+                "type": "Épices"
+            }
+        ],
+        "steps": [
+            "Peel and slice the potatoes thinly.",
+            "Rub the dish with garlic.",
+            "Layer the slices and pour cream over them.",
+            "Bake for 45 minutes at 180°C."
+        ]
+        ,
+        "stepsFR": [],
+        "timers": [
+            10,
+            1,
+            2,
+            45
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like":5,
+        "commentaires": [],
+        "id": 21,
+        "statut": "valide",
+        "id_auteur": 5
     }
+    
+    
+    
+    
+    
 ]

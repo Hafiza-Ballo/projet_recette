@@ -32,5 +32,16 @@
         ],
         "mdp": "$2y$10$EN68ZwA3YHkZ7PGNY1yDauEeWtBguY4JUGJpO8xha5cFn.EUOnLsa",
         "isCuisinier": 1
+    },
+    {
+        "id": 4,
+        "nom": "Lisa",
+        "prenom": "Lisa",
+        "mail": "lisa@yahoo.fr",
+        "role": [
+            "DemandeChef"
+        ],
+        "mdp": "$2y$10$NcR5a4ybzV2iXKSNEMF99uL8UwOyJVp2FpZCKh62muRehIFIVrQ82",
+        "isCuisinier": 0
     }
 ]
