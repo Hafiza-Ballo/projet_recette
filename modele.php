@@ -98,7 +98,7 @@ function recupLike(){
         
 }
 
-function recupRecetteById($id_recette){
+function ById($id_recette){
     if (file_exists('recettes.json')) {
         $f = fopen('recettes.json', 'r+');
     
