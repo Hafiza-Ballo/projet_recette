@@ -65,5 +65,16 @@
         ],
         "mdp": "$2y$10$9JPe9rqXfEJPLQV25hpY2O5XrEeoqN0wL.VCdPPIMGHpwfJMJUjLi",
         "isCuisinier": 1
+    },
+    {
+        "id": 7,
+        "nom": "hafiza",
+        "prenom": "hafiza",
+        "mail": "w@gmail.com",
+        "role": [
+            "Chef"
+        ],
+        "mdp": "$2y$10$UCJGIj0aQtMDF9HoGRZM8uG6xi9xoOv1.c8BiOL8e0CBUYI6z50G.",
+        "isCuisinier": 1
     }
 ]

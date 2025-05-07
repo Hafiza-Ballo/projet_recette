@@ -356,7 +356,7 @@
         "id_auteur": 1
     },
     "6": {
-        "name": "",
+        "name": "cokies eng",
         "nameFR": "Cookies",
         "Author": "Unknown",
         "Without": [],
@@ -1116,7 +1116,15 @@
         "nameFR": "Gratin dauphinois",
         "Author": "Mamie Jeanne",
         "Without": [],
-        "ingredients": [],
+        "ingredients": [
+            {
+                "quantity": "1kg",
+                "name": "potatoes",
+                "type": "potatos"
+            },
+            [],
+            []
+        ],
         "ingredientsFR": [
             {
                 "quantity": "1kg",
@@ -1140,7 +1148,12 @@
             "Layer the slices and pour cream over them.",
             "Bake for 45 minutes at 180\u00b0C."
         ],
-        "stepsFR": [],
+        "stepsFR": [
+            "ok",
+            "",
+            "",
+            ""
+        ],
         "timers": [
             10,
             1,
@@ -1154,5 +1167,42 @@
         "id": 21,
         "statut": "valide",
         "id_auteur": 5
+    },
+    "19": {
+        "name": "",
+        "nameFR": "tedt",
+        "Author": "hafiza hafiza",
+        "Without": [
+            "jp"
+        ],
+        "ingredients": [],
+        "ingredientsFR": [
+            {
+                "quantity": "1 litre",
+                "name": "eau",
+                "type": "eau"
+            },
+            {
+                "quantity": "2l",
+                "name": "mirl",
+                "type": null
+            }
+        ],
+        "steps": [],
+        "stepsFR": [
+            "melanger",
+            "tu"
+        ],
+        "timers": [
+            4,
+            4
+        ],
+        "imageURL": "",
+        "originalURL": "",
+        "like": 0,
+        "commentaires": [],
+        "id": 22,
+        "statut": "valide",
+        "id_auteur": 7
     }
 }
