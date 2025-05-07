@@ -271,7 +271,7 @@ function traduction(button,index, langue,id_recette,type_liste){
     success: function(){
       if(type_liste=='ingredients' ){
         if(langue=='fr'){
-          divSuivante.innerHTML='<div id="test'+type_liste+index+'"><label>Quantité: </label><input class=" trad_input_ingredients" name="'+type_liste+','+index+'"  ><br><label>Nom: </label><input class=" trad_input_ingredients" name="'+type_liste+','+index+'" ><br><label>Type: </label><input class="trad_input_ingredients" name="'+type_liste+','+index+'"  ><br> <button id="idb'+index+'" onclick="appliquerTradIngr('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Appliquer</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Annuler</button> </div>';
+          divSuivante.innerHTML='<div id="test'+type_liste+index+'"><label>Quantité: </label><input class=" trad_input_ingredients" name="q'+index+'" id="q'+index+'"  ><br><label>Nom: </label><input class=" trad_input_ingredients" name="n'+index+'" id= "n'+index+'"><br><label>Type: </label><input class="trad_input_ingredients" name="t'+index+'" id="t'+index+'" ><br> <button id="idb'+index+'" onclick="appliquerTradIngr('+index+',\' '+type_liste+' \','+id_recette+',\' '+langue+' \' )"> Appliquer</button> <button  id="idann'+index+'"onclick="annulerTrad('+index+',\''+type_liste+'\')">Annuler</button> </div>';
         }
         else if(langue.trim()=='eng'){
           console.log('i');
@@ -826,7 +826,7 @@ function validerRecette(id_recette, langue){
 }
 
 //supprimer une recette par l'administrateur afin de la supprimer du JSON
-function suprimerRecette(id_recette, langue){
+function suprimerRecette(id_user,id_recette, langue){
   let valider="non";
   $.ajax({
     url: 'controllerFrontal.php',
@@ -837,6 +837,7 @@ function suprimerRecette(id_recette, langue){
     },
     success: function(e) {  
       alert(langue.trim() === 'fr' ? 'Recette supprimée !' : 'Recipe deleted!');
+      window.location.href = 'controllerFrontal.php?action=admin&id_user=' + id_user;
 
     },
     error: function() {

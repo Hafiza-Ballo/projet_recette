@@ -30,5 +30,21 @@
         "nom": "Ballo",
         "prenom": "Hafiza",
         "date": "2025-05-04 13:13:20"
+    },
+    {
+        "id_user": "6",
+        "id_recette": "1",
+        "commentaire": "tres bon",
+        "nom": "Ndiaye",
+        "prenom": "Amadou",
+        "date": "2025-05-06 08:49:32"
+    },
+    {
+        "id_user": "7",
+        "id_recette": "1",
+        "commentaire": "cool",
+        "nom": "hafiza",
+        "prenom": "hafiza",
+        "date": "2025-05-06 09:28:00"
     }
 ]

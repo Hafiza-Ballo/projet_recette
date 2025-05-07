@@ -82,6 +82,23 @@ function recupRecette(){
     return [];
 }
 
+function recupRecetteAll(){
+    if (file_exists('recettes.json')) {
+        $f = fopen('recettes.json', 'r+');
+    
+        if (!flock($f, LOCK_EX)){
+            http_response_code(409);
+        } 
+    
+        $jsonString = fread($f, filesize('recettes.json'));
+        $data = json_decode($jsonString, true); 
+        
+        
+        
+        return $data;
+    }
+    return [];
+}
 
 function recupLike(){
     if (file_exists('likes.json')) {
@@ -98,7 +115,7 @@ function recupLike(){
         
 }
 
-function ById($id_recette){
+function recupRecetteById($id_recette){
     if (file_exists('recettes.json')) {
         $f = fopen('recettes.json', 'r+');
     
@@ -998,8 +1015,30 @@ function validerOuSupRecette($id_recette,$valider){
                 $data[$index]['statut']='valide';
             }
             else{
-                unset($data[$index]);
+                // Supprimer les photos associées à la recette
+                if (file_exists('photos.json')) {
+                    $fPhotos = fopen('photos.json', 'r+');
+                    if (flock($fPhotos, LOCK_EX)) {
+                        $photosJson = fread($fPhotos, filesize('photos.json'));
+                        $photos = json_decode($photosJson, true);
+                        $newPhotos = [];
+                        
+                        foreach($photos as $photo) {
+                            if($photo['id_recette'] != $id_recette) {
+                                $newPhotos[] = $photo;
+                            }
+                        }
+                        
+                        ftruncate($fPhotos, 0);
+                        fseek($fPhotos, 0);
+                        fwrite($fPhotos, json_encode($newPhotos, JSON_PRETTY_PRINT));
+                        flock($fPhotos, LOCK_UN);
+                    }
+                    fclose($fPhotos);
+                }
                 
+                // Supprimer la recette
+                unset($data[$index]);
             }
         }
     }

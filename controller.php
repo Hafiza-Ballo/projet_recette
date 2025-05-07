@@ -98,7 +98,7 @@ function CtlAfficherAdmin($id_user)
         throw new Exception('Accès refusé : vous n\'êtes pas administrateur.');
     }
     $utilisateurs = recupUtilisateurs() ;
-    $recettes = recupRecette(); 
+    $recettes = recupRecetteAll(); 
     afficherAdmin($user, $utilisateurs, $recettes);
 }
 

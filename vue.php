@@ -126,7 +126,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
     {
         $infosBtn .= '<a href="controllerFrontal.php?action=admin&id_user=' .$user['id'] . '">Espace Admin</a>';
         $validerRecette=($recette['statut']=="attente" ? ('<button class="btn_valider_recette"  onclick="validerRecette('.$id_recette.', \''.$langue.'\')">' . ($langue == "fr" ? "Valider" : "Confirm") . '</button>') : '');
-        $validerRecette.=($recette['statut']=="attente" ? ('<button class="btn_sup_recette" onclick="suprimerRecette('.$id_recette.', \''.$langue.'\')" >' . ($langue == "fr" ? "Supprimer" : "Delete") . '</button>') : '');
+        $validerRecette.=($recette['statut']=="attente" ? ('<button class="btn_sup_recette" onclick="suprimerRecette('.$id_user.','.$id_recette.', \''.$langue.'\')" >' . ($langue == "fr" ? "Supprimer" : "Delete") . '</button>') : '');
 
     }
     $nblike=$recette['like'];
@@ -210,7 +210,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                         $contenu.='<button onclick="traduction2(this,'.($index+1).',\''.$langue.'\','.$id_recette.', \'ingredients\')" id="btn_traduireingredients'.($index+1).'">Traduire</button>
                                    <div class="box_traduction tr_'.($index+1).'" style="display:none;">
                                        <div id="'.$x.'">
-                                           <label>Quantité: </label><input value="'.array_column($recette["ingredients"], "quantity")[$index].'" class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="q'.$index.'"><br>
+                                           <label>Quantité: </label><input value="'.array_column($recette["ingredients"], "quantity")[$index].'" class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="q'.($index+1).'"><br>
                                            <label>Nom: </label><input class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="n'.($index+1).'"><br>
                                            <label>Type: </label><input value="'.array_column($recette["ingredients"], "type")[$index].'" class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="t'.($index+1).'"><br>
                                            <button id="idb'.($index+1).'" onclick="appliquerTradIngr('.($index+1).',\'ingredients\','.$id_recette.',\''.$langue.'\')">Appliquer</button>
@@ -375,7 +375,7 @@ function afficherRecette($id_recette, $id_user, $recette, $like) {
                         $contenu.='<button onclick="traduction2(this,'.($index+1).',\''.$langue.'\','.$id_recette.', \'ingredients\')" id="btn_traduireingredients'.($index+1).'">Translate</button>
                                    <div class="box_traduction tr_'.($index+1).'" style="display:none;">
                                        <div id="'.$x.'">
-                                           <label>Quantity: </label><input value="'.array_column($recette["ingredientsFR"], "quantity")[$index].'" class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="q'.$index.'"><br>
+                                           <label>Quantity: </label><input value="'.array_column($recette["ingredientsFR"], "quantity")[$index].'" class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="q'.($index+1).'"><br>
                                            <label>Name: </label><input class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="n'.($index+1).'"><br>
                                            <label>Type: </label><input value="'.array_column($recette["ingredientsFR"], "type")[$index].'" class="trad_input_ingredients" name="\'ingredients\','.$index.'" id="t'.($index+1).'"><br>
                                            <button id="idb'.($index+1).'" onclick="appliquerTradIngr('.($index+1).',\'ingredients\','.$id_recette.',\''.$langue.'\')">Apply</button>
